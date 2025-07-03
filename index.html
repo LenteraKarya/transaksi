@@ -49,6 +49,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.3s ease;
         }
 
         .header h1 {
@@ -69,6 +70,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
+            transition: all 0.3s ease;
         }
 
         .left-panel {
@@ -78,6 +80,7 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
         .right-panel {
@@ -87,6 +90,7 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
         .panel-title {
@@ -140,6 +144,7 @@
         .btn:hover {
             background-color: var(--secondary-color);
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .btn-block {
@@ -186,6 +191,8 @@
 
         .table-responsive {
             overflow-x: auto;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .table {
@@ -204,6 +211,8 @@
             background-color: #f1f3f5;
             font-weight: 500;
             color: #555;
+            position: sticky;
+            top: 0;
         }
 
         .table tr:hover {
@@ -262,6 +271,11 @@
             align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #eee;
+            transition: all 0.2s ease;
+        }
+
+        .cart-item:hover {
+            background-color: #f9f9f9;
         }
 
         .cart-item:last-child {
@@ -294,6 +308,11 @@
             background-color: #f8f9fa;
             cursor: pointer;
             border-radius: 3px;
+            transition: all 0.2s;
+        }
+
+        .cart-item-qty button:hover {
+            background-color: #e9ecef;
         }
 
         .cart-item-qty input {
@@ -342,6 +361,13 @@
             align-items: center;
             margin-bottom: 10px;
             cursor: pointer;
+            padding: 8px;
+            border-radius: 5px;
+            transition: all 0.2s;
+        }
+
+        .payment-method:hover {
+            background-color: #f8f9fa;
         }
 
         .payment-method input {
@@ -369,6 +395,12 @@
 
         .tab-content {
             display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .tab-content.active {
@@ -386,6 +418,7 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
@@ -434,6 +467,12 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: #999;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+            transform: rotate(90deg);
         }
 
         .modal-body {
@@ -455,6 +494,12 @@
             border-radius: 10px;
             padding: 30px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .login-title {
@@ -503,6 +548,13 @@
         .login-logo i {
             font-size: 3rem;
             color: var(--primary-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         .barcode-scanner {
@@ -530,6 +582,7 @@
             font-family: 'Courier New', monospace;
             max-width: 300px;
             margin: 0 auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .receipt-header {
@@ -619,6 +672,11 @@
             transform: translateY(-50%);
             cursor: pointer;
             color: #999;
+            transition: all 0.2s;
+        }
+
+        .password-toggle:hover {
+            color: #333;
         }
 
         /* Error message styling */
@@ -678,10 +736,47 @@
             background-color: var(--warning-color);
         }
 
+        .toast.info {
+            background-color: var(--info-color);
+        }
+
         .toast i {
             margin-right: 10px;
         }
 
+        /* Confirmation dialog */
+        .confirmation-dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .confirmation-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Print styles */
         @media print {
             body * {
                 visibility: hidden;
@@ -695,9 +790,16 @@
                 top: 0;
                 width: 100%;
                 max-width: 100%;
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            .no-print {
+                display: none !important;
             }
         }
 
+        /* Responsive styles */
         @media (max-width: 768px) {
             .main-content {
                 flex-direction: column;
@@ -713,6 +815,137 @@
                 text-align: center;
                 margin-top: 10px;
             }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .admin-modal .modal-content {
+                width: 100%;
+                max-width: 100%;
+                height: 100%;
+                max-height: 100%;
+                border-radius: 0;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+
+        /* Data backup section */
+        .data-backup {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .backup-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* Sales report */
+        .sales-report {
+            margin-top: 20px;
+        }
+
+        .report-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .report-card {
+            flex: 1;
+            min-width: 200px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .report-card-title {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .report-card-value {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
         }
     </style>
 </head>
@@ -721,6 +954,17 @@
     <div id="toast" class="toast">
         <i class="fas fa-info-circle"></i>
         <span id="toast-message">Notification message</span>
+    </div>
+
+    <!-- Confirmation Dialog -->
+    <div id="confirmationDialog" class="confirmation-dialog" style="display: none;">
+        <div class="confirmation-content">
+            <h4 id="confirmationMessage">Apakah Anda yakin?</h4>
+            <div class="confirmation-buttons">
+                <button id="confirmCancel" class="btn btn-secondary">Batal</button>
+                <button id="confirmOk" class="btn btn-danger">Ya, Hapus</button>
+            </div>
+        </div>
     </div>
 
     <!-- Login Modal -->
@@ -737,7 +981,7 @@
                     <div class="error-message" id="cashierIdError"></div>
                 </div>
                 <div class="form-floating">
-                    <input type="password" id="cashierPin" placeholder="PIN" required maxlength="4">
+                    <input type="password" id="cashierPin" placeholder="PIN" required maxlength="4" inputmode="numeric">
                     <label for="cashierPin">PIN</label>
                     <div class="error-message" id="cashierPinError"></div>
                 </div>
@@ -787,9 +1031,7 @@
                     <label for="productCategory">Kategori</label>
                     <select id="productCategory" class="form-control">
                         <option value="all">Semua Kategori</option>
-                        <option value="food">Makanan</option>
-                        <option value="drink">Minuman</option>
-                        <option value="snack">Snack</option>
+                        <!-- Categories will be loaded here -->
                     </select>
                 </div>
 
@@ -861,6 +1103,7 @@
                         <div class="form-group">
                             <label for="memberId">ID Member</label>
                             <input type="text" id="memberId" class="form-control" placeholder="Masukkan ID Member">
+                            <button id="searchMember" class="btn btn-info btn-sm mt-2">Cari Member</button>
                         </div>
                         <div class="form-group">
                             <label for="memberDiscount">Diskon Member (%)</label>
@@ -940,7 +1183,9 @@
 
                     <div class="buttons">
                         <button id="backToCustomer" class="btn btn-warning">Kembali ke Pelanggan</button>
-                        <button id="completePayment" class="btn btn-success float-right">Selesaikan Pembayaran</button>
+                        <button id="completePayment" class="btn btn-success float-right">
+                            <i class="fas fa-print"></i> Selesaikan & Cetak
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1017,11 +1262,12 @@
                     <div class="tab admin-tab" data-tab="categories">Kategori</div>
                     <div class="tab admin-tab" data-tab="customers">Pelanggan</div>
                     <div class="tab admin-tab" data-tab="transactions">Transaksi</div>
+                    <div class="tab admin-tab" data-tab="reports">Laporan</div>
                     <div class="tab admin-tab" data-tab="settings">Pengaturan</div>
                 </div>
 
                 <div class="tab-content active admin-tab-content" id="productsTab">
-                    <button id="addProduct" class="btn btn-success mb-3">Tambah Produk</button>
+                    <button id="addProduct" class="btn btn-success mb-3"><i class="fas fa-plus"></i> Tambah Produk</button>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -1042,7 +1288,7 @@
                 </div>
 
                 <div class="tab-content admin-tab-content" id="categoriesTab">
-                    <button id="addCategory" class="btn btn-success mb-3">Tambah Kategori</button>
+                    <button id="addCategory" class="btn btn-success mb-3"><i class="fas fa-plus"></i> Tambah Kategori</button>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -1050,6 +1296,7 @@
                                     <th>ID</th>
                                     <th>Nama</th>
                                     <th>Deskripsi</th>
+                                    <th>Jumlah Produk</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -1061,7 +1308,7 @@
                 </div>
 
                 <div class="tab-content admin-tab-content" id="customersTab">
-                    <button id="addCustomer" class="btn btn-success mb-3">Tambah Pelanggan</button>
+                    <button id="addCustomer" class="btn btn-success mb-3"><i class="fas fa-plus"></i> Tambah Pelanggan</button>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -1086,7 +1333,6 @@
                         <label for="transactionDateRange">Rentang Tanggal</label>
                         <input type="text" id="transactionDateRange" class="form-control" placeholder="Pilih rentang tanggal">
                     </div>
-                    <button id="exportTransactions" class="btn btn-info mb-3">Ekspor ke Excel</button>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -1104,6 +1350,34 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div class="tab-content admin-tab-content" id="reportsTab">
+                    <div class="form-group">
+                        <label for="reportDateRange">Rentang Tanggal</label>
+                        <input type="text" id="reportDateRange" class="form-control" placeholder="Pilih rentang tanggal">
+                    </div>
+                    
+                    <div class="report-summary">
+                        <div class="report-card">
+                            <div class="report-card-title">Total Transaksi</div>
+                            <div class="report-card-value" id="reportTotalTransactions">0</div>
+                        </div>
+                        <div class="report-card">
+                            <div class="report-card-title">Total Pendapatan</div>
+                            <div class="report-card-value" id="reportTotalRevenue">Rp 0</div>
+                        </div>
+                        <div class="report-card">
+                            <div class="report-card-title">Produk Terlaris</div>
+                            <div class="report-card-value" id="reportBestSeller">-</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sales-report">
+                        <canvas id="salesChart" height="300"></canvas>
+                    </div>
+                    
+                    <button id="exportReport" class="btn btn-info mt-3"><i class="fas fa-file-export"></i> Ekspor Laporan</button>
                 </div>
 
                 <div class="tab-content admin-tab-content" id="settingsTab">
@@ -1129,10 +1403,10 @@
                         <input type="text" id="storeAccountNumber" class="form-control mt-2" placeholder="Nomor Rekening">
                         <input type="text" id="storeAccountName" class="form-control mt-2" placeholder="Nama Pemilik Rekening">
                     </div>
-                    <button id="saveSettings" class="btn btn-success">Simpan Pengaturan</button>
+                    <button id="saveSettings" class="btn btn-success"><i class="fas fa-save"></i> Simpan Pengaturan</button>
 
                     <h4 class="mt-4">Manajemen Kasir</h4>
-                    <button id="addCashier" class="btn btn-success mb-3">Tambah Kasir</button>
+                    <button id="addCashier" class="btn btn-success mb-3"><i class="fas fa-plus"></i> Tambah Kasir</button>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -1148,6 +1422,16 @@
                                 <!-- Cashiers will be loaded here -->
                             </tbody>
                         </table>
+                    </div>
+                    
+                    <div class="data-backup">
+                        <h4>Backup & Restore Data</h4>
+                        <p>Cadangkan atau pulihkan semua data sistem</p>
+                        <div class="backup-actions">
+                            <button id="backupData" class="btn btn-info"><i class="fas fa-download"></i> Backup Data</button>
+                            <button id="restoreData" class="btn btn-warning"><i class="fas fa-upload"></i> Restore Data</button>
+                            <input type="file" id="restoreFile" style="display: none;" accept=".json">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1168,7 +1452,7 @@
                 <div class="form-group">
                     <label for="productBarcode">Barcode</label>
                     <input type="text" id="productBarcode" class="form-control" placeholder="Masukkan barcode">
-                    <button id="scanProductBarcode" class="btn btn-info mt-2">Scan Barcode</button>
+                    <button id="scanProductBarcode" class="btn btn-info mt-2"><i class="fas fa-barcode"></i> Scan Barcode</button>
                 </div>
                 <div class="form-group">
                     <label for="productName">Nama Produk</label>
@@ -1196,7 +1480,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary close-product-modal">Batal</button>
-                <button class="btn btn-success save-product">Simpan</button>
+                <button class="btn btn-success save-product"><i class="fas fa-save"></i> Simpan</button>
             </div>
         </div>
     </div>
@@ -1239,7 +1523,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary close-edit-product-modal">Batal</button>
-                <button class="btn btn-success update-product">Update</button>
+                <button class="btn btn-success update-product"><i class="fas fa-save"></i> Update</button>
             </div>
         </div>
     </div>
@@ -1263,7 +1547,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary close-category-modal">Batal</button>
-                <button class="btn btn-success save-category">Simpan</button>
+                <button class="btn btn-success save-category"><i class="fas fa-save"></i> Simpan</button>
             </div>
         </div>
     </div>
@@ -1288,7 +1572,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary close-edit-category-modal">Batal</button>
-                <button class="btn btn-success update-category">Update</button>
+                <button class="btn btn-success update-category"><i class="fas fa-save"></i> Update</button>
             </div>
         </div>
     </div>
@@ -1327,7 +1611,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary close-customer-modal">Batal</button>
-                <button class="btn btn-success save-customer">Simpan</button>
+                <button class="btn btn-success save-customer"><i class="fas fa-save"></i> Simpan</button>
             </div>
         </div>
     </div>
@@ -1367,7 +1651,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary close-edit-customer-modal">Batal</button>
-                <button class="btn btn-success update-customer">Update</button>
+                <button class="btn btn-success update-customer"><i class="fas fa-save"></i> Update</button>
             </div>
         </div>
     </div>
@@ -1386,7 +1670,7 @@
                 </div>
                 <div class="form-group">
                     <label for="cashierPinModal">PIN (4 digit)</label>
-                    <input type="password" id="cashierPinModal" class="form-control" placeholder="Masukkan PIN" maxlength="4">
+                    <input type="password" id="cashierPinModal" class="form-control" placeholder="Masukkan PIN" maxlength="4" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label for="cashierStatus">Status</label>
@@ -1398,7 +1682,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary close-cashier-modal">Batal</button>
-                <button class="btn btn-success save-cashier">Simpan</button>
+                <button class="btn btn-success save-cashier"><i class="fas fa-save"></i> Simpan</button>
             </div>
         </div>
     </div>
@@ -1418,7 +1702,7 @@
                 </div>
                 <div class="form-group">
                     <label for="editCashierPin">PIN (4 digit)</label>
-                    <input type="password" id="editCashierPin" class="form-control" maxlength="4">
+                    <input type="password" id="editCashierPin" class="form-control" maxlength="4" inputmode="numeric">
                 </div>
                 <div class="form-group">
                     <label for="editCashierStatus">Status</label>
@@ -1430,7 +1714,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary close-edit-cashier-modal">Batal</button>
-                <button class="btn btn-success update-cashier">Update</button>
+                <button class="btn btn-success update-cashier"><i class="fas fa-save"></i> Update</button>
             </div>
         </div>
     </div>
@@ -1448,7 +1732,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary print-receipt">Cetak Ulang</button>
+                <button class="btn btn-primary print-receipt"><i class="fas fa-print"></i> Cetak Ulang</button>
                 <button class="btn btn-secondary close-detail-modal">Tutup</button>
             </div>
         </div>
@@ -1465,6 +1749,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
     <script>
         // Admin password (hidden from public)
         const ADMIN_PASSWORD = "Geraiku.12345";
@@ -1514,12 +1799,15 @@
         // Current cashier
         let currentCashier = JSON.parse(localStorage.getItem(STORAGE_KEYS.CURRENT_CASHIER)) || null;
         
+        // Chart instance
+        let salesChart = null;
+        
         // Toast notification function
         function showToast(message, type = 'info', duration = 3000) {
             const toast = $('#toast');
             const toastMessage = $('#toast-message');
             
-            toast.removeClass('success error warning').addClass(type);
+            toast.removeClass('success error warning info').addClass(type);
             toastMessage.text(message);
             toast.addClass('show');
             
@@ -1528,12 +1816,54 @@
             }, duration);
         }
         
+        // Confirmation dialog
+        function showConfirmation(message, callback) {
+            $('#confirmationMessage').text(message);
+            $('#confirmationDialog').show();
+            
+            $('#confirmOk').off('click').on('click', function() {
+                $('#confirmationDialog').hide();
+                if (typeof callback === 'function') {
+                    callback(true);
+                }
+            });
+            
+            $('#confirmCancel').off('click').on('click', function() {
+                $('#confirmationDialog').hide();
+                if (typeof callback === 'function') {
+                    callback(false);
+                }
+            });
+        }
+        
+        // Format currency
+        function formatCurrency(amount) {
+            return 'Rp ' + (amount || 0).toLocaleString('id-ID');
+        }
+        
+        // Generate PDF from receipt
+        function generatePDF(elementId, filename) {
+            const element = document.getElementById(elementId);
+            const opt = {
+                margin: 10,
+                filename: filename || 'receipt.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+        
         $(document).ready(function() {
             // Initialize data
             initializeData();
             
             // Set current date
-            $('#currentDate').text(moment().format('dddd, D MMMM YYYY'));
+            updateCurrentDate();
+            
+            // Update date every minute
+            setInterval(updateCurrentDate, 60000);
             
             // Show login modal first if no cashier is logged in
             if (!currentCashier) {
@@ -1589,7 +1919,7 @@
                         localStorage.setItem(STORAGE_KEYS.CURRENT_CASHIER, JSON.stringify(currentCashier));
                         $('#loggedInCashier').text(cashier.name);
                         $('#loginModal').hide();
-                        $('#mainApp').show();
+                        $('#mainApp').fadeIn();
                         
                         // Show success toast
                         showToast('Login berhasil', 'success');
@@ -1616,8 +1946,8 @@
                 e.preventDefault();
                 currentCashier = null;
                 localStorage.removeItem(STORAGE_KEYS.CURRENT_CASHIER);
-                $('#mainApp').hide();
-                $('#loginModal').show();
+                $('#mainApp').fadeOut();
+                $('#loginModal').fadeIn();
                 $('#cashierId').val('');
                 $('#cashierPin').val('');
                 
@@ -1641,6 +1971,11 @@
                 $(this).addClass('active');
                 $('.admin-tab-content').removeClass('active');
                 $(`#${tabId}Tab`).addClass('active');
+                
+                // Load data when switching to reports tab
+                if (tabId === 'reports') {
+                    loadSalesReport();
+                }
             });
             
             // Customer type change
@@ -1649,6 +1984,25 @@
                     $('#memberFields').show();
                 } else {
                     $('#memberFields').hide();
+                }
+            });
+            
+            // Search member
+            $('#searchMember').click(function() {
+                const memberId = $('#memberId').val().trim();
+                if (!memberId) {
+                    showToast('Masukkan ID Member terlebih dahulu', 'warning');
+                    return;
+                }
+                
+                const member = customers.find(c => c.id === memberId && c.type === 'member');
+                if (member) {
+                    $('#customerName').val(member.name);
+                    $('#customerPhone').val(member.phone);
+                    $('#customerEmail').val(member.email || '');
+                    showToast('Data member ditemukan', 'success');
+                } else {
+                    showToast('Member tidak ditemukan', 'error');
                 }
             });
             
@@ -1680,7 +2034,24 @@
                         showToast('ID Member harus diisi untuk pelanggan member', 'warning');
                         return;
                     }
+                    
+                    // Check if member exists
+                    const memberExists = customers.some(c => c.id === memberId && c.type === 'member');
+                    if (!memberExists) {
+                        showToast('ID Member tidak valid', 'error');
+                        return;
+                    }
                 }
+                
+                // Save customer info
+                currentCart.customer = {
+                    type: $('#customerType').val(),
+                    name: $('#customerName').val(),
+                    phone: $('#customerPhone').val(),
+                    email: $('#customerEmail').val(),
+                    memberId: $('#memberId').val(),
+                    discount: $('#customerType').val() === 'member' ? parseInt($('#memberDiscount').val()) || 0 : 0
+                };
                 
                 // Calculate discount if member
                 if ($('#customerType').val() === 'member') {
@@ -1721,16 +2092,6 @@
                     return;
                 }
                 
-                // Save customer info
-                currentCart.customer = {
-                    type: $('#customerType').val(),
-                    name: $('#customerName').val(),
-                    phone: $('#customerPhone').val(),
-                    email: $('#customerEmail').val(),
-                    memberId: $('#memberId').val(),
-                    discount: $('#customerType').val() === 'member' ? parseInt($('#memberDiscount').val()) || 0 : 0
-                };
-                
                 // Create transaction
                 const transaction = {
                     id: 'T' + moment().format('YYYYMMDDHHmmss'),
@@ -1747,12 +2108,27 @@
                     cashier: currentCashier
                 };
                 
+                // Update product stock
+                transaction.items.forEach(item => {
+                    const productIndex = products.findIndex(p => p.id === item.product.id);
+                    if (productIndex !== -1) {
+                        products[productIndex].stock -= item.quantity;
+                        if (products[productIndex].stock < 0) products[productIndex].stock = 0;
+                    }
+                });
+                
+                // Save products with updated stock
+                saveProducts();
+                
                 // Add to transactions
                 transactions.unshift(transaction);
                 saveTransactions();
                 
                 // Generate receipt
                 generateReceipt(transaction);
+                
+                // Generate PDF receipt
+                generatePDF('receiptTemplate', `Struk_${transaction.id}.pdf`);
                 
                 // Reset cart
                 resetCart();
@@ -1867,6 +2243,12 @@
                     return;
                 }
                 
+                // Check if barcode already exists
+                if (products.some(p => p.barcode === product.barcode)) {
+                    showToast('Barcode sudah digunakan oleh produk lain', 'error');
+                    return;
+                }
+                
                 // Add product
                 products.push(product);
                 saveProducts();
@@ -1920,7 +2302,7 @@
                 const productIndex = products.findIndex(p => p.id === productId);
                 
                 if (productIndex !== -1) {
-                    products[productIndex] = {
+                    const updatedProduct = {
                         ...products[productIndex],
                         barcode: $('#editProductBarcode').val(),
                         name: $('#editProductName').val(),
@@ -1930,6 +2312,14 @@
                         description: $('#editProductDescription').val()
                     };
                     
+                    // Check if barcode is changed and already exists
+                    if (updatedProduct.barcode !== products[productIndex].barcode && 
+                        products.some(p => p.barcode === updatedProduct.barcode && p.id !== productId)) {
+                        showToast('Barcode sudah digunakan oleh produk lain', 'error');
+                        return;
+                    }
+                    
+                    products[productIndex] = updatedProduct;
                     saveProducts();
                     loadProducts();
                     loadAdminProducts();
@@ -1941,15 +2331,19 @@
             
             // Delete product
             $(document).on('click', '.delete-product', function() {
-                if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
-                    const productId = $(this).data('id');
-                    products = products.filter(p => p.id !== productId);
-                    saveProducts();
-                    loadProducts();
-                    loadAdminProducts();
-                    
-                    showToast('Produk berhasil dihapus', 'success');
-                }
+                const productId = $(this).data('id');
+                const product = products.find(p => p.id === productId);
+                
+                showConfirmation(`Apakah Anda yakin ingin menghapus produk ${product?.name || 'ini'}?`, (confirmed) => {
+                    if (confirmed) {
+                        products = products.filter(p => p.id !== productId);
+                        saveProducts();
+                        loadProducts();
+                        loadAdminProducts();
+                        
+                        showToast('Produk berhasil dihapus', 'success');
+                    }
+                });
             });
             
             // Add category
@@ -1967,6 +2361,12 @@
                 
                 if (!category.name) {
                     showToast('Nama kategori harus diisi!', 'error');
+                    return;
+                }
+                
+                // Check if category name already exists
+                if (categories.some(c => c.name.toLowerCase() === category.name.toLowerCase())) {
+                    showToast('Nama kategori sudah ada', 'error');
                     return;
                 }
                 
@@ -2004,12 +2404,20 @@
                 const categoryIndex = categories.findIndex(c => c.id === categoryId);
                 
                 if (categoryIndex !== -1) {
-                    categories[categoryIndex] = {
+                    const updatedCategory = {
                         ...categories[categoryIndex],
                         name: $('#editCategoryName').val(),
                         description: $('#editCategoryDescription').val()
                     };
                     
+                    // Check if category name is changed and already exists
+                    if (updatedCategory.name !== categories[categoryIndex].name && 
+                        categories.some(c => c.name.toLowerCase() === updatedCategory.name.toLowerCase())) {
+                        showToast('Nama kategori sudah ada', 'error');
+                        return;
+                    }
+                    
+                    categories[categoryIndex] = updatedCategory;
                     saveCategories();
                     loadAdminCategories();
                     updateCategoryDropdowns();
@@ -2022,6 +2430,7 @@
             // Delete category
             $(document).on('click', '.delete-category', function() {
                 const categoryId = $(this).data('id');
+                const category = categories.find(c => c.id === categoryId);
                 
                 // Check if any products use this category
                 const productsUsingCategory = products.filter(p => p.categoryId === categoryId);
@@ -2031,14 +2440,16 @@
                     return;
                 }
                 
-                if (confirm('Apakah Anda yakin ingin menghapus kategori ini?')) {
-                    categories = categories.filter(c => c.id !== categoryId);
-                    saveCategories();
-                    loadAdminCategories();
-                    updateCategoryDropdowns();
-                    
-                    showToast('Kategori berhasil dihapus', 'success');
-                }
+                showConfirmation(`Apakah Anda yakin ingin menghapus kategori ${category?.name || 'ini'}?`, (confirmed) => {
+                    if (confirmed) {
+                        categories = categories.filter(c => c.id !== categoryId);
+                        saveCategories();
+                        loadAdminCategories();
+                        updateCategoryDropdowns();
+                        
+                        showToast('Kategori berhasil dihapus', 'success');
+                    }
+                });
             });
             
             // Add customer
@@ -2059,6 +2470,12 @@
                 
                 if (!customer.name || !customer.phone) {
                     showToast('Nama dan telepon pelanggan harus diisi!', 'error');
+                    return;
+                }
+                
+                // Check if phone number already exists
+                if (customers.some(c => c.phone === customer.phone)) {
+                    showToast('Nomor telepon sudah terdaftar', 'error');
                     return;
                 }
                 
@@ -2099,7 +2516,7 @@
                 const customerIndex = customers.findIndex(c => c.id === customerId);
                 
                 if (customerIndex !== -1) {
-                    customers[customerIndex] = {
+                    const updatedCustomer = {
                         ...customers[customerIndex],
                         type: $('#editCustomerType').val(),
                         name: $('#editCustomerName').val(),
@@ -2108,6 +2525,14 @@
                         address: $('#editCustomerAddress').val()
                     };
                     
+                    // Check if phone number is changed and already exists
+                    if (updatedCustomer.phone !== customers[customerIndex].phone && 
+                        customers.some(c => c.phone === updatedCustomer.phone)) {
+                        showToast('Nomor telepon sudah terdaftar', 'error');
+                        return;
+                    }
+                    
+                    customers[customerIndex] = updatedCustomer;
                     saveCustomers();
                     loadAdminCustomers();
                     $('#editCustomerModal').hide();
@@ -2118,14 +2543,18 @@
             
             // Delete customer
             $(document).on('click', '.delete-customer', function() {
-                if (confirm('Apakah Anda yakin ingin menghapus pelanggan ini?')) {
-                    const customerId = $(this).data('id');
-                    customers = customers.filter(c => c.id !== customerId);
-                    saveCustomers();
-                    loadAdminCustomers();
-                    
-                    showToast('Pelanggan berhasil dihapus', 'success');
-                }
+                const customerId = $(this).data('id');
+                const customer = customers.find(c => c.id === customerId);
+                
+                showConfirmation(`Apakah Anda yakin ingin menghapus pelanggan ${customer?.name || 'ini'}?`, (confirmed) => {
+                    if (confirmed) {
+                        customers = customers.filter(c => c.id !== customerId);
+                        saveCustomers();
+                        loadAdminCustomers();
+                        
+                        showToast('Pelanggan berhasil dihapus', 'success');
+                    }
+                });
             });
             
             // Add cashier
@@ -2144,6 +2573,12 @@
                 
                 if (!cashier.name || !cashier.pin || cashier.pin.length !== 4 || !/^\d+$/.test(cashier.pin)) {
                     showToast('Nama dan PIN (4 digit angka) harus diisi dengan benar!', 'error');
+                    return;
+                }
+                
+                // Check if PIN already exists
+                if (cashiers.some(c => c.pin === cashier.pin)) {
+                    showToast('PIN sudah digunakan oleh kasir lain', 'error');
                     return;
                 }
                 
@@ -2180,13 +2615,27 @@
                 const cashierIndex = cashiers.findIndex(c => c.id === cashierId);
                 
                 if (cashierIndex !== -1) {
-                    cashiers[cashierIndex] = {
+                    const updatedCashier = {
                         ...cashiers[cashierIndex],
                         name: $('#editCashierName').val(),
                         pin: $('#editCashierPin').val(),
                         status: $('#editCashierStatus').val()
                     };
                     
+                    // Check if PIN is changed and already exists
+                    if (updatedCashier.pin !== cashiers[cashierIndex].pin && 
+                        cashiers.some(c => c.pin === updatedCashier.pin)) {
+                        showToast('PIN sudah digunakan oleh kasir lain', 'error');
+                        return;
+                    }
+                    
+                    // Prevent deactivating currently logged in cashier
+                    if (updatedCashier.status === 'inactive' && cashierId === currentCashier?.id) {
+                        showToast('Tidak dapat menonaktifkan kasir yang sedang login', 'error');
+                        return;
+                    }
+                    
+                    cashiers[cashierIndex] = updatedCashier;
                     saveCashiers();
                     loadAdminCashiers();
                     $('#editCashierModal').hide();
@@ -2198,19 +2647,22 @@
             // Delete cashier
             $(document).on('click', '.delete-cashier', function() {
                 const cashierId = $(this).data('id');
+                const cashier = cashiers.find(c => c.id === cashierId);
                 
                 if (cashierId === currentCashier?.id) {
                     showToast('Tidak dapat menghapus kasir yang sedang login!', 'error');
                     return;
                 }
                 
-                if (confirm('Apakah Anda yakin ingin menghapus kasir ini?')) {
-                    cashiers = cashiers.filter(c => c.id !== cashierId);
-                    saveCashiers();
-                    loadAdminCashiers();
-                    
-                    showToast('Kasir berhasil dihapus', 'success');
-                }
+                showConfirmation(`Apakah Anda yakin ingin menghapus kasir ${cashier?.name || 'ini'}?`, (confirmed) => {
+                    if (confirmed) {
+                        cashiers = cashiers.filter(c => c.id !== cashierId);
+                        saveCashiers();
+                        loadAdminCashiers();
+                        
+                        showToast('Kasir berhasil dihapus', 'success');
+                    }
+                });
             });
             
             // Save settings
@@ -2261,6 +2713,94 @@
                 showToast('Data transaksi akan diekspor ke Excel', 'info');
             });
             
+            // Export report
+            $('#exportReport').click(function() {
+                showToast('Laporan penjualan akan diekspor', 'info');
+            });
+            
+            // Backup data
+            $('#backupData').click(function() {
+                const backupData = {
+                    products: products,
+                    categories: categories,
+                    customers: customers,
+                    cashiers: cashiers,
+                    transactions: transactions,
+                    settings: settings,
+                    timestamp: new Date().toISOString()
+                };
+                
+                const dataStr = JSON.stringify(backupData, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                
+                const exportName = `POS_Backup_${moment().format('YYYYMMDD_HHmmss')}.json`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportName);
+                linkElement.click();
+                
+                showToast('Backup data berhasil', 'success');
+            });
+            
+            // Restore data
+            $('#restoreData').click(function() {
+                $('#restoreFile').click();
+            });
+            
+            $('#restoreFile').change(function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                if (file.type !== 'application/json') {
+                    showToast('File harus dalam format JSON', 'error');
+                    return;
+                }
+                
+                showConfirmation('Apakah Anda yakin ingin memulihkan data? Semua data saat ini akan diganti.', (confirmed) => {
+                    if (!confirmed) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const backupData = JSON.parse(e.target.result);
+                            
+                            // Validate backup data
+                            if (!backupData.products || !backupData.categories || !backupData.customers || 
+                                !backupData.cashiers || !backupData.transactions || !backupData.settings) {
+                                showToast('Format backup tidak valid', 'error');
+                                return;
+                            }
+                            
+                            // Restore data
+                            products = backupData.products;
+                            categories = backupData.categories;
+                            customers = backupData.customers;
+                            cashiers = backupData.cashiers;
+                            transactions = backupData.transactions;
+                            settings = backupData.settings;
+                            
+                            // Save to local storage
+                            saveProducts();
+                            saveCategories();
+                            saveCustomers();
+                            saveCashiers();
+                            saveTransactions();
+                            
+                            // Update UI
+                            initializeData();
+                            loadAdminData();
+                            
+                            showToast('Data berhasil dipulihkan', 'success');
+                        } catch (error) {
+                            showToast('Gagal memproses file backup', 'error');
+                            console.error(error);
+                        }
+                    };
+                    reader.readAsText(file);
+                });
+            });
+            
             // Barcode scanner
             $('#toggleScanner').click(function() {
                 const scannerContainer = $('#scannerContainer');
@@ -2291,10 +2831,21 @@
                 const product = products.find(p => p.id === productId);
                 
                 if (product) {
+                    // Check if product is out of stock
+                    if (product.stock <= 0) {
+                        showToast('Stok produk habis', 'error');
+                        return;
+                    }
+                    
                     // Check if product already in cart
                     const existingItem = currentCart.items.find(item => item.product.id === productId);
                     
                     if (existingItem) {
+                        // Check if quantity exceeds stock
+                        if (existingItem.quantity + 1 > product.stock) {
+                            showToast('Jumlah melebihi stok yang tersedia', 'error');
+                            return;
+                        }
                         existingItem.quantity += 1;
                     } else {
                         currentCart.items.push({
@@ -2330,12 +2881,20 @@
                 
                 const item = currentCart.items.find(item => item.product.id === productId);
                 if (item) {
+                    // Check if quantity exceeds stock
+                    const product = products.find(p => p.id === productId);
+                    if (product && quantity > product.stock) {
+                        showToast('Jumlah melebihi stok yang tersedia', 'error');
+                        $(this).val(item.quantity); // Reset to previous value
+                        return;
+                    }
+                    
                     item.quantity = quantity;
                     updateCart();
                 }
             });
             
-            // Initialize date range picker
+            // Initialize date range picker for transactions
             $('#transactionDateRange').daterangepicker({
                 opens: 'left',
                 locale: {
@@ -2349,6 +2908,26 @@
                     monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
                     firstDay: 1
                 }
+            }).on('apply.daterangepicker', function(ev, picker) {
+                loadAdminTransactions(picker.startDate, picker.endDate);
+            });
+            
+            // Initialize date range picker for reports
+            $('#reportDateRange').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    applyLabel: 'Pilih',
+                    cancelLabel: 'Batal',
+                    fromLabel: 'Dari',
+                    toLabel: 'Sampai',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['Mg', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb'],
+                    monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                    firstDay: 1
+                }
+            }).on('apply.daterangepicker', function(ev, picker) {
+                loadSalesReport(picker.startDate, picker.endDate);
             });
             
             // Search products
@@ -2363,13 +2942,20 @@
             });
         });
         
+        // Update current date
+        function updateCurrentDate() {
+            $('#currentDate').text(moment().format('dddd, D MMMM YYYY, HH:mm'));
+        }
+        
         // Initialize data
         function initializeData() {
             // Save initial data if not exists
             if (products.length === 0) {
                 products = [
                     { id: 'P001', barcode: '123456789', name: 'Produk Contoh 1', categoryId: 'C001', price: 10000, stock: 15, description: '' },
-                    { id: 'P002', barcode: '987654321', name: 'Produk Contoh 2', categoryId: 'C002', price: 15000, stock: 8, description: '' }
+                    { id: 'P002', barcode: '987654321', name: 'Produk Contoh 2', categoryId: 'C002', price: 15000, stock: 8, description: '' },
+                    { id: 'P003', barcode: '456789123', name: 'Produk Contoh 3', categoryId: 'C001', price: 20000, stock: 20, description: '' },
+                    { id: 'P004', barcode: '321654987', name: 'Produk Contoh 4', categoryId: 'C003', price: 5000, stock: 30, description: '' }
                 ];
                 saveProducts();
             }
@@ -2437,6 +3023,7 @@
             // Load initial data
             loadProducts();
             updateCart();
+            updateCategoryDropdowns();
         }
         
         // Save data to local storage
@@ -2485,16 +3072,32 @@
             $('#productListBody').empty();
             
             if (filteredProducts.length === 0) {
-                $('#productListBody').append('<tr><td colspan="4" class="text-center">Tidak ada produk ditemukan</td></tr>');
+                $('#productListBody').html(`
+                    <tr>
+                        <td colspan="4">
+                            <div class="empty-state">
+                                <i class="fas fa-box-open"></i>
+                                <p>Tidak ada produk ditemukan</p>
+                            </div>
+                        </td>
+                    </tr>
+                `);
             } else {
                 filteredProducts.forEach(product => {
                     const category = categories.find(c => c.id === product.categoryId);
+                    const stockClass = product.stock > 5 ? 'text-success' : product.stock > 0 ? 'text-warning' : 'text-danger';
+                    
                     $('#productListBody').append(`
                         <tr>
                             <td>${product.name}</td>
-                            <td>Rp ${product.price.toLocaleString('id-ID')}</td>
-                            <td>${product.stock}</td>
-                            <td><button class="btn btn-success btn-sm add-to-cart" data-id="${product.id}">Tambah</button></td>
+                            <td>${formatCurrency(product.price)}</td>
+                            <td class="${stockClass}">${product.stock}</td>
+                            <td>
+                                <button class="btn btn-success btn-sm add-to-cart" data-id="${product.id}" 
+                                    ${product.stock <= 0 ? 'disabled title="Stok habis"' : ''}>
+                                    <i class="fas fa-cart-plus"></i> Tambah
+                                </button>
+                            </td>
                         </tr>
                     `);
                 });
@@ -2515,18 +3118,27 @@
             $('#cartItems').empty();
             
             if (currentCart.items.length === 0) {
-                $('#cartItems').append('<div class="text-center py-3">Keranjang belanja kosong</div>');
+                $('#cartItems').html(`
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Keranjang belanja kosong</p>
+                    </div>
+                `);
             } else {
                 currentCart.items.forEach(item => {
+                    const itemTotal = item.product.price * item.quantity;
                     $('#cartItems').append(`
                         <div class="cart-item">
                             <div class="cart-item-info">
                                 <div class="cart-item-name">${item.product.name}</div>
-                                <div class="cart-item-price">Rp ${item.product.price.toLocaleString('id-ID')}</div>
+                                <div class="cart-item-price">${formatCurrency(item.product.price)}</div>
                             </div>
                             <div class="cart-item-qty">
-                                <input type="number" value="${item.quantity}" min="1" class="cart-item-quantity" data-id="${item.product.id}">
-                                <button class="btn btn-danger btn-sm ml-2 remove-from-cart" data-id="${item.product.id}">Hapus</button>
+                                <input type="number" value="${item.quantity}" min="1" max="${item.product.stock}" 
+                                    class="cart-item-quantity" data-id="${item.product.id}">
+                                <button class="btn btn-danger btn-sm ml-2 remove-from-cart" data-id="${item.product.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </div>
                         </div>
                     `);
@@ -2534,18 +3146,18 @@
             }
             
             // Update summary
-            $('#cartSubtotal').text(`Rp ${currentCart.subtotal.toLocaleString('id-ID')}`);
-            $('#cartDiscount').text(`Rp ${currentCart.discount.toLocaleString('id-ID')}`);
-            $('#cartTax').text(`Rp ${currentCart.tax.toLocaleString('id-ID')}`);
-            $('#cartTotal').text(`Rp ${currentCart.total.toLocaleString('id-ID')}`);
+            $('#cartSubtotal').text(formatCurrency(currentCart.subtotal));
+            $('#cartDiscount').text(formatCurrency(currentCart.discount));
+            $('#cartTax').text(formatCurrency(currentCart.tax));
+            $('#cartTotal').text(formatCurrency(currentCart.total));
         }
         
         // Update payment summary
         function updatePaymentSummary() {
-            $('#paymentSubtotal').text(`Rp ${currentCart.subtotal.toLocaleString('id-ID')}`);
-            $('#paymentDiscount').text(`Rp ${currentCart.discount.toLocaleString('id-ID')}`);
-            $('#paymentTax').text(`Rp ${currentCart.tax.toLocaleString('id-ID')}`);
-            $('#paymentTotal').text(`Rp ${currentCart.total.toLocaleString('id-ID')}`);
+            $('#paymentSubtotal').text(formatCurrency(currentCart.subtotal));
+            $('#paymentDiscount').text(formatCurrency(currentCart.discount));
+            $('#paymentTax').text(formatCurrency(currentCart.tax));
+            $('#paymentTotal').text(formatCurrency(currentCart.total));
         }
         
         // Reset cart
@@ -2601,11 +3213,11 @@
                 receiptHTML += `
                     <div class="receipt-item">
                         <span>${item.product.name}</span>
-                        <span>Rp ${item.product.price.toLocaleString('id-ID')}</span>
+                        <span>${formatCurrency(item.product.price)}</span>
                     </div>
                     <div class="receipt-item">
-                        <span>${item.quantity} x Rp ${item.product.price.toLocaleString('id-ID')}</span>
-                        <span>Rp ${itemTotal.toLocaleString('id-ID')}</span>
+                        <span>${item.quantity} x ${formatCurrency(item.product.price)}</span>
+                        <span>${formatCurrency(itemTotal)}</span>
                     </div>
                 `;
             });
@@ -2615,16 +3227,28 @@
                 </div>
                 <div class="receipt-total">
                     <div class="receipt-item">
+                        <span>Subtotal</span>
+                        <span>${formatCurrency(transaction.subtotal)}</span>
+                    </div>
+                    <div class="receipt-item">
+                        <span>Diskon</span>
+                        <span>-${formatCurrency(transaction.discount)}</span>
+                    </div>
+                    <div class="receipt-item">
+                        <span>Pajak (${settings.taxRate}%)</span>
+                        <span>${formatCurrency(transaction.tax)}</span>
+                    </div>
+                    <div class="receipt-item">
                         <span>TOTAL</span>
-                        <span>Rp ${transaction.total.toLocaleString('id-ID')}</span>
+                        <span>${formatCurrency(transaction.total)}</span>
                     </div>
                     <div class="receipt-item">
                         <span>${paymentMethod}</span>
-                        <span>Rp ${transaction.paymentAmount.toLocaleString('id-ID')}</span>
+                        <span>${formatCurrency(transaction.paymentAmount)}</span>
                     </div>
                     <div class="receipt-item">
                         <span>Kembali</span>
-                        <span>Rp ${transaction.change.toLocaleString('id-ID')}</span>
+                        <span>${formatCurrency(transaction.change)}</span>
                     </div>
                 </div>
                 <div class="receipt-footer">
@@ -2636,40 +3260,8 @@
             if (target) {
                 $(target).html(receiptHTML);
             } else {
-                // Open receipt in new window for printing
-                const receiptWindow = window.open('', '_blank');
-                receiptWindow.document.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>Struk Pembayaran</title>
-                        <style>
-                            body { font-family: Arial, sans-serif; }
-                            .receipt { width: 300px; margin: 0 auto; padding: 10px; }
-                            .receipt-header { text-align: center; margin-bottom: 10px; }
-                            .receipt-title { font-weight: bold; font-size: 18px; }
-                            .receipt-address { font-size: 12px; }
-                            .receipt-date { font-size: 12px; margin-bottom: 10px; }
-                            .receipt-item { display: flex; justify-content: space-between; margin-bottom: 5px; }
-                            .receipt-total { border-top: 1px dashed #000; margin-top: 10px; padding-top: 10px; }
-                            .receipt-footer { text-align: center; margin-top: 10px; font-size: 12px; }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="receipt">
-                            ${receiptHTML}
-                        </div>
-                        <script>
-                            window.onload = function() {
-                                window.print();
-                                setTimeout(function() {
-                                    window.close();
-                                }, 1000);
-                            };
-                        <\/script>
-                    </body>
-                    </html>
-                `);
+                // Update receipt template
+                $('#receiptTemplate').html(receiptHTML);
             }
         }
         
@@ -2686,20 +3278,35 @@
             $('#adminProductsTable').empty();
             
             if (products.length === 0) {
-                $('#adminProductsTable').append('<tr><td colspan="6" class="text-center">Tidak ada produk</td></tr>');
+                $('#adminProductsTable').html(`
+                    <tr>
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <i class="fas fa-box-open"></i>
+                                <p>Tidak ada produk</p>
+                            </div>
+                        </td>
+                    </tr>
+                `);
             } else {
                 products.forEach(product => {
                     const category = categories.find(c => c.id === product.categoryId);
+                    const stockClass = product.stock > 5 ? 'text-success' : product.stock > 0 ? 'text-warning' : 'text-danger';
+                    
                     $('#adminProductsTable').append(`
                         <tr>
                             <td>${product.barcode}</td>
                             <td>${product.name}</td>
                             <td>${category ? category.name : '-'}</td>
-                            <td>Rp ${product.price.toLocaleString('id-ID')}</td>
-                            <td>${product.stock}</td>
+                            <td>${formatCurrency(product.price)}</td>
+                            <td class="${stockClass}">${product.stock}</td>
                             <td>
-                                <button class="btn btn-info btn-sm edit-product" data-id="${product.id}">Edit</button>
-                                <button class="btn btn-danger btn-sm delete-product" data-id="${product.id}">Hapus</button>
+                                <button class="btn btn-info btn-sm edit-product" data-id="${product.id}" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-product" data-id="${product.id}" title="Hapus">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     `);
@@ -2711,17 +3318,33 @@
             $('#adminCategoriesTable').empty();
             
             if (categories.length === 0) {
-                $('#adminCategoriesTable').append('<tr><td colspan="4" class="text-center">Tidak ada kategori</td></tr>');
+                $('#adminCategoriesTable').html(`
+                    <tr>
+                        <td colspan="5">
+                            <div class="empty-state">
+                                <i class="fas fa-tags"></i>
+                                <p>Tidak ada kategori</p>
+                            </div>
+                        </td>
+                    </tr>
+                `);
             } else {
                 categories.forEach(category => {
+                    const productCount = products.filter(p => p.categoryId === category.id).length;
+                    
                     $('#adminCategoriesTable').append(`
                         <tr>
                             <td>${category.id}</td>
                             <td>${category.name}</td>
                             <td>${category.description || '-'}</td>
+                            <td>${productCount} produk</td>
                             <td>
-                                <button class="btn btn-info btn-sm edit-category" data-id="${category.id}">Edit</button>
-                                <button class="btn btn-danger btn-sm delete-category" data-id="${category.id}">Hapus</button>
+                                <button class="btn btn-info btn-sm edit-category" data-id="${category.id}" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-category" data-id="${category.id}" title="Hapus">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     `);
@@ -2733,7 +3356,16 @@
             $('#adminCustomersTable').empty();
             
             if (customers.length === 0) {
-                $('#adminCustomersTable').append('<tr><td colspan="6" class="text-center">Tidak ada pelanggan</td></tr>');
+                $('#adminCustomersTable').html(`
+                    <tr>
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <i class="fas fa-users"></i>
+                                <p>Tidak ada pelanggan</p>
+                            </div>
+                        </td>
+                    </tr>
+                `);
             } else {
                 customers.forEach(customer => {
                     $('#adminCustomersTable').append(`
@@ -2748,8 +3380,12 @@
                                 </span>
                             </td>
                             <td>
-                                <button class="btn btn-info btn-sm edit-customer" data-id="${customer.id}">Edit</button>
-                                <button class="btn btn-danger btn-sm delete-customer" data-id="${customer.id}">Hapus</button>
+                                <button class="btn btn-info btn-sm edit-customer" data-id="${customer.id}" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-customer" data-id="${customer.id}" title="Hapus">
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     `);
@@ -2761,13 +3397,24 @@
             $('#adminCashiersTable').empty();
             
             if (cashiers.length === 0) {
-                $('#adminCashiersTable').append('<tr><td colspan="5" class="text-center">Tidak ada kasir</td></tr>');
+                $('#adminCashiersTable').html(`
+                    <tr>
+                        <td colspan="5">
+                            <div class="empty-state">
+                                <i class="fas fa-user-tie"></i>
+                                <p>Tidak ada kasir</p>
+                            </div>
+                        </td>
+                    </tr>
+                `);
             } else {
                 cashiers.forEach(cashier => {
+                    const isCurrent = currentCashier && cashier.id === currentCashier.id;
+                    
                     $('#adminCashiersTable').append(`
-                        <tr>
+                        <tr ${isCurrent ? 'style="background-color: #f8f9fa;"' : ''}>
                             <td>${cashier.id}</td>
-                            <td>${cashier.name}</td>
+                            <td>${cashier.name} ${isCurrent ? '(Anda)' : ''}</td>
                             <td>****</td>
                             <td>
                                 <span class="badge ${cashier.status === 'active' ? 'badge-success' : 'badge-danger'}">
@@ -2775,8 +3422,13 @@
                                 </span>
                             </td>
                             <td>
-                                <button class="btn btn-info btn-sm edit-cashier" data-id="${cashier.id}">Edit</button>
-                                <button class="btn btn-danger btn-sm delete-cashier" data-id="${cashier.id}">Hapus</button>
+                                <button class="btn btn-info btn-sm edit-cashier" data-id="${cashier.id}" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm delete-cashier" data-id="${cashier.id}" title="Hapus" 
+                                    ${isCurrent ? 'disabled' : ''}>
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     `);
@@ -2784,26 +3436,152 @@
             }
         }
         
-        function loadAdminTransactions() {
+        function loadAdminTransactions(startDate, endDate) {
             $('#adminTransactionsTable').empty();
             
-            if (transactions.length === 0) {
-                $('#adminTransactionsTable').append('<tr><td colspan="6" class="text-center">Tidak ada transaksi</td></tr>');
+            let filteredTransactions = [...transactions];
+            
+            // Filter by date range if provided
+            if (startDate && endDate) {
+                filteredTransactions = filteredTransactions.filter(t => {
+                    const transactionDate = new Date(t.date);
+                    return transactionDate >= startDate && transactionDate <= endDate;
+                });
+            }
+            
+            if (filteredTransactions.length === 0) {
+                $('#adminTransactionsTable').html(`
+                    <tr>
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <i class="fas fa-receipt"></i>
+                                <p>Tidak ada transaksi</p>
+                            </div>
+                        </td>
+                    </tr>
+                `);
             } else {
-                transactions.forEach(transaction => {
+                filteredTransactions.forEach(transaction => {
                     $('#adminTransactionsTable').append(`
                         <tr>
                             <td>${transaction.id}</td>
                             <td>${moment(transaction.date).format('DD/MM/YYYY HH:mm')}</td>
                             <td>${transaction.customer?.name || '-'}</td>
-                            <td>Rp ${transaction.total.toLocaleString('id-ID')}</td>
+                            <td>${formatCurrency(transaction.total)}</td>
                             <td>${transaction.cashier.name}</td>
                             <td>
-                                <button class="btn btn-info btn-sm view-transaction" data-id="${transaction.id}">Detail</button>
-                                <button class="btn btn-primary btn-sm print-transaction" data-id="${transaction.id}">Cetak</button>
+                                <button class="btn btn-info btn-sm view-transaction" data-id="${transaction.id}" title="Detail">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-primary btn-sm print-transaction" data-id="${transaction.id}" title="Cetak">
+                                    <i class="fas fa-print"></i>
+                                </button>
                             </td>
                         </tr>
                     `);
+                });
+            }
+        }
+        
+        // Load sales report
+        function loadSalesReport(startDate, endDate) {
+            let filteredTransactions = [...transactions];
+            
+            // Filter by date range if provided
+            if (startDate && endDate) {
+                filteredTransactions = filteredTransactions.filter(t => {
+                    const transactionDate = new Date(t.date);
+                    return transactionDate >= startDate && transactionDate <= endDate;
+                });
+            }
+            
+            // Calculate report summary
+            const totalTransactions = filteredTransactions.length;
+            const totalRevenue = filteredTransactions.reduce((sum, t) => sum + t.total, 0);
+            
+            // Find best selling product
+            let productSales = {};
+            filteredTransactions.forEach(t => {
+                t.items.forEach(item => {
+                    if (!productSales[item.product.id]) {
+                        productSales[item.product.id] = {
+                            name: item.product.name,
+                            quantity: 0
+                        };
+                    }
+                    productSales[item.product.id].quantity += item.quantity;
+                });
+            });
+            
+            let bestSeller = '-';
+            let maxQuantity = 0;
+            for (const productId in productSales) {
+                if (productSales[productId].quantity > maxQuantity) {
+                    maxQuantity = productSales[productId].quantity;
+                    bestSeller = `${productSales[productId].name} (${maxQuantity} pcs)`;
+                }
+            }
+            
+            // Update summary cards
+            $('#reportTotalTransactions').text(totalTransactions);
+            $('#reportTotalRevenue').text(formatCurrency(totalRevenue));
+            $('#reportBestSeller').text(bestSeller);
+            
+            // Prepare data for chart
+            const dailySales = {};
+            filteredTransactions.forEach(t => {
+                const date = moment(t.date).format('DD/MM');
+                if (!dailySales[date]) {
+                    dailySales[date] = 0;
+                }
+                dailySales[date] += t.total;
+            });
+            
+            const labels = Object.keys(dailySales).sort();
+            const data = labels.map(date => dailySales[date]);
+            
+            // Create or update chart
+            const ctx = document.getElementById('salesChart').getContext('2d');
+            
+            if (salesChart) {
+                salesChart.data.labels = labels;
+                salesChart.data.datasets[0].data = data;
+                salesChart.update();
+            } else {
+                salesChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Penjualan Harian',
+                            data: data,
+                            backgroundColor: '#4361ee',
+                            borderColor: '#3f37c9',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return 'Rp ' + value.toLocaleString('id-ID');
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return 'Rp ' + context.raw.toLocaleString('id-ID');
+                                    }
+                                }
+                            }
+                        }
+                    }
                 });
             }
         }
@@ -2864,10 +3642,23 @@
                 const product = products.find(p => p.barcode === code);
                 
                 if (product) {
+                    // Check if product is out of stock
+                    if (product.stock <= 0) {
+                        $('#barcodeResult').text('Produk stok habis: ' + code);
+                        showToast('Stok produk habis', 'error');
+                        return;
+                    }
+                    
                     // Add to cart
                     const existingItem = currentCart.items.find(item => item.product.id === product.id);
                     
                     if (existingItem) {
+                        // Check if quantity exceeds stock
+                        if (existingItem.quantity + 1 > product.stock) {
+                            $('#barcodeResult').text('Jumlah melebihi stok: ' + code);
+                            showToast('Jumlah melebihi stok yang tersedia', 'error');
+                            return;
+                        }
                         existingItem.quantity += 1;
                     } else {
                         currentCart.items.push({
