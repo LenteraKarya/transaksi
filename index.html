@@ -4,27 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium POS System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.css">
     <style>
         :root {
             --primary-color: #4361ee;
+            --primary-light: #eef2ff;
             --secondary-color: #3f37c9;
             --accent-color: #4895ef;
             --dark-color: #1a1a2e;
             --light-color: #f8f9fa;
-            --success-color: #4cc9f0;
-            --danger-color: #f72585;
-            --warning-color: #f8961e;
-            --info-color: #560bad;
+            --success-color: #10b981;
+            --success-light: #d1fae5;
+            --danger-color: #ef4444;
+            --danger-light: #fee2e2;
+            --warning-color: #f59e0b;
+            --warning-light: #fef3c7;
+            --info-color: #3b82f6;
+            --info-light: #dbeafe;
+            --gray-color: #6b7280;
+            --gray-light: #f3f4f6;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --rounded-sm: 0.25rem;
+            --rounded: 0.5rem;
+            --rounded-lg: 0.75rem;
+            --rounded-xl: 1rem;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
@@ -43,9 +58,9 @@
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 15px 20px;
-            border-radius: 10px;
+            border-radius: var(--rounded-lg);
             margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -54,7 +69,7 @@
 
         .header h1 {
             font-size: 1.8rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .header-info {
@@ -77,9 +92,9 @@
             flex: 1;
             min-width: 300px;
             background: white;
-            border-radius: 10px;
+            border-radius: var(--rounded-lg);
             padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-sm);
             transition: all 0.3s ease;
         }
 
@@ -87,9 +102,9 @@
             flex: 2;
             min-width: 400px;
             background: white;
-            border-radius: 10px;
+            border-radius: var(--rounded-lg);
             padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-sm);
             transition: all 0.3s ease;
         }
 
@@ -99,6 +114,7 @@
             color: var(--dark-color);
             border-bottom: 2px solid var(--accent-color);
             padding-bottom: 5px;
+            font-weight: 600;
         }
 
         .form-group {
@@ -117,9 +133,9 @@
             width: 100%;
             padding: 10px 15px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: var(--rounded-sm);
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
         }
 
         .form-control:focus {
@@ -134,17 +150,22 @@
             background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: var(--rounded-sm);
             cursor: pointer;
             font-size: 1rem;
             transition: all 0.3s;
             text-align: center;
+            font-weight: 500;
         }
 
         .btn:hover {
             background-color: var(--secondary-color);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         .btn-block {
@@ -157,7 +178,7 @@
         }
 
         .btn-success:hover {
-            background-color: #3aa8d8;
+            background-color: #0d9b6c;
         }
 
         .btn-danger {
@@ -165,7 +186,7 @@
         }
 
         .btn-danger:hover {
-            background-color: #e5177a;
+            background-color: #dc2626;
         }
 
         .btn-warning {
@@ -173,7 +194,7 @@
         }
 
         .btn-warning:hover {
-            background-color: #e68717;
+            background-color: #e69007;
         }
 
         .btn-info {
@@ -181,7 +202,15 @@
         }
 
         .btn-info:hover {
-            background-color: #4a0898;
+            background-color: #2563eb;
+        }
+
+        .btn-secondary {
+            background-color: var(--gray-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #4b5563;
         }
 
         .btn-sm {
@@ -189,16 +218,27 @@
             font-size: 0.85rem;
         }
 
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+        }
+
         .table-responsive {
             overflow-x: auto;
-            border-radius: 5px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border-radius: var(--rounded-sm);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 20px;
         }
 
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 0;
         }
 
         .table th, .table td {
@@ -229,23 +269,28 @@
         }
 
         .badge-success {
-            background-color: #d1fae5;
+            background-color: var(--success-light);
             color: #065f46;
         }
 
         .badge-danger {
-            background-color: #fee2e2;
+            background-color: var(--danger-light);
             color: #b91c1c;
         }
 
         .badge-warning {
-            background-color: #fef3c7;
+            background-color: var(--warning-light);
             color: #92400e;
         }
 
         .badge-info {
-            background-color: #dbeafe;
+            background-color: var(--info-light);
             color: #1e40af;
+        }
+
+        .badge-primary {
+            background-color: #eef2ff;
+            color: var(--primary-color);
         }
 
         .search-box {
@@ -423,12 +468,12 @@
 
         .modal-content {
             background-color: white;
-            border-radius: 10px;
+            border-radius: var(--rounded-lg);
             width: 90%;
             max-width: 800px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-lg);
             animation: modalFadeIn 0.3s;
         }
 
@@ -458,7 +503,7 @@
 
         .modal-title {
             font-size: 1.2rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .modal-close {
@@ -491,10 +536,22 @@
             max-width: 400px;
             margin: 50px auto;
             background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: var(--rounded-xl);
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
             animation: slideUp 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
 
         @keyframes slideUp {
@@ -506,6 +563,8 @@
             text-align: center;
             margin-bottom: 30px;
             color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 600;
         }
 
         .form-floating {
@@ -517,8 +576,14 @@
             width: 100%;
             padding: 15px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: var(--rounded-sm);
             font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-floating input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
         }
 
         .form-floating label {
@@ -528,6 +593,8 @@
             color: #999;
             transition: all 0.3s;
             pointer-events: none;
+            background-color: white;
+            padding: 0 5px;
         }
 
         .form-floating input:focus + label,
@@ -535,9 +602,8 @@
             top: -10px;
             left: 10px;
             font-size: 0.8rem;
-            background-color: white;
-            padding: 0 5px;
             color: var(--primary-color);
+            font-weight: 500;
         }
 
         .login-logo {
@@ -564,16 +630,18 @@
 
         .barcode-scanner video {
             width: 100%;
-            border-radius: 5px;
+            border-radius: var(--rounded-sm);
             border: 1px solid #ddd;
+            background: #000;
         }
 
         .barcode-result {
             margin-top: 10px;
             padding: 10px;
             background-color: #f8f9fa;
-            border-radius: 5px;
+            border-radius: var(--rounded-sm);
             text-align: center;
+            font-weight: 500;
         }
 
         .receipt {
@@ -582,7 +650,29 @@
             font-family: 'Courier New', monospace;
             max-width: 300px;
             margin: 0 auto;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .receipt::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://raw.githubusercontent.com/LenteraKarya/transaksi/main/watermak-struk.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 60%;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .receipt > * {
+            position: relative;
+            z-index: 1;
         }
 
         .receipt-header {
@@ -614,6 +704,7 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 5px;
+            font-size: 0.9rem;
         }
 
         .receipt-total {
@@ -711,8 +802,8 @@
             padding: 15px 20px;
             background-color: #333;
             color: white;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: var(--rounded-sm);
+            box-shadow: var(--shadow-md);
             z-index: 1100;
             display: flex;
             align-items: center;
@@ -762,10 +853,10 @@
         .confirmation-content {
             background-color: white;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: var(--rounded-lg);
             max-width: 400px;
             width: 90%;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
             text-align: center;
         }
 
@@ -792,6 +883,8 @@
                 max-width: 100%;
                 box-shadow: none;
                 padding: 0;
+                margin: 0;
+                font-size: 12px;
             }
             
             .no-print {
@@ -826,6 +919,28 @@
                 height: 100%;
                 max-height: 100%;
                 border-radius: 0;
+            }
+            
+            .login-container {
+                padding: 30px 20px;
+                margin: 20px auto;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+            }
+            
+            .tab {
+                padding: 10px 15px;
+            }
+            
+            #adminAccess {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
             }
         }
 
@@ -913,6 +1028,7 @@
             display: flex;
             gap: 10px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
 
         /* Sales report */
@@ -931,9 +1047,9 @@
             flex: 1;
             min-width: 200px;
             background: white;
-            border-radius: 8px;
+            border-radius: var(--rounded-sm);
             padding: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-sm);
         }
 
         .report-card-title {
@@ -944,8 +1060,117 @@
 
         .report-card-value {
             font-size: 1.5rem;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--primary-color);
+        }
+
+        /* Floating action button */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .fab:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .fab i {
+            font-size: 1.5rem;
+        }
+
+        /* Input group */
+        .input-group {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .input-group input {
+            flex: 1;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .input-group button {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .slide-up {
+            animation: slideUp 0.3s ease;
+        }
+
+        /* Print button */
+        .print-btn {
+            background-color: var(--gray-color);
+        }
+
+        .print-btn:hover {
+            background-color: #4b5563;
+        }
+
+        /* Status indicators */
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .status-active {
+            background-color: var(--success-color);
+        }
+
+        .status-inactive {
+            background-color: var(--danger-color);
+        }
+
+        /* QR code container */
+        .qr-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .qr-container canvas {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background: white;
+        }
+
+        /* Barcode container */
+        .barcode-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .barcode-container svg {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background: white;
         }
     </style>
 </head>
@@ -973,7 +1198,7 @@
             <div class="login-logo">
                 <i class="fas fa-cash-register"></i>
             </div>
-            <h2 class="login-title">Login Kasir</h2>
+            <h2 class="login-title">Premium POS</h2>
             <form id="loginForm">
                 <div class="form-floating">
                     <input type="text" id="cashierId" placeholder="ID Kasir" required>
@@ -1102,8 +1327,10 @@
                     <div id="memberFields" style="display: none;">
                         <div class="form-group">
                             <label for="memberId">ID Member</label>
-                            <input type="text" id="memberId" class="form-control" placeholder="Masukkan ID Member">
-                            <button id="searchMember" class="btn btn-info btn-sm mt-2">Cari Member</button>
+                            <div class="input-group">
+                                <input type="text" id="memberId" class="form-control" placeholder="Masukkan ID Member">
+                                <button id="searchMember" class="btn btn-info">Cari</button>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="memberDiscount">Diskon Member (%)</label>
@@ -1377,7 +1604,10 @@
                         <canvas id="salesChart" height="300"></canvas>
                     </div>
                     
-                    <button id="exportReport" class="btn btn-info mt-3"><i class="fas fa-file-export"></i> Ekspor Laporan</button>
+                    <div class="mt-3">
+                        <button id="exportReportPDF" class="btn btn-info"><i class="fas fa-file-pdf"></i> Ekspor ke PDF</button>
+                        <button id="exportReportExcel" class="btn btn-success ml-2"><i class="fas fa-file-excel"></i> Ekspor ke Excel</button>
+                    </div>
                 </div>
 
                 <div class="tab-content admin-tab-content" id="settingsTab">
@@ -1739,9 +1969,9 @@
     </div>
 
     <!-- Admin Access Button -->
-    <button id="adminAccess" class="btn btn-dark" style="position: fixed; bottom: 20px; right: 20px;">
-        <i class="fas fa-lock"></i> Admin
-    </button>
+    <div id="adminAccess" class="fab" title="Admin Access">
+        <i class="fas fa-lock"></i>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -1750,6 +1980,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
         // Admin password (hidden from public)
         const ADMIN_PASSWORD = "Geraiku.12345";
@@ -1853,6 +2084,14 @@
             };
             
             html2pdf().set(opt).from(element).save();
+        }
+        
+        // Export data to Excel
+        function exportToExcel(data, filename) {
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            XLSX.writeFile(wb, filename || "export.xlsx");
         }
         
         $(document).ready(function() {
@@ -2127,8 +2366,8 @@
                 // Generate receipt
                 generateReceipt(transaction);
                 
-                // Generate PDF receipt
-                generatePDF('receiptTemplate', `Struk_${transaction.id}.pdf`);
+                // Print receipt automatically
+                window.print();
                 
                 // Reset cart
                 resetCart();
@@ -2706,16 +2945,89 @@
                 window.print();
             });
             
-            // Export transactions
-            $('#exportTransactions').click(function() {
-                // In a real app, you would generate an Excel file
-                // For this demo, we'll just show a toast
-                showToast('Data transaksi akan diekspor ke Excel', 'info');
+            // Export report to PDF
+            $('#exportReportPDF').click(function() {
+                const dateRange = $('#reportDateRange').val() || 'semua';
+                const filename = `Laporan_Penjualan_${dateRange.replace(/\//g, '-')}.pdf`;
+                
+                // Create a temporary element with the report content
+                const reportContent = `
+                    <div style="padding: 20px; font-family: Arial, sans-serif;">
+                        <h2 style="text-align: center; margin-bottom: 20px;">Laporan Penjualan</h2>
+                        <p style="text-align: center; margin-bottom: 20px;">Periode: ${dateRange}</p>
+                        
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+                            <div style="flex: 1; text-align: center; padding: 10px; border: 1px solid #ddd; margin: 0 5px;">
+                                <h3 style="margin-bottom: 5px;">Total Transaksi</h3>
+                                <p style="font-size: 24px; font-weight: bold;">${$('#reportTotalTransactions').text()}</p>
+                            </div>
+                            <div style="flex: 1; text-align: center; padding: 10px; border: 1px solid #ddd; margin: 0 5px;">
+                                <h3 style="margin-bottom: 5px;">Total Pendapatan</h3>
+                                <p style="font-size: 24px; font-weight: bold;">${$('#reportTotalRevenue').text()}</p>
+                            </div>
+                            <div style="flex: 1; text-align: center; padding: 10px; border: 1px solid #ddd; margin: 0 5px;">
+                                <h3 style="margin-bottom: 5px;">Produk Terlaris</h3>
+                                <p style="font-size: 24px; font-weight: bold;">${$('#reportBestSeller').text()}</p>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 30px;">
+                            <img src="${$('#salesChart').get(0).toDataURL()}" style="width: 100%;">
+                        </div>
+                        
+                        <div style="margin-top: 30px; text-align: right; font-style: italic;">
+                            <p>Dicetak pada: ${moment().format('DD/MM/YYYY HH:mm')}</p>
+                            <p>Oleh: ${currentCashier?.name || 'Admin'}</p>
+                        </div>
+                    </div>
+                `;
+                
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = reportContent;
+                document.body.appendChild(tempDiv);
+                
+                const opt = {
+                    margin: 10,
+                    filename: filename,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+                };
+                
+                html2pdf().set(opt).from(tempDiv).save().then(() => {
+                    document.body.removeChild(tempDiv);
+                    showToast('Laporan berhasil diekspor ke PDF', 'success');
+                });
             });
             
-            // Export report
-            $('#exportReport').click(function() {
-                showToast('Laporan penjualan akan diekspor', 'info');
+            // Export report to Excel
+            $('#exportReportExcel').click(function() {
+                const dateRange = $('#reportDateRange').val() || 'semua';
+                const filteredTransactions = getFilteredTransactions();
+                
+                if (filteredTransactions.length === 0) {
+                    showToast('Tidak ada data transaksi untuk diekspor', 'warning');
+                    return;
+                }
+                
+                // Prepare data for export
+                const exportData = filteredTransactions.map(t => ({
+                    'ID Transaksi': t.id,
+                    'Tanggal': moment(t.date).format('DD/MM/YYYY HH:mm'),
+                    'Pelanggan': t.customer?.name || '-',
+                    'Subtotal': t.subtotal,
+                    'Diskon': t.discount,
+                    'Pajak': t.tax,
+                    'Total': t.total,
+                    'Metode Pembayaran': t.paymentMethod === 'cash' ? 'Tunai' : 
+                                        t.paymentMethod === 'debit' ? 'Kartu Debit' :
+                                        t.paymentMethod === 'credit' ? 'Kartu Kredit' :
+                                        t.paymentMethod === 'transfer' ? 'Transfer Bank' : 'E-Wallet',
+                    'Kasir': t.cashier.name
+                }));
+                
+                exportToExcel(exportData, `Laporan_Penjualan_${dateRange.replace(/\//g, '-')}.xlsx`);
+                showToast('Laporan berhasil diekspor ke Excel', 'success');
             });
             
             // Backup data
@@ -2854,10 +3166,7 @@
                         });
                     }
                     
-                    // Update cart
                     updateCart();
-                    
-                    // Show success message
                     showToast(`${product.name} ditambahkan ke keranjang`, 'success');
                 }
             });
@@ -3439,15 +3748,7 @@
         function loadAdminTransactions(startDate, endDate) {
             $('#adminTransactionsTable').empty();
             
-            let filteredTransactions = [...transactions];
-            
-            // Filter by date range if provided
-            if (startDate && endDate) {
-                filteredTransactions = filteredTransactions.filter(t => {
-                    const transactionDate = new Date(t.date);
-                    return transactionDate >= startDate && transactionDate <= endDate;
-                });
-            }
+            let filteredTransactions = getFilteredTransactions(startDate, endDate);
             
             if (filteredTransactions.length === 0) {
                 $('#adminTransactionsTable').html(`
@@ -3483,8 +3784,8 @@
             }
         }
         
-        // Load sales report
-        function loadSalesReport(startDate, endDate) {
+        // Get filtered transactions by date range
+        function getFilteredTransactions(startDate, endDate) {
             let filteredTransactions = [...transactions];
             
             // Filter by date range if provided
@@ -3494,6 +3795,13 @@
                     return transactionDate >= startDate && transactionDate <= endDate;
                 });
             }
+            
+            return filteredTransactions;
+        }
+        
+        // Load sales report
+        function loadSalesReport(startDate, endDate) {
+            let filteredTransactions = getFilteredTransactions(startDate, endDate);
             
             // Calculate report summary
             const totalTransactions = filteredTransactions.length;
