@@ -1,1 +1,1557 @@
-.
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium POS System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+            --warning-color: #f8961e;
+            --info-color: #560bad;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 500;
+        }
+
+        .header-info {
+            text-align: right;
+        }
+
+        .header-info p {
+            margin: 2px 0;
+            font-size: 0.9rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .left-panel {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .right-panel {
+            flex: 2;
+            min-width: 400px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #3aa8d8;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #e5177a;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+
+        .btn-warning:hover {
+            background-color: #e68717;
+        }
+
+        .btn-info {
+            background-color: var(--info-color);
+        }
+
+        .btn-info:hover {
+            background-color: #4a0898;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f1f3f5;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .badge-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-danger {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .badge-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-info {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            padding-left: 40px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .cart-item-price {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-item-qty button {
+            width: 25px;
+            height: 25px;
+            border: 1px solid #ddd;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .cart-item-qty input {
+            width: 40px;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 3px;
+        }
+
+        .cart-summary {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed #ddd;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-label {
+            font-weight: 500;
+        }
+
+        .summary-value {
+            font-weight: 500;
+        }
+
+        .total-row {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .payment-methods {
+            margin-top: 20px;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .payment-method input {
+            margin-right: 10px;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+
+        .form-floating {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .form-floating input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-floating label {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: #999;
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+
+        .form-floating input:focus + label,
+        .form-floating input:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 10px;
+            font-size: 0.8rem;
+            background-color: white;
+            padding: 0 5px;
+            color: var(--primary-color);
+        }
+
+        .login-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-logo i {
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        .barcode-scanner {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .barcode-scanner video {
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .barcode-result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .receipt {
+            background-color: white;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .receipt-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .receipt-address {
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+
+        .receipt-date {
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .receipt-items {
+            margin-bottom: 15px;
+        }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .receipt-total {
+            border-top: 1px dashed #000;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .receipt-footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.8rem;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .receipt, .receipt * {
+                visibility: visible;
+            }
+            .receipt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .left-panel, .right-panel {
+                min-width: 100%;
+            }
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .header-info {
+                text-align: center;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-cash-register"></i>
+            </div>
+            <h2 class="login-title">Login Kasir</h2>
+            <form id="loginForm">
+                <div class="form-floating">
+                    <input type="text" id="cashierId" placeholder="ID Kasir" required>
+                    <label for="cashierId">ID Kasir</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" id="cashierPin" placeholder="PIN" required>
+                    <label for="cashierPin">PIN</label>
+                </div>
+                <button type="submit" class="btn btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainApp" style="display: none;">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1 id="storeName">Premium POS System</h1>
+                <p id="storeAddress">Jl. Contoh No. 123, Kota Contoh</p>
+            </div>
+            <div class="header-info">
+                <p id="currentDate">Senin, 1 Januari 2023</p>
+                <p>Kasir: <span id="loggedInCashier">John Doe</span></p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Left Panel -->
+            <div class="left-panel">
+                <h2 class="panel-title">Produk</h2>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="productSearch" class="form-control" placeholder="Cari produk atau scan barcode...">
+                </div>
+
+                <div class="barcode-scanner">
+                    <button id="toggleScanner" class="btn btn-info btn-block">
+                        <i class="fas fa-barcode"></i> Buka Scanner Barcode
+                    </button>
+                    <div id="scannerContainer" style="display: none;">
+                        <video id="barcodeScanner" width="100%" height="200"></video>
+                        <div id="barcodeResult" class="barcode-result">Scanning...</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productCategory">Kategori</label>
+                    <select id="productCategory" class="form-control">
+                        <option value="all">Semua Kategori</option>
+                        <option value="food">Makanan</option>
+                        <option value="drink">Minuman</option>
+                        <option value="snack">Snack</option>
+                    </select>
+                </div>
+
+                <div id="productList" class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Harga</th>
+                                <th>Stok</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Produk Contoh 1</td>
+                                <td>Rp 10.000</td>
+                                <td>15</td>
+                                <td><button class="btn btn-success btn-sm">Tambah</button></td>
+                            </tr>
+                            <tr>
+                                <td>Produk Contoh 2</td>
+                                <td>Rp 15.000</td>
+                                <td>8</td>
+                                <td><button class="btn btn-success btn-sm">Tambah</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="right-panel">
+                <h2 class="panel-title">Transaksi</h2>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="cart">Keranjang</div>
+                    <div class="tab" data-tab="customer">Pelanggan</div>
+                    <div class="tab" data-tab="payment">Pembayaran</div>
+                </div>
+
+                <div class="tab-content active" id="cartTab">
+                    <div id="cartItems">
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <div class="cart-item-name">Produk Contoh 1</div>
+                                <div class="cart-item-price">Rp 10.000</div>
+                            </div>
+                            <div class="cart-item-qty">
+                                <button class="qty-minus">-</button>
+                                <input type="number" value="1" min="1" class="qty-input">
+                                <button class="qty-plus">+</button>
+                                <button class="btn btn-danger btn-sm ml-2">Hapus</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span class="summary-label">Subtotal:</span>
+                            <span class="summary-value">Rp 10.000</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Diskon:</span>
+                            <span class="summary-value">Rp 0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Pajak:</span>
+                            <span class="summary-value">Rp 0</span>
+                        </div>
+                        <div class="summary-row total-row">
+                            <span class="summary-label">Total:</span>
+                            <span class="summary-value">Rp 10.000</span>
+                        </div>
+                    </div>
+
+                    <button id="nextToCustomer" class="btn btn-primary btn-block mt-3">Lanjut ke Pelanggan</button>
+                </div>
+
+                <div class="tab-content" id="customerTab">
+                    <div class="form-group">
+                        <label for="customerType">Tipe Pelanggan</label>
+                        <select id="customerType" class="form-control">
+                            <option value="walkin">Pelanggan Biasa</option>
+                            <option value="member">Member</option>
+                            <option value="guest">Tamu</option>
+                        </select>
+                    </div>
+
+                    <div id="memberFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="memberId">ID Member</label>
+                            <input type="text" id="memberId" class="form-control" placeholder="Masukkan ID Member">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerName">Nama Pelanggan</label>
+                        <input type="text" id="customerName" class="form-control" placeholder="Masukkan nama pelanggan">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerPhone">No. Telepon</label>
+                        <input type="tel" id="customerPhone" class="form-control" placeholder="Masukkan nomor telepon">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerEmail">Email (opsional)</label>
+                        <input type="email" id="customerEmail" class="form-control" placeholder="Masukkan email">
+                    </div>
+
+                    <div class="buttons">
+                        <button id="backToCart" class="btn btn-warning">Kembali ke Keranjang</button>
+                        <button id="nextToPayment" class="btn btn-primary float-right">Lanjut ke Pembayaran</button>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="paymentTab">
+                    <div class="cart-summary">
+                        <div class="summary-row">
+                            <span class="summary-label">Subtotal:</span>
+                            <span class="summary-value">Rp 10.000</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Diskon:</span>
+                            <span class="summary-value">Rp 0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Pajak:</span>
+                            <span class="summary-value">Rp 0</span>
+                        </div>
+                        <div class="summary-row total-row">
+                            <span class="summary-label">Total:</span>
+                            <span class="summary-value">Rp 10.000</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentAmount">Jumlah Pembayaran</label>
+                        <input type="number" id="paymentAmount" class="form-control" placeholder="Masukkan jumlah pembayaran">
+                    </div>
+
+                    <div class="payment-methods">
+                        <label>Metode Pembayaran:</label>
+                        <div class="payment-method">
+                            <input type="radio" id="cash" name="paymentMethod" value="cash" checked>
+                            <label for="cash">Tunai</label>
+                        </div>
+                        <div class="payment-method">
+                            <input type="radio" id="debit" name="paymentMethod" value="debit">
+                            <label for="debit">Kartu Debit</label>
+                        </div>
+                        <div class="payment-method">
+                            <input type="radio" id="credit" name="paymentMethod" value="credit">
+                            <label for="credit">Kartu Kredit</label>
+                        </div>
+                        <div class="payment-method">
+                            <input type="radio" id="transfer" name="paymentMethod" value="transfer">
+                            <label for="transfer">Transfer Bank</label>
+                        </div>
+                        <div class="payment-method">
+                            <input type="radio" id="ewallet" name="paymentMethod" value="ewallet">
+                            <label for="ewallet">E-Wallet</label>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button id="backToCustomer" class="btn btn-warning">Kembali ke Pelanggan</button>
+                        <button id="completePayment" class="btn btn-success float-right">Selesaikan Pembayaran</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Template (Hidden) -->
+    <div id="receiptTemplate" style="display: none;">
+        <div class="receipt">
+            <div class="receipt-header">
+                <div class="receipt-title" id="receiptStoreName">TOKO CONTOH</div>
+                <div class="receipt-address" id="receiptStoreAddress">Jl. Contoh No. 123, Kota Contoh</div>
+                <div class="receipt-address" id="receiptStorePhone">Telp: 081234567890</div>
+                <div class="receipt-date" id="receiptDate">01/01/2023 10:00:00</div>
+            </div>
+            <div class="receipt-items">
+                <div class="receipt-item">
+                    <span>Produk Contoh 1</span>
+                    <span>Rp 10.000</span>
+                </div>
+                <div class="receipt-item">
+                    <span>1 x Rp 10.000</span>
+                    <span>Rp 10.000</span>
+                </div>
+            </div>
+            <div class="receipt-total">
+                <div class="receipt-item">
+                    <span>TOTAL</span>
+                    <span>Rp 10.000</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Tunai</span>
+                    <span>Rp 10.000</span>
+                </div>
+                <div class="receipt-item">
+                    <span>Kembali</span>
+                    <span>Rp 0</span>
+                </div>
+            </div>
+            <div class="receipt-footer">
+                <div>Terima kasih telah berbelanja</div>
+                <div>Kasir: John Doe</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Admin Dashboard</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="tabs">
+                    <div class="tab active" data-tab="products">Produk</div>
+                    <div class="tab" data-tab="categories">Kategori</div>
+                    <div class="tab" data-tab="customers">Pelanggan</div>
+                    <div class="tab" data-tab="transactions">Transaksi</div>
+                    <div class="tab" data-tab="settings">Pengaturan</div>
+                </div>
+
+                <div class="tab-content active" id="productsTab">
+                    <button id="addProduct" class="btn btn-success mb-3">Tambah Produk</button>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Barcode</th>
+                                    <th>Nama</th>
+                                    <th>Kategori</th>
+                                    <th>Harga</th>
+                                    <th>Stok</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>123456789</td>
+                                    <td>Produk Contoh 1</td>
+                                    <td>Makanan</td>
+                                    <td>Rp 10.000</td>
+                                    <td>15</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm">Edit</button>
+                                        <button class="btn btn-danger btn-sm">Hapus</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="categoriesTab">
+                    <button id="addCategory" class="btn btn-success mb-3">Tambah Kategori</button>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nama</th>
+                                    <th>Deskripsi</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Makanan</td>
+                                    <td>Produk makanan</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm">Edit</button>
+                                        <button class="btn btn-danger btn-sm">Hapus</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="customersTab">
+                    <button id="addCustomer" class="btn btn-success mb-3">Tambah Pelanggan</button>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nama</th>
+                                    <th>Telepon</th>
+                                    <th>Email</th>
+                                    <th>Tipe</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>M001</td>
+                                    <td>Pelanggan Contoh</td>
+                                    <td>081234567890</td>
+                                    <td>contoh@email.com</td>
+                                    <td><span class="badge badge-success">Member</span></td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm">Edit</button>
+                                        <button class="btn btn-danger btn-sm">Hapus</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="transactionsTab">
+                    <div class="form-group">
+                        <label for="transactionDateRange">Rentang Tanggal</label>
+                        <input type="text" id="transactionDateRange" class="form-control" placeholder="Pilih rentang tanggal">
+                    </div>
+                    <button id="exportTransactions" class="btn btn-info mb-3">Ekspor ke Excel</button>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tanggal</th>
+                                    <th>Pelanggan</th>
+                                    <th>Total</th>
+                                    <th>Kasir</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>T001</td>
+                                    <td>01/01/2023</td>
+                                    <td>Pelanggan Contoh</td>
+                                    <td>Rp 10.000</td>
+                                    <td>John Doe</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm">Detail</button>
+                                        <button class="btn btn-primary btn-sm">Cetak</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="settingsTab">
+                    <div class="form-group">
+                        <label for="storeNameSetting">Nama Toko</label>
+                        <input type="text" id="storeNameSetting" class="form-control" value="TOKO CONTOH">
+                    </div>
+                    <div class="form-group">
+                        <label for="storeAddressSetting">Alamat Toko</label>
+                        <textarea id="storeAddressSetting" class="form-control">Jl. Contoh No. 123, Kota Contoh</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="storePhoneSetting">Telepon Toko</label>
+                        <input type="text" id="storePhoneSetting" class="form-control" value="081234567890">
+                    </div>
+                    <div class="form-group">
+                        <label for="storeBankSetting">Rekening Bank</label>
+                        <input type="text" id="storeBankSetting" class="form-control" placeholder="Nama Bank">
+                        <input type="text" id="storeAccountNumber" class="form-control mt-2" placeholder="Nomor Rekening">
+                        <input type="text" id="storeAccountName" class="form-control mt-2" placeholder="Nama Pemilik Rekening">
+                    </div>
+                    <button id="saveSettings" class="btn btn-success">Simpan Pengaturan</button>
+
+                    <h4 class="mt-4">Manajemen Kasir</h4>
+                    <button id="addCashier" class="btn btn-success mb-3">Tambah Kasir</button>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nama</th>
+                                    <th>PIN</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>K001</td>
+                                    <td>John Doe</td>
+                                    <td>****</td>
+                                    <td><span class="badge badge-success">Aktif</span></td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm">Edit</button>
+                                        <button class="btn btn-danger btn-sm">Hapus</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-admin-modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Produk</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="productBarcode">Barcode</label>
+                    <input type="text" id="productBarcode" class="form-control" placeholder="Masukkan barcode">
+                    <button id="scanProductBarcode" class="btn btn-info mt-2">Scan Barcode</button>
+                </div>
+                <div class="form-group">
+                    <label for="productName">Nama Produk</label>
+                    <input type="text" id="productName" class="form-control" placeholder="Masukkan nama produk">
+                </div>
+                <div class="form-group">
+                    <label for="productCategoryModal">Kategori</label>
+                    <select id="productCategoryModal" class="form-control">
+                        <option value="">Pilih Kategori</option>
+                        <option value="1">Makanan</option>
+                        <option value="2">Minuman</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Harga</label>
+                    <input type="number" id="productPrice" class="form-control" placeholder="Masukkan harga">
+                </div>
+                <div class="form-group">
+                    <label for="productStock">Stok</label>
+                    <input type="number" id="productStock" class="form-control" placeholder="Masukkan stok awal">
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Deskripsi (opsional)</label>
+                    <textarea id="productDescription" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-product-modal">Batal</button>
+                <button class="btn btn-success save-product">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="categoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Kategori</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="categoryName">Nama Kategori</label>
+                    <input type="text" id="categoryName" class="form-control" placeholder="Masukkan nama kategori">
+                </div>
+                <div class="form-group">
+                    <label for="categoryDescription">Deskripsi</label>
+                    <textarea id="categoryDescription" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-category-modal">Batal</button>
+                <button class="btn btn-success save-category">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Customer Modal -->
+    <div id="customerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Pelanggan</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="customerTypeModal">Tipe Pelanggan</label>
+                    <select id="customerTypeModal" class="form-control">
+                        <option value="walkin">Pelanggan Biasa</option>
+                        <option value="member">Member</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="customerNameModal">Nama Lengkap</label>
+                    <input type="text" id="customerNameModal" class="form-control" placeholder="Masukkan nama lengkap">
+                </div>
+                <div class="form-group">
+                    <label for="customerPhoneModal">No. Telepon</label>
+                    <input type="tel" id="customerPhoneModal" class="form-control" placeholder="Masukkan nomor telepon">
+                </div>
+                <div class="form-group">
+                    <label for="customerEmailModal">Email</label>
+                    <input type="email" id="customerEmailModal" class="form-control" placeholder="Masukkan email">
+                </div>
+                <div class="form-group">
+                    <label for="customerAddressModal">Alamat</label>
+                    <textarea id="customerAddressModal" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-customer-modal">Batal</button>
+                <button class="btn btn-success save-customer">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Cashier Modal -->
+    <div id="cashierModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Kasir</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="cashierNameModal">Nama Lengkap</label>
+                    <input type="text" id="cashierNameModal" class="form-control" placeholder="Masukkan nama lengkap">
+                </div>
+                <div class="form-group">
+                    <label for="cashierPinModal">PIN (4 digit)</label>
+                    <input type="password" id="cashierPinModal" class="form-control" placeholder="Masukkan PIN" maxlength="4">
+                </div>
+                <div class="form-group">
+                    <label for="cashierStatus">Status</label>
+                    <select id="cashierStatus" class="form-control">
+                        <option value="active">Aktif</option>
+                        <option value="inactive">Nonaktif</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-cashier-modal">Batal</button>
+                <button class="btn btn-success save-cashier">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Detail Modal -->
+    <div id="transactionDetailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Detail Transaksi #T001</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="receipt">
+                    <div class="receipt-header">
+                        <div class="receipt-title">TOKO CONTOH</div>
+                        <div class="receipt-address">Jl. Contoh No. 123, Kota Contoh</div>
+                        <div class="receipt-date">01/01/2023 10:00:00</div>
+                    </div>
+                    <div class="receipt-items">
+                        <div class="receipt-item">
+                            <span>Produk Contoh 1</span>
+                            <span>Rp 10.000</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span>1 x Rp 10.000</span>
+                            <span>Rp 10.000</span>
+                        </div>
+                    </div>
+                    <div class="receipt-total">
+                        <div class="receipt-item">
+                            <span>TOTAL</span>
+                            <span>Rp 10.000</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span>Tunai</span>
+                            <span>Rp 10.000</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span>Kembali</span>
+                            <span>Rp 0</span>
+                        </div>
+                    </div>
+                    <div class="receipt-footer">
+                        <div>Kasir: John Doe</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary print-receipt">Cetak Ulang</button>
+                <button class="btn btn-secondary close-detail-modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Access Button -->
+    <button id="adminAccess" class="btn btn-dark" style="position: fixed; bottom: 20px; right: 20px;">
+        <i class="fas fa-lock"></i> Admin
+    </button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Set current date
+            $('#currentDate').text(moment().format('dddd, D MMMM YYYY'));
+            
+            // Show login modal first
+            $('#loginModal').show();
+            
+            // Login form handler
+            $('#loginForm').submit(function(e) {
+                e.preventDefault();
+                // In a real app, you would validate the credentials with a server
+                $('#loggedInCashier').text('John Doe'); // Example name
+                $('#loginModal').hide();
+                $('#mainApp').show();
+            });
+            
+            // Tab switching
+            $('.tab').click(function() {
+                const tabId = $(this).data('tab');
+                $('.tab').removeClass('active');
+                $(this).addClass('active');
+                $('.tab-content').removeClass('active');
+                $(`#${tabId}Tab`).addClass('active');
+            });
+            
+            // Customer type change
+            $('#customerType').change(function() {
+                if ($(this).val() === 'member') {
+                    $('#memberFields').show();
+                } else {
+                    $('#memberFields').hide();
+                }
+            });
+            
+            // Navigation between tabs
+            $('#nextToCustomer').click(function() {
+                $('.tab').removeClass('active');
+                $('[data-tab="customer"]').addClass('active');
+                $('.tab-content').removeClass('active');
+                $('#customerTab').addClass('active');
+            });
+            
+            $('#backToCart').click(function() {
+                $('.tab').removeClass('active');
+                $('[data-tab="cart"]').addClass('active');
+                $('.tab-content').removeClass('active');
+                $('#cartTab').addClass('active');
+            });
+            
+            $('#nextToPayment').click(function() {
+                $('.tab').removeClass('active');
+                $('[data-tab="payment"]').addClass('active');
+                $('.tab-content').removeClass('active');
+                $('#paymentTab').addClass('active');
+            });
+            
+            $('#backToCustomer').click(function() {
+                $('.tab').removeClass('active');
+                $('[data-tab="customer"]').addClass('active');
+                $('.tab-content').removeClass('active');
+                $('#customerTab').addClass('active');
+            });
+            
+            // Complete payment
+            $('#completePayment').click(function() {
+                // Generate receipt
+                const receipt = $('#receiptTemplate').html();
+                const receiptWindow = window.open('', '_blank');
+                receiptWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Struk Pembayaran</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; }
+                            .receipt { width: 300px; margin: 0 auto; padding: 10px; }
+                            .receipt-header { text-align: center; margin-bottom: 10px; }
+                            .receipt-title { font-weight: bold; font-size: 18px; }
+                            .receipt-address { font-size: 12px; }
+                            .receipt-date { font-size: 12px; margin-bottom: 10px; }
+                            .receipt-item { display: flex; justify-content: space-between; margin-bottom: 5px; }
+                            .receipt-total { border-top: 1px dashed #000; margin-top: 10px; padding-top: 10px; }
+                            .receipt-footer { text-align: center; margin-top: 10px; font-size: 12px; }
+                        </style>
+                    </head>
+                    <body>
+                        ${receipt}
+                        <script>
+                            window.onload = function() {
+                                window.print();
+                                setTimeout(function() {
+                                    window.close();
+                                }, 1000);
+                            };
+                        <\/script>
+                    </body>
+                    </html>
+                `);
+                
+                // In a real app, you would save the transaction to a database
+                alert('Transaksi berhasil disimpan!');
+                
+                // Reset the form
+                $('.tab').removeClass('active');
+                $('[data-tab="cart"]').addClass('active');
+                $('.tab-content').removeClass('active');
+                $('#cartTab').addClass('active');
+                $('#cartItems').empty();
+            });
+            
+            // Admin access
+            $('#adminAccess').click(function() {
+                $('#adminModal').show();
+            });
+            
+            $('.modal-close, .close-admin-modal').click(function() {
+                $('#adminModal').hide();
+            });
+            
+            // Admin tabs
+            $('.admin-tab').click(function() {
+                const tabId = $(this).data('tab');
+                $('.admin-tab').removeClass('active');
+                $(this).addClass('active');
+                $('.admin-tab-content').removeClass('active');
+                $(`#${tabId}Tab`).addClass('active');
+            });
+            
+            // Add product
+            $('#addProduct').click(function() {
+                $('#productModal').show();
+            });
+            
+            $('.close-product-modal').click(function() {
+                $('#productModal').hide();
+            });
+            
+            // Add category
+            $('#addCategory').click(function() {
+                $('#categoryModal').show();
+            });
+            
+            $('.close-category-modal').click(function() {
+                $('#categoryModal').hide();
+            });
+            
+            // Add customer
+            $('#addCustomer').click(function() {
+                $('#customerModal').show();
+            });
+            
+            $('.close-customer-modal').click(function() {
+                $('#customerModal').hide();
+            });
+            
+            // Add cashier
+            $('#addCashier').click(function() {
+                $('#cashierModal').show();
+            });
+            
+            $('.close-cashier-modal').click(function() {
+                $('#cashierModal').hide();
+            });
+            
+            // Barcode scanner
+            $('#toggleScanner').click(function() {
+                const scannerContainer = $('#scannerContainer');
+                if (scannerContainer.is(':visible')) {
+                    scannerContainer.hide();
+                    if (window.scannerActive) {
+                        Quagga.stop();
+                        window.scannerActive = false;
+                    }
+                    $(this).html('<i class="fas fa-barcode"></i> Buka Scanner Barcode');
+                } else {
+                    scannerContainer.show();
+                    initScanner();
+                    $(this).html('<i class="fas fa-barcode"></i> Tutup Scanner Barcode');
+                }
+            });
+            
+            function initScanner() {
+                Quagga.init({
+                    inputStream: {
+                        name: "Live",
+                        type: "LiveStream",
+                        target: document.querySelector('#barcodeScanner'),
+                        constraints: {
+                            width: 480,
+                            height: 320,
+                            facingMode: "environment"
+                        },
+                    },
+                    decoder: {
+                        readers: ["ean_reader", "ean_8_reader", "code_128_reader", "code_39_reader", "code_39_vin_reader", "codabar_reader", "upc_reader", "upc_e_reader"]
+                    },
+                }, function(err) {
+                    if (err) {
+                        console.log(err);
+                        $('#barcodeResult').text('Error initializing scanner: ' + err);
+                        return;
+                    }
+                    console.log("Initialization finished. Ready to start");
+                    Quagga.start();
+                    window.scannerActive = true;
+                });
+                
+                Quagga.onDetected(function(result) {
+                    const code = result.codeResult.code;
+                    $('#barcodeResult').text('Barcode terdeteksi: ' + code);
+                    $('#productBarcode').val(code);
+                    Quagga.stop();
+                    window.scannerActive = false;
+                    $('#scannerContainer').hide();
+                    $('#toggleScanner').html('<i class="fas fa-barcode"></i> Buka Scanner Barcode');
+                    
+                    // In a real app, you would search for the product with this barcode
+                });
+            }
+            
+            // Scan product barcode
+            $('#scanProductBarcode').click(function() {
+                $('#productModal').hide();
+                $('#scannerContainer').show();
+                initScanner();
+            });
+            
+            // Print receipt from transaction detail
+            $('.print-receipt').click(function() {
+                window.print();
+            });
+            
+            $('.close-detail-modal').click(function() {
+                $('#transactionDetailModal').hide();
+            });
+            
+            // View transaction detail
+            $(document).on('click', '.view-transaction', function() {
+                $('#transactionDetailModal').show();
+            });
+            
+            // Export transactions
+            $('#exportTransactions').click(function() {
+                // In a real app, you would generate an Excel file
+                alert('Data transaksi akan diekspor ke Excel');
+            });
+            
+            // Save settings
+            $('#saveSettings').click(function() {
+                const storeName = $('#storeNameSetting').val();
+                const storeAddress = $('#storeAddressSetting').val();
+                const storePhone = $('#storePhoneSetting').val();
+                
+                $('#storeName').text(storeName);
+                $('#storeAddress').text(storeAddress);
+                $('#receiptStoreName').text(storeName);
+                $('#receiptStoreAddress').text(storeAddress);
+                $('#receiptStorePhone').text('Telp: ' + storePhone);
+                
+                alert('Pengaturan berhasil disimpan');
+                $('#adminModal').hide();
+            });
+            
+            // Initialize date range picker
+            $('#transactionDateRange').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'DD/MM/YYYY',
+                    applyLabel: 'Pilih',
+                    cancelLabel: 'Batal',
+                    fromLabel: 'Dari',
+                    toLabel: 'Sampai',
+                    customRangeLabel: 'Custom',
+                    daysOfWeek: ['Mg', 'Sn', 'Sl', 'Rb', 'Km', 'Jm', 'Sb'],
+                    monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                    firstDay: 1
+                }
+            });
+        });
+    </script>
+</body>
+</html>
