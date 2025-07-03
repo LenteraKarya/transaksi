@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LENTERA KARYA Payment Online System</title>
+    <title>Premium POS System</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.css">
@@ -1222,11 +1222,11 @@
         <!-- Header -->
         <div class="header">
             <div>
-                <h1 id="storeName">LENTERA KARYA Payment Online System</h1>
-                <p id="storeAddress">Kabupaten Situbondo, Provinsi Jawa Timur</p>
+                <h1 id="storeName">Premium POS System</h1>
+                <p id="storeAddress">Jl. Contoh No. 123, Kota Contoh</p>
             </div>
             <div class="header-info">
-                <p id="currentDate">Senin, 1 Januari 2025</p>
+                <p id="currentDate">Senin, 1 Januari 2023</p>
                 <p>Kasir: <span id="loggedInCashier">John Doe</span> | <a href="#" id="logoutBtn" style="color: white; text-decoration: none;">Logout</a></p>
             </div>
         </div>
@@ -1391,6 +1391,14 @@
                             <label for="cash">Tunai</label>
                         </div>
                         <div class="payment-method">
+                            <input type="radio" id="debit" name="paymentMethod" value="debit">
+                            <label for="debit">Kartu Debit</label>
+                        </div>
+                        <div class="payment-method">
+                            <input type="radio" id="credit" name="paymentMethod" value="credit">
+                            <label for="credit">Kartu Kredit</label>
+                        </div>
+                        <div class="payment-method">
                             <input type="radio" id="transfer" name="paymentMethod" value="transfer">
                             <label for="transfer">Transfer Bank</label>
                         </div>
@@ -1415,10 +1423,10 @@
     <div id="receiptTemplate" style="display: none;">
         <div class="receipt">
             <div class="receipt-header">
-                <div class="receipt-title" id="receiptStoreName">PAYMENT ONLINE SYSTEM</div>
-                <div class="receipt-address" id="receiptStoreAddress">KABUPATEN SITOBONDO, PROVINSI JAWATIMUR</div>
-                <div class="receipt-address" id="receiptStorePhone">Telp: 08********22</div>
-                <div class="receipt-date" id="receiptDate">01/01/2025 10:00:00</div>
+                <div class="receipt-title" id="receiptStoreName">TOKO CONTOH</div>
+                <div class="receipt-address" id="receiptStoreAddress">Jl. Contoh No. 123, Kota Contoh</div>
+                <div class="receipt-address" id="receiptStorePhone">Telp: 081234567890</div>
+                <div class="receipt-date" id="receiptDate">01/01/2023 10:00:00</div>
             </div>
             <div class="receipt-items" id="receiptItems">
                 <!-- Items will be added here -->
@@ -1438,8 +1446,8 @@
                 </div>
             </div>
             <div class="receipt-footer">
-                <div>Terima kasih telah berbelanja & transaksi di gerai kami</div>
-                <div>Kasir: <span id="receiptCashier">Online Cashier</span></div>
+                <div>Terima kasih telah berbelanja</div>
+                <div>Kasir: <span id="receiptCashier">John Doe</span></div>
             </div>
         </div>
     </div>
@@ -1994,15 +2002,15 @@
         let categories = JSON.parse(localStorage.getItem(STORAGE_KEYS.CATEGORIES)) || [];
         let customers = JSON.parse(localStorage.getItem(STORAGE_KEYS.CUSTOMERS)) || [];
         let cashiers = JSON.parse(localStorage.getItem(STORAGE_KEYS.CASHIERS)) || [
-            { id: 'LKS', name: 'Admin', pin: '1499', status: 'active' },
-            { id: 'LKS1', name: 'Kasir 1', pin: '1122', status: 'active' },
-            { id: 'GRATIS', name: 'Kasir 2', pin: '0000', status: 'active' }
+            { id: 'K001', name: 'Admin', pin: '1234', status: 'active' },
+            { id: 'K002', name: 'Kasir 1', pin: '1111', status: 'active' },
+            { id: 'K003', name: 'Kasir 2', pin: '2222', status: 'active' }
         ];
         let transactions = JSON.parse(localStorage.getItem(STORAGE_KEYS.TRANSACTIONS)) || [];
         let settings = JSON.parse(localStorage.getItem(STORAGE_KEYS.SETTINGS)) || {
-            storeName: "LENTERA KARYA Payment Online System",
-            storeAddress: "Kabupaten Situbondo Provinsi Jawa Timur",
-            storePhone: "08********22",
+            storeName: "Premium POS System",
+            storeAddress: "Jl. Contoh No. 123, Kota Contoh",
+            storePhone: "081234567890",
             taxRate: 10,
             bankName: "",
             accountNumber: "",
@@ -3012,7 +3020,9 @@
                     'Pajak': t.tax,
                     'Total': t.total,
                     'Metode Pembayaran': t.paymentMethod === 'cash' ? 'Tunai' : 
-                                       t.paymentMethod === 'transfer' ? 'Transfer Bank' : 'E-Wallet',
+                                        t.paymentMethod === 'debit' ? 'Kartu Debit' :
+                                        t.paymentMethod === 'credit' ? 'Kartu Kredit' :
+                                        t.paymentMethod === 'transfer' ? 'Transfer Bank' : 'E-Wallet',
                     'Kasir': t.cashier.name
                 }));
                 
@@ -3251,12 +3261,10 @@
             // Save initial data if not exists
             if (products.length === 0) {
                 products = [
-                    { id: 'P001', barcode: '123456789', name: 'Mie Ayam', categoryId: 'C001', price: 10000, stock: 100, description: '' },
-                    { id: 'P002', barcode: '987654321', name: 'Es Oyen', categoryId: 'C002', price: 8000, stock: 100, description: '' },
-                    { id: 'P003', barcode: '456789123', name: 'Sosis Bakar', categoryId: 'C003', price: 20000, stock: 100, description: '' },
-                    { id: 'P004', barcode: '321654987', name: 'TV led 32 inch', categoryId: 'C004', price: 3525000, stock: 30, description: '' },
-                    { id: 'P005', barcode: '321654988', name: 'Pigura 3D Print Digital', categoryId: 'C005', price: 125000, stock: 30, description: '' },
-                    { id: 'P006', barcode: '321654989', name: 'Decorasi Wedding', categoryId: 'C006', price: 2500000, stock: 1000, description: '' }
+                    { id: 'P001', barcode: '123456789', name: 'Produk Contoh 1', categoryId: 'C001', price: 10000, stock: 15, description: '' },
+                    { id: 'P002', barcode: '987654321', name: 'Produk Contoh 2', categoryId: 'C002', price: 15000, stock: 8, description: '' },
+                    { id: 'P003', barcode: '456789123', name: 'Produk Contoh 3', categoryId: 'C001', price: 20000, stock: 20, description: '' },
+                    { id: 'P004', barcode: '321654987', name: 'Produk Contoh 4', categoryId: 'C003', price: 5000, stock: 30, description: '' }
                 ];
                 saveProducts();
             }
@@ -3265,10 +3273,7 @@
                 categories = [
                     { id: 'C001', name: 'Makanan', description: 'Produk makanan' },
                     { id: 'C002', name: 'Minuman', description: 'Produk minuman' },
-                    { id: 'C003', name: 'Snack', description: 'Produk snack' },
-                    { id: 'C004', name: 'Peralatan', description: 'Alat Elektronik' },
-                    { id: 'C005', name: 'Kerajinan Tangan', description: 'Parcel' },
-                    { id: 'C006', name: 'Jasa', description: 'Sewa' }
+                    { id: 'C003', name: 'Snack', description: 'Produk snack' }
                 ];
                 saveCategories();
             }
@@ -3980,7 +3985,7 @@
                 Quagga.stop();
                 window.scannerActive = false;
                 $('#scannerContainer').hide();
-                $('#toggleScanner').html('<i class="fas fa-barcode"></i> Tutup Scanner Barcode');
+                $('#toggleScanner').html('<i class="fas fa-barcode"></i> Buka Scanner Barcode');
             });
         }
     </script>
