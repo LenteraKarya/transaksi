@@ -99,6 +99,7 @@
 
         .form-group {
             margin-bottom: 15px;
+            position: relative;
         }
 
         .form-group label {
@@ -620,6 +621,67 @@
             color: #999;
         }
 
+        /* Error message styling */
+        .error-message {
+            color: var(--danger-color);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            background-color: var(--success-color);
+        }
+
+        .toast.error {
+            background-color: var(--danger-color);
+        }
+
+        .toast.warning {
+            background-color: var(--warning-color);
+        }
+
+        .toast i {
+            margin-right: 10px;
+        }
+
         @media print {
             body * {
                 visibility: hidden;
@@ -655,6 +717,12 @@
     </style>
 </head>
 <body>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-info-circle"></i>
+        <span id="toast-message">Notification message</span>
+    </div>
+
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="login-container">
@@ -666,12 +734,16 @@
                 <div class="form-floating">
                     <input type="text" id="cashierId" placeholder="ID Kasir" required>
                     <label for="cashierId">ID Kasir</label>
+                    <div class="error-message" id="cashierIdError"></div>
                 </div>
                 <div class="form-floating">
-                    <input type="password" id="cashierPin" placeholder="PIN" required>
+                    <input type="password" id="cashierPin" placeholder="PIN" required maxlength="4">
                     <label for="cashierPin">PIN</label>
+                    <div class="error-message" id="cashierPinError"></div>
                 </div>
-                <button type="submit" class="btn btn-block">Login</button>
+                <button type="submit" class="btn btn-block" id="loginBtn">
+                    <span id="loginBtnText">Login</span>
+                </button>
             </form>
         </div>
     </div>
@@ -922,6 +994,7 @@
                         <input type="password" id="adminPassword" class="form-control" placeholder="Password Admin">
                         <i class="fas fa-eye password-toggle" id="togglePassword"></i>
                     </div>
+                    <div class="error-message" id="adminPasswordError"></div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -1441,6 +1514,20 @@
         // Current cashier
         let currentCashier = JSON.parse(localStorage.getItem(STORAGE_KEYS.CURRENT_CASHIER)) || null;
         
+        // Toast notification function
+        function showToast(message, type = 'info', duration = 3000) {
+            const toast = $('#toast');
+            const toastMessage = $('#toast-message');
+            
+            toast.removeClass('success error warning').addClass(type);
+            toastMessage.text(message);
+            toast.addClass('show');
+            
+            setTimeout(() => {
+                toast.removeClass('show');
+            }, duration);
+        }
+        
         $(document).ready(function() {
             // Initialize data
             initializeData();
@@ -1462,21 +1549,66 @@
                 const cashierId = $('#cashierId').val().trim();
                 const cashierPin = $('#cashierPin').val().trim();
                 
-                // Find cashier
-                const cashier = cashiers.find(c => c.id === cashierId && c.pin === cashierPin && c.status === 'active');
+                // Reset error messages
+                $('#cashierIdError').hide().text('');
+                $('#cashierPinError').hide().text('');
                 
-                if (cashier) {
-                    currentCashier = cashier;
-                    localStorage.setItem(STORAGE_KEYS.CURRENT_CASHIER, JSON.stringify(currentCashier));
-                    $('#loggedInCashier').text(cashier.name);
-                    $('#loginModal').hide();
-                    $('#mainApp').show();
-                    
-                    // Load products
-                    loadProducts();
-                } else {
-                    alert('ID Kasir atau PIN salah, atau akun tidak aktif');
+                // Validate inputs
+                let isValid = true;
+                
+                if (!cashierId) {
+                    $('#cashierIdError').text('ID Kasir harus diisi').show();
+                    isValid = false;
                 }
+                
+                if (!cashierPin) {
+                    $('#cashierPinError').text('PIN harus diisi').show();
+                    isValid = false;
+                } else if (cashierPin.length !== 4 || !/^\d+$/.test(cashierPin)) {
+                    $('#cashierPinError').text('PIN harus 4 digit angka').show();
+                    isValid = false;
+                }
+                
+                if (!isValid) return;
+                
+                // Show loading state
+                $('#loginBtn').prop('disabled', true);
+                $('#loginBtnText').html('<div class="spinner"></div> Memproses...');
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    // Find cashier
+                    const cashier = cashiers.find(c => 
+                        c.id === cashierId && 
+                        c.pin === cashierPin && 
+                        c.status === 'active'
+                    );
+                    
+                    if (cashier) {
+                        currentCashier = cashier;
+                        localStorage.setItem(STORAGE_KEYS.CURRENT_CASHIER, JSON.stringify(currentCashier));
+                        $('#loggedInCashier').text(cashier.name);
+                        $('#loginModal').hide();
+                        $('#mainApp').show();
+                        
+                        // Show success toast
+                        showToast('Login berhasil', 'success');
+                        
+                        // Load products
+                        loadProducts();
+                    } else {
+                        // Show error messages
+                        $('#cashierIdError').text('ID Kasir atau PIN salah').show();
+                        $('#cashierPinError').text('ID Kasir atau PIN salah').show();
+                        
+                        // Show error toast
+                        showToast('ID Kasir atau PIN salah', 'error');
+                    }
+                    
+                    // Reset login button
+                    $('#loginBtn').prop('disabled', false);
+                    $('#loginBtnText').text('Login');
+                }, 1000);
             });
             
             // Logout handler
@@ -1488,6 +1620,9 @@
                 $('#loginModal').show();
                 $('#cashierId').val('');
                 $('#cashierPin').val('');
+                
+                // Show logout notification
+                showToast('Anda telah logout', 'info');
             });
             
             // Tab switching
@@ -1520,7 +1655,7 @@
             // Navigation between tabs
             $('#nextToCustomer').click(function() {
                 if (currentCart.items.length === 0) {
-                    alert('Keranjang belanja kosong. Tambahkan produk terlebih dahulu.');
+                    showToast('Keranjang belanja kosong. Tambahkan produk terlebih dahulu.', 'warning');
                     return;
                 }
                 
@@ -1538,6 +1673,15 @@
             });
             
             $('#nextToPayment').click(function() {
+                // Validate customer info if member
+                if ($('#customerType').val() === 'member') {
+                    const memberId = $('#memberId').val().trim();
+                    if (!memberId) {
+                        showToast('ID Member harus diisi untuk pelanggan member', 'warning');
+                        return;
+                    }
+                }
+                
                 // Calculate discount if member
                 if ($('#customerType').val() === 'member') {
                     const discountPercentage = parseInt($('#memberDiscount').val()) || 0;
@@ -1573,7 +1717,7 @@
                 const paymentAmount = parseFloat($('#paymentAmount').val()) || 0;
                 
                 if (paymentAmount < currentCart.total) {
-                    alert('Jumlah pembayaran kurang dari total yang harus dibayar.');
+                    showToast('Jumlah pembayaran kurang dari total yang harus dibayar.', 'error');
                     return;
                 }
                 
@@ -1614,7 +1758,7 @@
                 resetCart();
                 
                 // Show success message
-                alert('Transaksi berhasil disimpan!');
+                showToast('Transaksi berhasil disimpan!', 'success');
                 
                 // Go back to cart tab
                 $('.tab').removeClass('active');
@@ -1635,8 +1779,10 @@
                     $('#adminPasswordModal').hide();
                     $('#adminModal').show();
                     loadAdminData();
+                    showToast('Berhasil masuk sebagai admin', 'success');
                 } else {
-                    alert('Password admin salah!');
+                    $('#adminPasswordError').text('Password admin salah!').show();
+                    showToast('Password admin salah!', 'error');
                 }
             });
             
@@ -1717,7 +1863,7 @@
                 };
                 
                 if (!product.barcode || !product.name || !product.categoryId || product.price <= 0) {
-                    alert('Harap isi semua field yang diperlukan dengan benar!');
+                    showToast('Harap isi semua field yang diperlukan dengan benar!', 'error');
                     return;
                 }
                 
@@ -1731,6 +1877,9 @@
                 
                 // Close modal
                 $('#productModal').hide();
+                
+                // Show success message
+                showToast('Produk berhasil ditambahkan', 'success');
                 
                 // Reset form
                 $('#productBarcode').val('');
@@ -1785,6 +1934,8 @@
                     loadProducts();
                     loadAdminProducts();
                     $('#editProductModal').hide();
+                    
+                    showToast('Produk berhasil diperbarui', 'success');
                 }
             });
             
@@ -1796,6 +1947,8 @@
                     saveProducts();
                     loadProducts();
                     loadAdminProducts();
+                    
+                    showToast('Produk berhasil dihapus', 'success');
                 }
             });
             
@@ -1813,7 +1966,7 @@
                 };
                 
                 if (!category.name) {
-                    alert('Nama kategori harus diisi!');
+                    showToast('Nama kategori harus diisi!', 'error');
                     return;
                 }
                 
@@ -1827,6 +1980,8 @@
                 $('#categoryModal').hide();
                 $('#categoryName').val('');
                 $('#categoryDescription').val('');
+                
+                showToast('Kategori berhasil ditambahkan', 'success');
             });
             
             // Edit category
@@ -1859,6 +2014,8 @@
                     loadAdminCategories();
                     updateCategoryDropdowns();
                     $('#editCategoryModal').hide();
+                    
+                    showToast('Kategori berhasil diperbarui', 'success');
                 }
             });
             
@@ -1870,7 +2027,7 @@
                 const productsUsingCategory = products.filter(p => p.categoryId === categoryId);
                 
                 if (productsUsingCategory.length > 0) {
-                    alert('Tidak dapat menghapus kategori ini karena ada produk yang menggunakan kategori ini.');
+                    showToast('Tidak dapat menghapus kategori ini karena ada produk yang menggunakan kategori ini.', 'error');
                     return;
                 }
                 
@@ -1879,6 +2036,8 @@
                     saveCategories();
                     loadAdminCategories();
                     updateCategoryDropdowns();
+                    
+                    showToast('Kategori berhasil dihapus', 'success');
                 }
             });
             
@@ -1899,7 +2058,7 @@
                 };
                 
                 if (!customer.name || !customer.phone) {
-                    alert('Nama dan telepon pelanggan harus diisi!');
+                    showToast('Nama dan telepon pelanggan harus diisi!', 'error');
                     return;
                 }
                 
@@ -1913,6 +2072,8 @@
                 $('#customerPhoneModal').val('');
                 $('#customerEmailModal').val('');
                 $('#customerAddressModal').val('');
+                
+                showToast('Pelanggan berhasil ditambahkan', 'success');
             });
             
             // Edit customer
@@ -1950,6 +2111,8 @@
                     saveCustomers();
                     loadAdminCustomers();
                     $('#editCustomerModal').hide();
+                    
+                    showToast('Pelanggan berhasil diperbarui', 'success');
                 }
             });
             
@@ -1960,6 +2123,8 @@
                     customers = customers.filter(c => c.id !== customerId);
                     saveCustomers();
                     loadAdminCustomers();
+                    
+                    showToast('Pelanggan berhasil dihapus', 'success');
                 }
             });
             
@@ -1977,8 +2142,8 @@
                     status: $('#cashierStatus').val()
                 };
                 
-                if (!cashier.name || !cashier.pin || cashier.pin.length !== 4) {
-                    alert('Nama dan PIN (4 digit) harus diisi dengan benar!');
+                if (!cashier.name || !cashier.pin || cashier.pin.length !== 4 || !/^\d+$/.test(cashier.pin)) {
+                    showToast('Nama dan PIN (4 digit angka) harus diisi dengan benar!', 'error');
                     return;
                 }
                 
@@ -1990,6 +2155,8 @@
                 $('#cashierNameModal').val('');
                 $('#cashierPinModal').val('');
                 $('#cashierStatus').val('active');
+                
+                showToast('Kasir berhasil ditambahkan', 'success');
             });
             
             // Edit cashier
@@ -2023,6 +2190,8 @@
                     saveCashiers();
                     loadAdminCashiers();
                     $('#editCashierModal').hide();
+                    
+                    showToast('Kasir berhasil diperbarui', 'success');
                 }
             });
             
@@ -2031,7 +2200,7 @@
                 const cashierId = $(this).data('id');
                 
                 if (cashierId === currentCashier?.id) {
-                    alert('Tidak dapat menghapus kasir yang sedang login!');
+                    showToast('Tidak dapat menghapus kasir yang sedang login!', 'error');
                     return;
                 }
                 
@@ -2039,6 +2208,8 @@
                     cashiers = cashiers.filter(c => c.id !== cashierId);
                     saveCashiers();
                     loadAdminCashiers();
+                    
+                    showToast('Kasir berhasil dihapus', 'success');
                 }
             });
             
@@ -2063,7 +2234,7 @@
                 $('#receiptStoreAddress').text(settings.storeAddress);
                 $('#receiptStorePhone').text('Telp: ' + settings.storePhone);
                 
-                alert('Pengaturan berhasil disimpan');
+                showToast('Pengaturan berhasil disimpan', 'success');
             });
             
             // View transaction detail
@@ -2086,8 +2257,8 @@
             // Export transactions
             $('#exportTransactions').click(function() {
                 // In a real app, you would generate an Excel file
-                // For this demo, we'll just show an alert
-                alert('Data transaksi akan diekspor ke Excel');
+                // For this demo, we'll just show a toast
+                showToast('Data transaksi akan diekspor ke Excel', 'info');
             });
             
             // Barcode scanner
@@ -2134,14 +2305,22 @@
                     
                     // Update cart
                     updateCart();
+                    
+                    // Show success message
+                    showToast(`${product.name} ditambahkan ke keranjang`, 'success');
                 }
             });
             
             // Remove item from cart
             $(document).on('click', '.remove-from-cart', function() {
                 const productId = $(this).data('id');
+                const product = products.find(p => p.id === productId);
                 currentCart.items = currentCart.items.filter(item => item.product.id !== productId);
                 updateCart();
+                
+                if (product) {
+                    showToast(`${product.name} dihapus dari keranjang`, 'info');
+                }
             });
             
             // Update item quantity in cart
@@ -2698,8 +2877,10 @@
                     }
                     
                     updateCart();
+                    showToast(`${product.name} ditambahkan ke keranjang`, 'success');
                 } else {
                     $('#barcodeResult').text('Produk tidak ditemukan: ' + code);
+                    showToast('Produk tidak ditemukan', 'warning');
                 }
                 
                 Quagga.stop();
