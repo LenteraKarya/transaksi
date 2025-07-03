@@ -3254,9 +3254,9 @@
                     { id: 'P001', barcode: '123456789', name: 'Mie Ayam', categoryId: 'C001', price: 10000, stock: 100, description: '' },
                     { id: 'P002', barcode: '987654321', name: 'Es Oyen', categoryId: 'C002', price: 8000, stock: 100, description: '' },
                     { id: 'P003', barcode: '456789123', name: 'Sosis Bakar', categoryId: 'C003', price: 20000, stock: 100, description: '' },
-                    { id: 'P004', barcode: '321654987', name: 'TV led 32 inch', categoryId: 'C004', price: 3525000, stock: 30, description: '' }
-                    { id: 'P005', barcode: '321654987', name: 'Pigura 3D Print Digital', categoryId: 'C005', price: 125000, stock: 30, description: '' }
-                    { id: 'P006', barcode: '321654987', name: 'Decorasi Wedding', categoryId: 'C006', price: 2500000, stock: 1000, description: '' }
+                    { id: 'P004', barcode: '321654987', name: 'TV led 32 inch', categoryId: 'C004', price: 3525000, stock: 30, description: '' },
+                    { id: 'P005', barcode: '321654988', name: 'Pigura 3D Print Digital', categoryId: 'C005', price: 125000, stock: 30, description: '' },
+                    { id: 'P006', barcode: '321654989', name: 'Decorasi Wedding', categoryId: 'C006', price: 2500000, stock: 1000, description: '' }
                 ];
                 saveProducts();
             }
@@ -3265,9 +3265,9 @@
                 categories = [
                     { id: 'C001', name: 'Makanan', description: 'Produk makanan' },
                     { id: 'C002', name: 'Minuman', description: 'Produk minuman' },
-                    { id: 'C003', name: 'Snack', description: 'Produk snack' }
-                    { id: 'C004', name: 'Peralatan', description: 'Alat Elektronik' }
-                    { id: 'C005', name: 'Kerajinan Tangan', description: 'Parcel' }
+                    { id: 'C003', name: 'Snack', description: 'Produk snack' },
+                    { id: 'C004', name: 'Peralatan', description: 'Alat Elektronik' },
+                    { id: 'C005', name: 'Kerajinan Tangan', description: 'Parcel' },
                     { id: 'C006', name: 'Jasa', description: 'Sewa' }
                 ];
                 saveCategories();
@@ -3980,7 +3980,7 @@
                 Quagga.stop();
                 window.scannerActive = false;
                 $('#scannerContainer').hide();
-                $('#toggleScanner').html('<i class="fas fa-barcode"></i> Buka Scanner Barcode');
+                $('#toggleScanner').html('<i class="fas fa-barcode"></i> Tutup Scanner Barcode');
             });
         }
     </script>
