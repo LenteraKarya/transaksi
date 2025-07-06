@@ -1172,6 +1172,20 @@
             color: #666;
             margin-top: 3px;
         }
+        
+        /* Brand and unit selector */
+        .brand-unit-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .brand-unit-selector select {
+            flex: 1;
+        }
+        
+        .brand-unit-selector button {
+            width: 40px;
+        }
     </style>
 </head>
 <body>
@@ -1613,16 +1627,6 @@
                         <input type="number" id="storeTaxRate" class="form-control" value="10" min="0" max="100">
                     </div>
                     
-                    <h4 class="mt-4">Merk & Satuan Produk</h4>
-                    <div class="form-group">
-                        <label for="productBrands">Daftar Merk Produk (pisahkan dengan koma)</label>
-                        <textarea id="productBrands" class="form-control" rows="3" placeholder="Merk A, Merk B, Merk C"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="productUnits">Daftar Satuan Produk (pisahkan dengan koma)</label>
-                        <textarea id="productUnits" class="form-control" rows="3" placeholder="Pcs, Kg, Liter, Box"></textarea>
-                    </div>
-                    
                     <h4 class="mt-4">Rekening Bank</h4>
                     <div class="form-group">
                         <label for="storeBankSetting">Nama Bank</label>
@@ -1691,13 +1695,27 @@
                     <label for="productName">Nama Produk</label>
                     <input type="text" id="productName" class="form-control" placeholder="Masukkan nama produk">
                 </div>
-                <div class="form-group">
-                    <label for="productBrand">Merk</label>
-                    <input type="text" id="productBrand" class="form-control" placeholder="Masukkan merk produk">
-                </div>
-                <div class="form-group">
-                    <label for="productUnit">Satuan</label>
-                    <input type="text" id="productUnit" class="form-control" placeholder="Masukkan satuan (pcs, kg, etc)">
+                <div class="brand-unit-selector">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="productBrand">Merk</label>
+                        <div class="input-group">
+                            <select id="productBrand" class="form-control">
+                                <option value="">Pilih Merk</option>
+                                <!-- Brands will be loaded here -->
+                            </select>
+                            <button type="button" id="addNewBrand" class="btn btn-secondary">+</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="productUnit">Satuan</label>
+                        <div class="input-group">
+                            <select id="productUnit" class="form-control">
+                                <option value="">Pilih Satuan</option>
+                                <!-- Units will be loaded here -->
+                            </select>
+                            <button type="button" id="addNewUnit" class="btn btn-secondary">+</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="productCategoryModal">Kategori</label>
@@ -1726,6 +1744,46 @@
         </div>
     </div>
 
+    <!-- Add Brand Modal -->
+    <div id="brandModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Merk Baru</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newBrandName">Nama Merk</label>
+                    <input type="text" id="newBrandName" class="form-control" placeholder="Masukkan nama merk">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-brand-modal">Batal</button>
+                <button class="btn btn-success save-brand">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Unit Modal -->
+    <div id="unitModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Tambah Satuan Baru</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="newUnitName">Nama Satuan</label>
+                    <input type="text" id="newUnitName" class="form-control" placeholder="Masukkan nama satuan">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-unit-modal">Batal</button>
+                <button class="btn btn-success save-unit">Simpan</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Edit Product Modal -->
     <div id="editProductModal" class="modal">
         <div class="modal-content">
@@ -1743,13 +1801,27 @@
                     <label for="editProductName">Nama Produk</label>
                     <input type="text" id="editProductName" class="form-control">
                 </div>
-                <div class="form-group">
-                    <label for="editProductBrand">Merk</label>
-                    <input type="text" id="editProductBrand" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="editProductUnit">Satuan</label>
-                    <input type="text" id="editProductUnit" class="form-control">
+                <div class="brand-unit-selector">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="editProductBrand">Merk</label>
+                        <div class="input-group">
+                            <select id="editProductBrand" class="form-control">
+                                <option value="">Pilih Merk</option>
+                                <!-- Brands will be loaded here -->
+                            </select>
+                            <button type="button" id="editAddNewBrand" class="btn btn-secondary">+</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="editProductUnit">Satuan</label>
+                        <div class="input-group">
+                            <select id="editProductUnit" class="form-control">
+                                <option value="">Pilih Satuan</option>
+                                <!-- Units will be loaded here -->
+                            </select>
+                            <button type="button" id="editAddNewUnit" class="btn btn-secondary">+</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="editProductCategory">Kategori</label>
@@ -2510,7 +2582,91 @@
                     $('#productCategoryModal').append(`<option value="${category.id}">${category.name}</option>`);
                 });
                 
+                // Load brands for dropdown
+                $('#productBrand').empty().append('<option value="">Pilih Merk</option>');
+                productBrands.forEach(brand => {
+                    $('#productBrand').append(`<option value="${brand}">${brand}</option>`);
+                });
+                
+                // Load units for dropdown
+                $('#productUnit').empty().append('<option value="">Pilih Satuan</option>');
+                productUnits.forEach(unit => {
+                    $('#productUnit').append(`<option value="${unit}">${unit}</option>`);
+                });
+                
                 $('#productModal').show();
+            });
+            
+            // Add new brand
+            $('#addNewBrand').click(function() {
+                $('#brandModal').show();
+            });
+            
+            // Save new brand
+            $('.save-brand').click(function() {
+                const brandName = $('#newBrandName').val().trim();
+                
+                if (!brandName) {
+                    showToast('Nama merk harus diisi', 'error');
+                    return;
+                }
+                
+                if (productBrands.includes(brandName)) {
+                    showToast('Merk sudah ada', 'error');
+                    return;
+                }
+                
+                productBrands.push(brandName);
+                localStorage.setItem(STORAGE_KEYS.PRODUCT_BRANDS, JSON.stringify(productBrands));
+                
+                // Update brand dropdown
+                $('#productBrand').append(`<option value="${brandName}">${brandName}</option>`);
+                
+                $('#brandModal').hide();
+                $('#newBrandName').val('');
+                
+                showToast('Merk berhasil ditambahkan', 'success');
+            });
+            
+            // Close brand modal
+            $('.close-brand-modal').click(function() {
+                $('#brandModal').hide();
+            });
+            
+            // Add new unit
+            $('#addNewUnit').click(function() {
+                $('#unitModal').show();
+            });
+            
+            // Save new unit
+            $('.save-unit').click(function() {
+                const unitName = $('#newUnitName').val().trim();
+                
+                if (!unitName) {
+                    showToast('Nama satuan harus diisi', 'error');
+                    return;
+                }
+                
+                if (productUnits.includes(unitName)) {
+                    showToast('Satuan sudah ada', 'error');
+                    return;
+                }
+                
+                productUnits.push(unitName);
+                localStorage.setItem(STORAGE_KEYS.PRODUCT_UNITS, JSON.stringify(productUnits));
+                
+                // Update unit dropdown
+                $('#productUnit').append(`<option value="${unitName}">${unitName}</option>`);
+                
+                $('#unitModal').hide();
+                $('#newUnitName').val('');
+                
+                showToast('Satuan berhasil ditambahkan', 'success');
+            });
+            
+            // Close unit modal
+            $('.close-unit-modal').click(function() {
+                $('#unitModal').hide();
             });
             
             // Save product
@@ -2572,8 +2728,18 @@
                     $('#editProductId').val(product.id);
                     $('#editProductBarcode').val(product.barcode);
                     $('#editProductName').val(product.name);
-                    $('#editProductBrand').val(product.brand || '');
-                    $('#editProductUnit').val(product.unit || '');
+                    
+                    // Load brands for dropdown
+                    $('#editProductBrand').empty().append('<option value="">Pilih Merk</option>');
+                    productBrands.forEach(brand => {
+                        $('#editProductBrand').append(`<option value="${brand}" ${brand === product.brand ? 'selected' : ''}>${brand}</option>`);
+                    });
+                    
+                    // Load units for dropdown
+                    $('#editProductUnit').empty().append('<option value="">Pilih Satuan</option>');
+                    productUnits.forEach(unit => {
+                        $('#editProductUnit').append(`<option value="${unit}" ${unit === product.unit ? 'selected' : ''}>${unit}</option>`);
+                    });
                     
                     // Load categories for dropdown
                     $('#editProductCategory').empty();
@@ -2587,6 +2753,16 @@
                     
                     $('#editProductModal').show();
                 }
+            });
+            
+            // Add new brand from edit modal
+            $('#editAddNewBrand').click(function() {
+                $('#brandModal').show();
+            });
+            
+            // Add new unit from edit modal
+            $('#editAddNewUnit').click(function() {
+                $('#unitModal').show();
             });
             
             // Update product
@@ -2962,9 +3138,6 @@
             
             // Save settings
             $('#saveSettings').click(function() {
-                const newBrands = $('#productBrands').val().split(',').map(b => b.trim()).filter(b => b);
-                const newUnits = $('#productUnits').val().split(',').map(u => u.trim()).filter(u => u);
-                
                 settings = {
                     storeName: $('#storeNameSetting').val(),
                     storeAddress: $('#storeAddressSetting').val(),
@@ -2975,14 +3148,8 @@
                     accountName: $('#storeAccountName').val()
                 };
                 
-                // Update brands and units
-                productBrands = newBrands;
-                productUnits = newUnits;
-                
                 // Save to local storage
                 localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
-                localStorage.setItem(STORAGE_KEYS.PRODUCT_BRANDS, JSON.stringify(productBrands));
-                localStorage.setItem(STORAGE_KEYS.PRODUCT_UNITS, JSON.stringify(productUnits));
                 
                 // Update UI
                 $('#storeName').text(settings.storeName);
@@ -3392,10 +3559,6 @@
             $('#storeBankSetting').val(settings.bankName);
             $('#storeAccountNumber').val(settings.accountNumber);
             $('#storeAccountName').val(settings.accountName);
-            
-            // Update product brands and units
-            $('#productBrands').val(productBrands.join(', '));
-            $('#productUnits').val(productUnits.join(', '));
             
             // Load initial data
             loadProducts();
