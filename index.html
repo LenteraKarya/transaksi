@@ -631,6 +631,7 @@
             margin: 0 auto;
             box-shadow: var(--shadow-sm);
             position: relative;
+            font-size: 14px;
         }
 
         .receipt::after {
@@ -861,13 +862,20 @@
                 width: 100%;
                 max-width: 100%;
                 box-shadow: none;
-                padding: 0;
+                padding: 20px;
                 margin: 0;
-                font-size: 12px;
+                font-size: 14px;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
             
             .no-print {
                 display: none !important;
+            }
+            
+            @page {
+                size: auto;
+                margin: 0;
             }
         }
 
@@ -920,6 +928,12 @@
                 right: 10px;
                 padding: 8px 12px;
                 font-size: 0.8rem;
+            }
+            
+            .receipt {
+                max-width: 100%;
+                padding: 15px;
+                font-size: 12px;
             }
         }
 
@@ -1150,6 +1164,13 @@
             border: 1px solid #ddd;
             padding: 10px;
             background: white;
+        }
+        
+        /* Product brand and unit */
+        .product-brand-unit {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 3px;
         }
     </style>
 </head>
@@ -1463,6 +1484,8 @@
                                 <tr>
                                     <th>Barcode</th>
                                     <th>Nama</th>
+                                    <th>Merk</th>
+                                    <th>Satuan</th>
                                     <th>Kategori</th>
                                     <th>Harga</th>
                                     <th>Stok</th>
@@ -1589,12 +1612,31 @@
                         <label for="storeTaxRate">Pajak (%)</label>
                         <input type="number" id="storeTaxRate" class="form-control" value="10" min="0" max="100">
                     </div>
+                    
+                    <h4 class="mt-4">Merk & Satuan Produk</h4>
                     <div class="form-group">
-                        <label for="storeBankSetting">Rekening Bank</label>
-                        <input type="text" id="storeBankSetting" class="form-control" placeholder="Nama Bank">
-                        <input type="text" id="storeAccountNumber" class="form-control mt-2" placeholder="Nomor Rekening">
-                        <input type="text" id="storeAccountName" class="form-control mt-2" placeholder="Nama Pemilik Rekening">
+                        <label for="productBrands">Daftar Merk Produk (pisahkan dengan koma)</label>
+                        <textarea id="productBrands" class="form-control" rows="3" placeholder="Merk A, Merk B, Merk C"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="productUnits">Daftar Satuan Produk (pisahkan dengan koma)</label>
+                        <textarea id="productUnits" class="form-control" rows="3" placeholder="Pcs, Kg, Liter, Box"></textarea>
+                    </div>
+                    
+                    <h4 class="mt-4">Rekening Bank</h4>
+                    <div class="form-group">
+                        <label for="storeBankSetting">Nama Bank</label>
+                        <input type="text" id="storeBankSetting" class="form-control" placeholder="Nama Bank">
+                    </div>
+                    <div class="form-group">
+                        <label for="storeAccountNumber">Nomor Rekening</label>
+                        <input type="text" id="storeAccountNumber" class="form-control" placeholder="Nomor Rekening">
+                    </div>
+                    <div class="form-group">
+                        <label for="storeAccountName">Nama Pemilik Rekening</label>
+                        <input type="text" id="storeAccountName" class="form-control" placeholder="Nama Pemilik Rekening">
+                    </div>
+                    
                     <button id="saveSettings" class="btn btn-success"><i class="fas fa-save"></i> Simpan Pengaturan</button>
 
                     <h4 class="mt-4">Manajemen Kasir</h4>
@@ -1650,6 +1692,14 @@
                     <input type="text" id="productName" class="form-control" placeholder="Masukkan nama produk">
                 </div>
                 <div class="form-group">
+                    <label for="productBrand">Merk</label>
+                    <input type="text" id="productBrand" class="form-control" placeholder="Masukkan merk produk">
+                </div>
+                <div class="form-group">
+                    <label for="productUnit">Satuan</label>
+                    <input type="text" id="productUnit" class="form-control" placeholder="Masukkan satuan (pcs, kg, etc)">
+                </div>
+                <div class="form-group">
                     <label for="productCategoryModal">Kategori</label>
                     <select id="productCategoryModal" class="form-control">
                         <option value="">Pilih Kategori</option>
@@ -1692,6 +1742,14 @@
                 <div class="form-group">
                     <label for="editProductName">Nama Produk</label>
                     <input type="text" id="editProductName" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="editProductBrand">Merk</label>
+                    <input type="text" id="editProductBrand" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="editProductUnit">Satuan</label>
+                    <input type="text" id="editProductUnit" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="editProductCategory">Kategori</label>
@@ -1953,7 +2011,9 @@
             TRANSACTIONS: 'pos_transactions',
             SETTINGS: 'pos_settings',
             CURRENT_CART: 'pos_current_cart',
-            CURRENT_CASHIER: 'pos_current_cashier'
+            CURRENT_CASHIER: 'pos_current_cashier',
+            PRODUCT_BRANDS: 'pos_product_brands',
+            PRODUCT_UNITS: 'pos_product_units'
         };
         
         // Initialize data
@@ -1975,6 +2035,10 @@
             accountNumber: "",
             accountName: ""
         };
+        
+        // Product brands and units
+        let productBrands = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCT_BRANDS)) || ["Merk A", "Merk B", "Merk C"];
+        let productUnits = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCT_UNITS)) || ["Pcs", "Kg", "Liter", "Box"];
         
         // Current transaction
         let currentCart = JSON.parse(localStorage.getItem(STORAGE_KEYS.CURRENT_CART)) || {
@@ -2038,19 +2102,40 @@
                 margin: 10,
                 filename: filename || 'receipt.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
+                html2canvas: { 
+                    scale: 2,
+                    logging: true,
+                    useCORS: true,
+                    allowTaint: true,
+                    letterRendering: true
+                },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             
-            html2pdf().set(opt).from(element).save();
+            // Show loading
+            showToast('Membuat PDF...', 'info');
+            
+            // Create PDF
+            html2pdf().set(opt).from(element).save().then(() => {
+                showToast('PDF berhasil dibuat', 'success');
+            }).catch(err => {
+                showToast('Gagal membuat PDF', 'error');
+                console.error('PDF generation error:', err);
+            });
         }
         
         // Export data to Excel
         function exportToExcel(data, filename) {
-            const ws = XLSX.utils.json_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-            XLSX.writeFile(wb, filename || "export.xlsx");
+            try {
+                const ws = XLSX.utils.json_to_sheet(data);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+                XLSX.writeFile(wb, filename || "export.xlsx");
+                showToast('Excel berhasil diekspor', 'success');
+            } catch (error) {
+                showToast('Gagal mengekspor ke Excel', 'error');
+                console.error('Excel export error:', error);
+            }
         }
         
         $(document).ready(function() {
@@ -2328,7 +2413,9 @@
                 generateReceipt(transaction);
                 
                 // Print receipt automatically
-                window.print();
+                setTimeout(() => {
+                    window.print();
+                }, 500);
                 
                 // Reset cart
                 resetCart();
@@ -2432,6 +2519,8 @@
                     id: 'P' + moment().format('YYYYMMDDHHmmss'),
                     barcode: $('#productBarcode').val(),
                     name: $('#productName').val(),
+                    brand: $('#productBrand').val(),
+                    unit: $('#productUnit').val(),
                     categoryId: $('#productCategoryModal').val(),
                     price: parseFloat($('#productPrice').val()) || 0,
                     stock: parseInt($('#productStock').val()) || 0,
@@ -2466,6 +2555,8 @@
                 // Reset form
                 $('#productBarcode').val('');
                 $('#productName').val('');
+                $('#productBrand').val('');
+                $('#productUnit').val('');
                 $('#productCategoryModal').val('');
                 $('#productPrice').val('');
                 $('#productStock').val('');
@@ -2481,6 +2572,8 @@
                     $('#editProductId').val(product.id);
                     $('#editProductBarcode').val(product.barcode);
                     $('#editProductName').val(product.name);
+                    $('#editProductBrand').val(product.brand || '');
+                    $('#editProductUnit').val(product.unit || '');
                     
                     // Load categories for dropdown
                     $('#editProductCategory').empty();
@@ -2490,7 +2583,7 @@
                     
                     $('#editProductPrice').val(product.price);
                     $('#editProductStock').val(product.stock);
-                    $('#editProductDescription').val(product.description);
+                    $('#editProductDescription').val(product.description || '');
                     
                     $('#editProductModal').show();
                 }
@@ -2506,6 +2599,8 @@
                         ...products[productIndex],
                         barcode: $('#editProductBarcode').val(),
                         name: $('#editProductName').val(),
+                        brand: $('#editProductBrand').val(),
+                        unit: $('#editProductUnit').val(),
                         categoryId: $('#editProductCategory').val(),
                         price: parseFloat($('#editProductPrice').val()) || 0,
                         stock: parseInt($('#editProductStock').val()) || 0,
@@ -2867,6 +2962,9 @@
             
             // Save settings
             $('#saveSettings').click(function() {
+                const newBrands = $('#productBrands').val().split(',').map(b => b.trim()).filter(b => b);
+                const newUnits = $('#productUnits').val().split(',').map(u => u.trim()).filter(u => u);
+                
                 settings = {
                     storeName: $('#storeNameSetting').val(),
                     storeAddress: $('#storeAddressSetting').val(),
@@ -2877,7 +2975,14 @@
                     accountName: $('#storeAccountName').val()
                 };
                 
+                // Update brands and units
+                productBrands = newBrands;
+                productUnits = newUnits;
+                
+                // Save to local storage
                 localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+                localStorage.setItem(STORAGE_KEYS.PRODUCT_BRANDS, JSON.stringify(productBrands));
+                localStorage.setItem(STORAGE_KEYS.PRODUCT_UNITS, JSON.stringify(productUnits));
                 
                 // Update UI
                 $('#storeName').text(settings.storeName);
@@ -2903,7 +3008,18 @@
             
             // Print receipt from transaction detail
             $('.print-receipt').click(function() {
-                window.print();
+                const receiptContent = $('#transactionDetailReceipt').html();
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = receiptContent;
+                document.body.appendChild(tempDiv);
+                
+                // Generate PDF
+                generatePDF(tempDiv.id, `Struk_${moment().format('YYYYMMDD_HHmmss')}.pdf`);
+                
+                // Remove temporary element
+                setTimeout(() => {
+                    document.body.removeChild(tempDiv);
+                }, 1000);
             });
             
             // Export report to PDF
@@ -2951,7 +3067,7 @@
                     margin: 10,
                     filename: filename,
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
+                    html2canvas: { scale: 2, logging: true, useCORS: true },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
                 };
                 
@@ -2986,7 +3102,6 @@
                 }));
                 
                 exportToExcel(exportData, `Laporan_Penjualan_${dateRange.replace(/\//g, '-')}.xlsx`);
-                showToast('Laporan berhasil diekspor ke Excel', 'success');
             });
             
             // Backup data
@@ -2998,6 +3113,8 @@
                     cashiers: cashiers,
                     transactions: transactions,
                     settings: settings,
+                    productBrands: productBrands,
+                    productUnits: productUnits,
                     timestamp: new Date().toISOString()
                 };
                 
@@ -3051,12 +3168,24 @@
                             transactions = backupData.transactions;
                             settings = backupData.settings;
                             
+                            // Restore brands and units if available
+                            if (backupData.productBrands) {
+                                productBrands = backupData.productBrands;
+                            }
+                            
+                            if (backupData.productUnits) {
+                                productUnits = backupData.productUnits;
+                            }
+                            
                             // Save to local storage
                             saveProducts();
                             saveCategories();
                             saveCustomers();
                             saveCashiers();
                             saveTransactions();
+                            localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
+                            localStorage.setItem(STORAGE_KEYS.PRODUCT_BRANDS, JSON.stringify(productBrands));
+                            localStorage.setItem(STORAGE_KEYS.PRODUCT_UNITS, JSON.stringify(productUnits));
                             
                             // Update UI
                             initializeData();
@@ -3196,10 +3325,10 @@
             // Save initial data if not exists
             if (products.length === 0) {
                 products = [
-                    { id: 'P001', barcode: '123456789', name: 'Produk Contoh 1', categoryId: 'C001', price: 10000, stock: 15, description: '' },
-                    { id: 'P002', barcode: '987654321', name: 'Produk Contoh 2', categoryId: 'C002', price: 15000, stock: 8, description: '' },
-                    { id: 'P003', barcode: '456789123', name: 'Produk Contoh 3', categoryId: 'C001', price: 20000, stock: 20, description: '' },
-                    { id: 'P004', barcode: '321654987', name: 'Produk Contoh 4', categoryId: 'C003', price: 5000, stock: 30, description: '' }
+                    { id: 'P001', barcode: '123456789', name: 'Produk Contoh 1', brand: 'Merk A', unit: 'Pcs', categoryId: 'C001', price: 10000, stock: 15, description: '' },
+                    { id: 'P002', barcode: '987654321', name: 'Produk Contoh 2', brand: 'Merk B', unit: 'Kg', categoryId: 'C002', price: 15000, stock: 8, description: '' },
+                    { id: 'P003', barcode: '456789123', name: 'Produk Contoh 3', brand: 'Merk A', unit: 'Pcs', categoryId: 'C001', price: 20000, stock: 20, description: '' },
+                    { id: 'P004', barcode: '321654987', name: 'Produk Contoh 4', brand: 'Merk C', unit: 'Box', categoryId: 'C003', price: 5000, stock: 30, description: '' }
                 ];
                 saveProducts();
             }
@@ -3263,6 +3392,10 @@
             $('#storeBankSetting').val(settings.bankName);
             $('#storeAccountNumber').val(settings.accountNumber);
             $('#storeAccountName').val(settings.accountName);
+            
+            // Update product brands and units
+            $('#productBrands').val(productBrands.join(', '));
+            $('#productUnits').val(productUnits.join(', '));
             
             // Load initial data
             loadProducts();
@@ -3333,7 +3466,12 @@
                     
                     $('#productListBody').append(`
                         <tr>
-                            <td>${product.name}</td>
+                            <td>
+                                <div>${product.name}</div>
+                                <div class="product-brand-unit">
+                                    ${product.brand ? product.brand + ' • ' : ''}${product.unit || 'Pcs'}
+                                </div>
+                            </td>
                             <td>${formatCurrency(product.price)}</td>
                             <td class="${stockClass}">${product.stock}</td>
                             <td>
@@ -3523,7 +3661,7 @@
             if (products.length === 0) {
                 $('#adminProductsTable').html(`
                     <tr>
-                        <td colspan="6">
+                        <td colspan="8">
                             <div class="empty-state">
                                 <i class="fas fa-box-open"></i>
                                 <p>Tidak ada produk</p>
@@ -3540,6 +3678,8 @@
                         <tr>
                             <td>${product.barcode}</td>
                             <td>${product.name}</td>
+                            <td>${product.brand || '-'}</td>
+                            <td>${product.unit || '-'}</td>
                             <td>${category ? category.name : '-'}</td>
                             <td>${formatCurrency(product.price)}</td>
                             <td class="${stockClass}">${product.stock}</td>
