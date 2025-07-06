@@ -1173,18 +1173,17 @@
             margin-top: 3px;
         }
         
-        /* Brand and unit selector */
-        .brand-unit-selector {
-            display: flex;
-            gap: 10px;
+        /* Profit indicator */
+        .profit-positive {
+            color: var(--success-color);
         }
         
-        .brand-unit-selector select {
-            flex: 1;
+        .profit-negative {
+            color: var(--danger-color);
         }
         
-        .brand-unit-selector button {
-            width: 40px;
+        .profit-neutral {
+            color: var(--gray-color);
         }
     </style>
 </head>
@@ -1501,7 +1500,9 @@
                                     <th>Merk</th>
                                     <th>Satuan</th>
                                     <th>Kategori</th>
-                                    <th>Harga</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
+                                    <th>Laba</th>
                                     <th>Stok</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -1567,6 +1568,7 @@
                                     <th>Tanggal</th>
                                     <th>Pelanggan</th>
                                     <th>Total</th>
+                                    <th>Laba</th>
                                     <th>Kasir</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -1592,6 +1594,10 @@
                         <div class="report-card">
                             <div class="report-card-title">Total Pendapatan</div>
                             <div class="report-card-value" id="reportTotalRevenue">Rp 0</div>
+                        </div>
+                        <div class="report-card">
+                            <div class="report-card-title">Total Laba</div>
+                            <div class="report-card-value" id="reportTotalProfit">Rp 0</div>
                         </div>
                         <div class="report-card">
                             <div class="report-card-title">Produk Terlaris</div>
@@ -1627,18 +1633,14 @@
                         <input type="number" id="storeTaxRate" class="form-control" value="10" min="0" max="100">
                     </div>
                     
-                    <h4 class="mt-4">Rekening Bank</h4>
                     <div class="form-group">
-                        <label for="storeBankSetting">Nama Bank</label>
-                        <input type="text" id="storeBankSetting" class="form-control" placeholder="Nama Bank">
+                        <label for="storeDiscount">Diskon Default (%)</label>
+                        <input type="number" id="storeDiscount" class="form-control" value="0" min="0" max="100">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="storeAccountNumber">Nomor Rekening</label>
-                        <input type="text" id="storeAccountNumber" class="form-control" placeholder="Nomor Rekening">
-                    </div>
-                    <div class="form-group">
-                        <label for="storeAccountName">Nama Pemilik Rekening</label>
-                        <input type="text" id="storeAccountName" class="form-control" placeholder="Nama Pemilik Rekening">
+                        <label for="storeAdditionalInfo">Info Tambahan</label>
+                        <textarea id="storeAdditionalInfo" class="form-control" rows="3" placeholder="Masukkan informasi tambahan toko"></textarea>
                     </div>
                     
                     <button id="saveSettings" class="btn btn-success"><i class="fas fa-save"></i> Simpan Pengaturan</button>
@@ -1695,27 +1697,13 @@
                     <label for="productName">Nama Produk</label>
                     <input type="text" id="productName" class="form-control" placeholder="Masukkan nama produk">
                 </div>
-                <div class="brand-unit-selector">
-                    <div class="form-group" style="flex: 1;">
-                        <label for="productBrand">Merk</label>
-                        <div class="input-group">
-                            <select id="productBrand" class="form-control">
-                                <option value="">Pilih Merk</option>
-                                <!-- Brands will be loaded here -->
-                            </select>
-                            <button type="button" id="addNewBrand" class="btn btn-secondary">+</button>
-                        </div>
-                    </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label for="productUnit">Satuan</label>
-                        <div class="input-group">
-                            <select id="productUnit" class="form-control">
-                                <option value="">Pilih Satuan</option>
-                                <!-- Units will be loaded here -->
-                            </select>
-                            <button type="button" id="addNewUnit" class="btn btn-secondary">+</button>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="productBrand">Merk</label>
+                    <input type="text" id="productBrand" class="form-control" placeholder="Masukkan merk produk">
+                </div>
+                <div class="form-group">
+                    <label for="productUnit">Satuan</label>
+                    <input type="text" id="productUnit" class="form-control" placeholder="Masukkan satuan (pcs, kg, etc)">
                 </div>
                 <div class="form-group">
                     <label for="productCategoryModal">Kategori</label>
@@ -1725,8 +1713,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="productPrice">Harga</label>
-                    <input type="number" id="productPrice" class="form-control" placeholder="Masukkan harga">
+                    <label for="productPurchasePrice">Harga Beli</label>
+                    <input type="number" id="productPurchasePrice" class="form-control" placeholder="Masukkan harga beli">
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Harga Jual</label>
+                    <input type="number" id="productPrice" class="form-control" placeholder="Masukkan harga jual">
                 </div>
                 <div class="form-group">
                     <label for="productStock">Stok</label>
@@ -1740,46 +1732,6 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary close-product-modal">Batal</button>
                 <button class="btn btn-success save-product"><i class="fas fa-save"></i> Simpan</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Brand Modal -->
-    <div id="brandModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Tambah Merk Baru</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="newBrandName">Nama Merk</label>
-                    <input type="text" id="newBrandName" class="form-control" placeholder="Masukkan nama merk">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary close-brand-modal">Batal</button>
-                <button class="btn btn-success save-brand">Simpan</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Unit Modal -->
-    <div id="unitModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Tambah Satuan Baru</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="newUnitName">Nama Satuan</label>
-                    <input type="text" id="newUnitName" class="form-control" placeholder="Masukkan nama satuan">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary close-unit-modal">Batal</button>
-                <button class="btn btn-success save-unit">Simpan</button>
             </div>
         </div>
     </div>
@@ -1801,27 +1753,13 @@
                     <label for="editProductName">Nama Produk</label>
                     <input type="text" id="editProductName" class="form-control">
                 </div>
-                <div class="brand-unit-selector">
-                    <div class="form-group" style="flex: 1;">
-                        <label for="editProductBrand">Merk</label>
-                        <div class="input-group">
-                            <select id="editProductBrand" class="form-control">
-                                <option value="">Pilih Merk</option>
-                                <!-- Brands will be loaded here -->
-                            </select>
-                            <button type="button" id="editAddNewBrand" class="btn btn-secondary">+</button>
-                        </div>
-                    </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label for="editProductUnit">Satuan</label>
-                        <div class="input-group">
-                            <select id="editProductUnit" class="form-control">
-                                <option value="">Pilih Satuan</option>
-                                <!-- Units will be loaded here -->
-                            </select>
-                            <button type="button" id="editAddNewUnit" class="btn btn-secondary">+</button>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="editProductBrand">Merk</label>
+                    <input type="text" id="editProductBrand" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="editProductUnit">Satuan</label>
+                    <input type="text" id="editProductUnit" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="editProductCategory">Kategori</label>
@@ -1830,7 +1768,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="editProductPrice">Harga</label>
+                    <label for="editProductPurchasePrice">Harga Beli</label>
+                    <input type="number" id="editProductPurchasePrice" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="editProductPrice">Harga Jual</label>
                     <input type="number" id="editProductPrice" class="form-control">
                 </div>
                 <div class="form-group">
@@ -2083,9 +2025,7 @@
             TRANSACTIONS: 'pos_transactions',
             SETTINGS: 'pos_settings',
             CURRENT_CART: 'pos_current_cart',
-            CURRENT_CASHIER: 'pos_current_cashier',
-            PRODUCT_BRANDS: 'pos_product_brands',
-            PRODUCT_UNITS: 'pos_product_units'
+            CURRENT_CASHIER: 'pos_current_cashier'
         };
         
         // Initialize data
@@ -2103,14 +2043,9 @@
             storeAddress: "Jl. Contoh No. 123, Kota Contoh",
             storePhone: "081234567890",
             taxRate: 10,
-            bankName: "",
-            accountNumber: "",
-            accountName: ""
+            defaultDiscount: 0,
+            additionalInfo: ""
         };
-        
-        // Product brands and units
-        let productBrands = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCT_BRANDS)) || ["Merk A", "Merk B", "Merk C"];
-        let productUnits = JSON.parse(localStorage.getItem(STORAGE_KEYS.PRODUCT_UNITS)) || ["Pcs", "Kg", "Liter", "Box"];
         
         // Current transaction
         let currentCart = JSON.parse(localStorage.getItem(STORAGE_KEYS.CURRENT_CART)) || {
@@ -2407,7 +2342,7 @@
                     phone: $('#customerType').val() === 'member' ? $('#customerPhone').val() : '',
                     email: $('#customerType').val() === 'member' ? $('#customerEmail').val() : '',
                     memberId: $('#memberId').val(),
-                    discount: $('#customerType').val() === 'member' ? parseInt($('#memberDiscount').val()) || 0 : 0
+                    discount: $('#customerType').val() === 'member' ? parseInt($('#memberDiscount').val()) || 0 : settings.defaultDiscount || 0
                 };
                 
                 // Calculate discount if member
@@ -2415,7 +2350,8 @@
                     const discountPercentage = parseInt($('#memberDiscount').val()) || 0;
                     currentCart.discount = (currentCart.subtotal * discountPercentage) / 100;
                 } else {
-                    currentCart.discount = 0;
+                    const discountPercentage = settings.defaultDiscount || 0;
+                    currentCart.discount = (currentCart.subtotal * discountPercentage) / 100;
                 }
                 
                 // Calculate tax
@@ -2449,6 +2385,13 @@
                     return;
                 }
                 
+                // Calculate profit
+                let profit = 0;
+                currentCart.items.forEach(item => {
+                    const productProfit = (item.product.price - (item.product.purchasePrice || item.product.price)) * item.quantity;
+                    profit += productProfit;
+                });
+                
                 // Create transaction
                 const transaction = {
                     id: 'T' + moment().format('YYYYMMDDHHmmss'),
@@ -2459,6 +2402,7 @@
                     discount: currentCart.discount,
                     tax: currentCart.tax,
                     total: currentCart.total,
+                    profit: profit,
                     paymentMethod: $('input[name="paymentMethod"]:checked').val(),
                     paymentAmount: paymentAmount,
                     change: paymentAmount - currentCart.total,
@@ -2582,91 +2526,7 @@
                     $('#productCategoryModal').append(`<option value="${category.id}">${category.name}</option>`);
                 });
                 
-                // Load brands for dropdown
-                $('#productBrand').empty().append('<option value="">Pilih Merk</option>');
-                productBrands.forEach(brand => {
-                    $('#productBrand').append(`<option value="${brand}">${brand}</option>`);
-                });
-                
-                // Load units for dropdown
-                $('#productUnit').empty().append('<option value="">Pilih Satuan</option>');
-                productUnits.forEach(unit => {
-                    $('#productUnit').append(`<option value="${unit}">${unit}</option>`);
-                });
-                
                 $('#productModal').show();
-            });
-            
-            // Add new brand
-            $('#addNewBrand').click(function() {
-                $('#brandModal').show();
-            });
-            
-            // Save new brand
-            $('.save-brand').click(function() {
-                const brandName = $('#newBrandName').val().trim();
-                
-                if (!brandName) {
-                    showToast('Nama merk harus diisi', 'error');
-                    return;
-                }
-                
-                if (productBrands.includes(brandName)) {
-                    showToast('Merk sudah ada', 'error');
-                    return;
-                }
-                
-                productBrands.push(brandName);
-                localStorage.setItem(STORAGE_KEYS.PRODUCT_BRANDS, JSON.stringify(productBrands));
-                
-                // Update brand dropdown
-                $('#productBrand').append(`<option value="${brandName}">${brandName}</option>`);
-                
-                $('#brandModal').hide();
-                $('#newBrandName').val('');
-                
-                showToast('Merk berhasil ditambahkan', 'success');
-            });
-            
-            // Close brand modal
-            $('.close-brand-modal').click(function() {
-                $('#brandModal').hide();
-            });
-            
-            // Add new unit
-            $('#addNewUnit').click(function() {
-                $('#unitModal').show();
-            });
-            
-            // Save new unit
-            $('.save-unit').click(function() {
-                const unitName = $('#newUnitName').val().trim();
-                
-                if (!unitName) {
-                    showToast('Nama satuan harus diisi', 'error');
-                    return;
-                }
-                
-                if (productUnits.includes(unitName)) {
-                    showToast('Satuan sudah ada', 'error');
-                    return;
-                }
-                
-                productUnits.push(unitName);
-                localStorage.setItem(STORAGE_KEYS.PRODUCT_UNITS, JSON.stringify(productUnits));
-                
-                // Update unit dropdown
-                $('#productUnit').append(`<option value="${unitName}">${unitName}</option>`);
-                
-                $('#unitModal').hide();
-                $('#newUnitName').val('');
-                
-                showToast('Satuan berhasil ditambahkan', 'success');
-            });
-            
-            // Close unit modal
-            $('.close-unit-modal').click(function() {
-                $('#unitModal').hide();
             });
             
             // Save product
@@ -2678,6 +2538,7 @@
                     brand: $('#productBrand').val(),
                     unit: $('#productUnit').val(),
                     categoryId: $('#productCategoryModal').val(),
+                    purchasePrice: parseFloat($('#productPurchasePrice').val()) || 0,
                     price: parseFloat($('#productPrice').val()) || 0,
                     stock: parseInt($('#productStock').val()) || 0,
                     description: $('#productDescription').val()
@@ -2714,6 +2575,7 @@
                 $('#productBrand').val('');
                 $('#productUnit').val('');
                 $('#productCategoryModal').val('');
+                $('#productPurchasePrice').val('');
                 $('#productPrice').val('');
                 $('#productStock').val('');
                 $('#productDescription').val('');
@@ -2728,18 +2590,8 @@
                     $('#editProductId').val(product.id);
                     $('#editProductBarcode').val(product.barcode);
                     $('#editProductName').val(product.name);
-                    
-                    // Load brands for dropdown
-                    $('#editProductBrand').empty().append('<option value="">Pilih Merk</option>');
-                    productBrands.forEach(brand => {
-                        $('#editProductBrand').append(`<option value="${brand}" ${brand === product.brand ? 'selected' : ''}>${brand}</option>`);
-                    });
-                    
-                    // Load units for dropdown
-                    $('#editProductUnit').empty().append('<option value="">Pilih Satuan</option>');
-                    productUnits.forEach(unit => {
-                        $('#editProductUnit').append(`<option value="${unit}" ${unit === product.unit ? 'selected' : ''}>${unit}</option>`);
-                    });
+                    $('#editProductBrand').val(product.brand || '');
+                    $('#editProductUnit').val(product.unit || '');
                     
                     // Load categories for dropdown
                     $('#editProductCategory').empty();
@@ -2747,22 +2599,13 @@
                         $('#editProductCategory').append(`<option value="${category.id}" ${category.id === product.categoryId ? 'selected' : ''}>${category.name}</option>`);
                     });
                     
+                    $('#editProductPurchasePrice').val(product.purchasePrice || '');
                     $('#editProductPrice').val(product.price);
                     $('#editProductStock').val(product.stock);
                     $('#editProductDescription').val(product.description || '');
                     
                     $('#editProductModal').show();
                 }
-            });
-            
-            // Add new brand from edit modal
-            $('#editAddNewBrand').click(function() {
-                $('#brandModal').show();
-            });
-            
-            // Add new unit from edit modal
-            $('#editAddNewUnit').click(function() {
-                $('#unitModal').show();
             });
             
             // Update product
@@ -2778,6 +2621,7 @@
                         brand: $('#editProductBrand').val(),
                         unit: $('#editProductUnit').val(),
                         categoryId: $('#editProductCategory').val(),
+                        purchasePrice: parseFloat($('#editProductPurchasePrice').val()) || 0,
                         price: parseFloat($('#editProductPrice').val()) || 0,
                         stock: parseInt($('#editProductStock').val()) || 0,
                         description: $('#editProductDescription').val()
@@ -3143,9 +2987,8 @@
                     storeAddress: $('#storeAddressSetting').val(),
                     storePhone: $('#storePhoneSetting').val(),
                     taxRate: parseInt($('#storeTaxRate').val()) || 0,
-                    bankName: $('#storeBankSetting').val(),
-                    accountNumber: $('#storeAccountNumber').val(),
-                    accountName: $('#storeAccountName').val()
+                    defaultDiscount: parseInt($('#storeDiscount').val()) || 0,
+                    additionalInfo: $('#storeAdditionalInfo').val()
                 };
                 
                 // Save to local storage
@@ -3210,6 +3053,10 @@
                                 <p style="font-size: 24px; font-weight: bold;">${$('#reportTotalRevenue').text()}</p>
                             </div>
                             <div style="flex: 1; text-align: center; padding: 10px; border: 1px solid #ddd; margin: 0 5px;">
+                                <h3 style="margin-bottom: 5px;">Total Laba</h3>
+                                <p style="font-size: 24px; font-weight: bold;">${$('#reportTotalProfit').text()}</p>
+                            </div>
+                            <div style="flex: 1; text-align: center; padding: 10px; border: 1px solid #ddd; margin: 0 5px;">
                                 <h3 style="margin-bottom: 5px;">Produk Terlaris</h3>
                                 <p style="font-size: 24px; font-weight: bold;">${$('#reportBestSeller').text()}</p>
                             </div>
@@ -3263,6 +3110,7 @@
                     'Diskon': t.discount,
                     'Pajak': t.tax,
                     'Total': t.total,
+                    'Laba': t.profit || 0,
                     'Metode Pembayaran': t.paymentMethod === 'cash' ? 'Tunai' : 
                                         t.paymentMethod === 'transfer' ? 'Transfer Bank' : 'E-Wallet',
                     'Kasir': t.cashier.name
@@ -3280,8 +3128,6 @@
                     cashiers: cashiers,
                     transactions: transactions,
                     settings: settings,
-                    productBrands: productBrands,
-                    productUnits: productUnits,
                     timestamp: new Date().toISOString()
                 };
                 
@@ -3335,15 +3181,6 @@
                             transactions = backupData.transactions;
                             settings = backupData.settings;
                             
-                            // Restore brands and units if available
-                            if (backupData.productBrands) {
-                                productBrands = backupData.productBrands;
-                            }
-                            
-                            if (backupData.productUnits) {
-                                productUnits = backupData.productUnits;
-                            }
-                            
                             // Save to local storage
                             saveProducts();
                             saveCategories();
@@ -3351,8 +3188,6 @@
                             saveCashiers();
                             saveTransactions();
                             localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(settings));
-                            localStorage.setItem(STORAGE_KEYS.PRODUCT_BRANDS, JSON.stringify(productBrands));
-                            localStorage.setItem(STORAGE_KEYS.PRODUCT_UNITS, JSON.stringify(productUnits));
                             
                             // Update UI
                             initializeData();
@@ -3492,10 +3327,10 @@
             // Save initial data if not exists
             if (products.length === 0) {
                 products = [
-                    { id: 'P001', barcode: '123456789', name: 'Produk Contoh 1', brand: 'Merk A', unit: 'Pcs', categoryId: 'C001', price: 10000, stock: 15, description: '' },
-                    { id: 'P002', barcode: '987654321', name: 'Produk Contoh 2', brand: 'Merk B', unit: 'Kg', categoryId: 'C002', price: 15000, stock: 8, description: '' },
-                    { id: 'P003', barcode: '456789123', name: 'Produk Contoh 3', brand: 'Merk A', unit: 'Pcs', categoryId: 'C001', price: 20000, stock: 20, description: '' },
-                    { id: 'P004', barcode: '321654987', name: 'Produk Contoh 4', brand: 'Merk C', unit: 'Box', categoryId: 'C003', price: 5000, stock: 30, description: '' }
+                    { id: 'P001', barcode: '123456789', name: 'Produk Contoh 1', brand: 'Merk A', unit: 'Pcs', categoryId: 'C001', purchasePrice: 8000, price: 10000, stock: 15, description: '' },
+                    { id: 'P002', barcode: '987654321', name: 'Produk Contoh 2', brand: 'Merk B', unit: 'Kg', categoryId: 'C002', purchasePrice: 12000, price: 15000, stock: 8, description: '' },
+                    { id: 'P003', barcode: '456789123', name: 'Produk Contoh 3', brand: 'Merk A', unit: 'Pcs', categoryId: 'C001', purchasePrice: 15000, price: 20000, stock: 20, description: '' },
+                    { id: 'P004', barcode: '321654987', name: 'Produk Contoh 4', brand: 'Merk C', unit: 'Box', categoryId: 'C003', purchasePrice: 4000, price: 5000, stock: 30, description: '' }
                 ];
                 saveProducts();
             }
@@ -3536,6 +3371,7 @@
                         discount: 1000,
                         tax: 900,
                         total: 9900,
+                        profit: 2000,
                         paymentMethod: 'cash',
                         paymentAmount: 10000,
                         change: 100,
@@ -3556,9 +3392,8 @@
             $('#storeAddressSetting').val(settings.storeAddress);
             $('#storePhoneSetting').val(settings.storePhone);
             $('#storeTaxRate').val(settings.taxRate);
-            $('#storeBankSetting').val(settings.bankName);
-            $('#storeAccountNumber').val(settings.accountNumber);
-            $('#storeAccountName').val(settings.accountName);
+            $('#storeDiscount').val(settings.defaultDiscount || 0);
+            $('#storeAdditionalInfo').val(settings.additionalInfo || '');
             
             // Load initial data
             loadProducts();
@@ -3796,7 +3631,7 @@
                     </div>
                 </div>
                 <div class="receipt-footer">
-                    <div>Terima kasih telah berbelanja</div>
+                    <div>${settings.additionalInfo || 'Terima kasih telah berbelanja'}</div>
                     <div>Kasir: ${transaction.cashier.name}</div>
                 </div>
             `;
@@ -3824,7 +3659,7 @@
             if (products.length === 0) {
                 $('#adminProductsTable').html(`
                     <tr>
-                        <td colspan="8">
+                        <td colspan="10">
                             <div class="empty-state">
                                 <i class="fas fa-box-open"></i>
                                 <p>Tidak ada produk</p>
@@ -3836,6 +3671,8 @@
                 products.forEach(product => {
                     const category = categories.find(c => c.id === product.categoryId);
                     const stockClass = product.stock > 5 ? 'text-success' : product.stock > 0 ? 'text-warning' : 'text-danger';
+                    const profit = product.price - (product.purchasePrice || product.price);
+                    const profitClass = profit > 0 ? 'profit-positive' : profit < 0 ? 'profit-negative' : 'profit-neutral';
                     
                     $('#adminProductsTable').append(`
                         <tr>
@@ -3844,7 +3681,9 @@
                             <td>${product.brand || '-'}</td>
                             <td>${product.unit || '-'}</td>
                             <td>${category ? category.name : '-'}</td>
+                            <td>${formatCurrency(product.purchasePrice || 0)}</td>
                             <td>${formatCurrency(product.price)}</td>
+                            <td class="${profitClass}">${formatCurrency(profit)}</td>
                             <td class="${stockClass}">${product.stock}</td>
                             <td>
                                 <button class="btn btn-info btn-sm edit-product" data-id="${product.id}" title="Edit">
@@ -3990,7 +3829,7 @@
             if (filteredTransactions.length === 0) {
                 $('#adminTransactionsTable').html(`
                     <tr>
-                        <td colspan="6">
+                        <td colspan="7">
                             <div class="empty-state">
                                 <i class="fas fa-receipt"></i>
                                 <p>Tidak ada transaksi</p>
@@ -4000,12 +3839,15 @@
                 `);
             } else {
                 filteredTransactions.forEach(transaction => {
+                    const profitClass = transaction.profit > 0 ? 'profit-positive' : transaction.profit < 0 ? 'profit-negative' : 'profit-neutral';
+                    
                     $('#adminTransactionsTable').append(`
                         <tr>
                             <td>${transaction.id}</td>
                             <td>${moment(transaction.date).format('DD/MM/YYYY HH:mm')}</td>
                             <td>${transaction.customer?.name || '-'}</td>
                             <td>${formatCurrency(transaction.total)}</td>
+                            <td class="${profitClass}">${formatCurrency(transaction.profit || 0)}</td>
                             <td>${transaction.cashier.name}</td>
                             <td>
                                 <button class="btn btn-info btn-sm view-transaction" data-id="${transaction.id}" title="Detail">
@@ -4043,6 +3885,7 @@
             // Calculate report summary
             const totalTransactions = filteredTransactions.length;
             const totalRevenue = filteredTransactions.reduce((sum, t) => sum + t.total, 0);
+            const totalProfit = filteredTransactions.reduce((sum, t) => sum + (t.profit || 0), 0);
             
             // Find best selling product
             let productSales = {};
@@ -4070,6 +3913,7 @@
             // Update summary cards
             $('#reportTotalTransactions').text(totalTransactions);
             $('#reportTotalRevenue').text(formatCurrency(totalRevenue));
+            $('#reportTotalProfit').text(formatCurrency(totalProfit));
             $('#reportBestSeller').text(bestSeller);
             
             // Prepare data for chart
@@ -4077,20 +3921,26 @@
             filteredTransactions.forEach(t => {
                 const date = moment(t.date).format('DD/MM');
                 if (!dailySales[date]) {
-                    dailySales[date] = 0;
+                    dailySales[date] = {
+                        revenue: 0,
+                        profit: 0
+                    };
                 }
-                dailySales[date] += t.total;
+                dailySales[date].revenue += t.total;
+                dailySales[date].profit += t.profit || 0;
             });
             
             const labels = Object.keys(dailySales).sort();
-            const data = labels.map(date => dailySales[date]);
+            const revenueData = labels.map(date => dailySales[date].revenue);
+            const profitData = labels.map(date => dailySales[date].profit);
             
             // Create or update chart
             const ctx = document.getElementById('salesChart').getContext('2d');
             
             if (salesChart) {
                 salesChart.data.labels = labels;
-                salesChart.data.datasets[0].data = data;
+                salesChart.data.datasets[0].data = revenueData;
+                salesChart.data.datasets[1].data = profitData;
                 salesChart.update();
             } else {
                 salesChart = new Chart(ctx, {
@@ -4098,10 +3948,17 @@
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: 'Penjualan Harian',
-                            data: data,
+                            label: 'Pendapatan',
+                            data: revenueData,
                             backgroundColor: '#4361ee',
                             borderColor: '#3f37c9',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Laba',
+                            data: profitData,
+                            backgroundColor: '#10b981',
+                            borderColor: '#0d9b6c',
                             borderWidth: 1
                         }]
                     },
