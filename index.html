@@ -4,24 +4,17 @@
 <meta charset="UTF-8">
 <title>Premium POS System – Final Lengkap</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.css">
 <style>
+/* Reset & Root */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,Arial,system-ui}
 :root{
     --primary:#4361ee;
-    --primary-light:#eef2ff;
     --success:#10b981;
     --danger:#ef4444;
-    --warning:#f59e0b;
-    --info:#3b82f6;
     --bg:#f5f7fa;
-    --dark:#1a1a2e;
     --radius:.7rem;
     --shadow:0 4px 12px -4px rgba(0,0,0,.1);
-    --shadow-lg:0 20px 25px -5px rgba(0,0,0,.1);
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
 body{background:var(--bg);color:#333;line-height:1.6}
 .container{max-width:100%;margin:0 auto;padding:20px}
 .header{background:linear-gradient(135deg,var(--primary),#3f37c9);color:#fff;padding:15px 20px;border-radius:var(--radius);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
@@ -30,12 +23,10 @@ body{background:var(--bg);color:#333;line-height:1.6}
 .main-content{display:flex;gap:20px;flex-wrap:wrap}
 .panel{flex:1 1 320px;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
 .panel-title{font-size:1.2rem;font-weight:600;margin-bottom:15px;border-bottom:2px solid var(--primary);padding-bottom:5px}
-.btn{display:inline-block;padding:8px 16px;border:none;border-radius:.4rem;cursor:pointer;font-weight:600;transition:.2s}
+.btn{display:inline-block;padding:8px 16px;border:none;border-radius:.4rem;cursor:pointer;font-weight:600}
 .btn-primary{background:var(--primary);color:#fff}
 .btn-success{background:var(--success);color:#fff}
 .btn-danger{background:var(--danger);color:#fff}
-.btn-warning{background:var(--warning);color:#fff}
-.btn-info{background:var(--info);color:#fff}
 .btn-sm{padding:5px 10px;font-size:.8rem}
 .btn-block{width:100%}
 .form-control{width:100%;padding:10px;border:1px solid #ccc;border-radius:.4rem}
@@ -56,10 +47,10 @@ body{background:var(--bg);color:#333;line-height:1.6}
 .tab-content.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:1000}
-.modal-content{background:#fff;border-radius:var(--radius);max-width:90%;max-height:90%;overflow-y:auto;padding:20px;box-shadow:var(--shadow-lg)}
+.modal-content{background:#fff;border-radius:var(--radius);max-width:90%;max-height:90%;overflow-y:auto;padding:20px;box-shadow:var(--shadow)}
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
 .modal-close{background:none;border:none;font-size:1.5rem;cursor:pointer}
-.login-container{max-width:400px;margin:50px auto;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:30px}
+.login-container{max-width:400px;margin:50px auto;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:30px}
 .login-logo{text-align:center;margin-bottom:20px}
 .login-logo i{font-size:3rem;color:var(--primary);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
@@ -77,11 +68,10 @@ body{background:var(--bg);color:#333;line-height:1.6}
 .toast.warning{background:var(--warning)}
 .confirmation-dialog{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);justify-content:center;align-items:center;z-index:1200}
 .confirmation-content{background:#fff;padding:20px;border-radius:var(--radius);max-width:350px;text-align:center}
-.fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-lg)}
+.fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow)}
 @media(max-width:768px){
     .main-content{flex-direction:column}
     .header{flex-direction:column;align-items:flex-start}
-    .table th,.table td{white-space:nowrap}
 }
 </style>
 </head>
@@ -218,7 +208,7 @@ body{background:var(--bg);color:#333;line-height:1.6}
 </div>
 
 <!-- Admin FAB -->
-<div class="fab" id="adminFab" title="Admin"><i class="fas fa-lock"></i></div>
+<div class="fab" id="adminFab" title="Admin"><i class="fas fa-cash-register"></i></div>
 
 <!-- Admin Modal -->
 <div class="modal" id="adminModal">
@@ -282,16 +272,10 @@ body{background:var(--bg);color:#333;line-height:1.6}
 <!-- Receipt hidden -->
 <div id="receiptArea" style="display:none"></div>
 
-<!-- CDN JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-/* ========== CONFIG & DATA ========== */
+/* === CONFIG & DATA === */
 const ADMIN_PASSWORD = 'Geraiku.12345';
 let products=[],categories=[],customers=[],cashiers=[],transactions=[],settings={};
-
 const STORAGE = {
     PRODUCTS:'pos_products',
     CATEGORIES:'pos_categories',
@@ -303,8 +287,6 @@ const STORAGE = {
     CASHIER:'pos_cashier'
 };
 let currentCart, currentCashier;
-
-/* ========== UTILS ========== */
 const $=sel=>document.querySelector(sel);
 const $$=sel=>document.querySelectorAll(sel);
 const fmt=n=>'Rp '+n.toLocaleString('id-ID');
@@ -313,16 +295,10 @@ const toast=(msg,type='info',t=3000)=>{
     el.textContent=msg;el.className='toast '+type;el.classList.add('show');
     setTimeout(()=>el.classList.remove('show'),t);
 };
-const confirmDialog=(msg,cb)=>{
-    $('#confirmText').textContent=msg;
-    $('#confirmDialog').style.display='flex';
-    $('#confirmOk').onclick=()=>{cb(true);$('#confirmDialog').style.display='none'};
-    $('#confirmCancel').onclick=()=>{cb(false);$('#confirmDialog').style.display='none'};
-};
 const save=(key,data)=>localStorage.setItem(key,JSON.stringify(data));
 const load=key=>JSON.parse(localStorage.getItem(key))||null;
 
-/* ========== INIT DATA ========== */
+/* === INIT DATA === */
 function initData(){
     products=load(STORAGE.PRODUCTS)||[
         {id:'P001',barcode:'123456',name:'Susu UHT',brand:'Indomilk',unit:'pcs',categoryId:'C001',purchasePrice:7000,price:10000,stock:20},
@@ -338,17 +314,17 @@ function initData(){
 }
 initData();
 
-/* ========== RENDER ========== */
+/* === RENDER === */
 function renderProducts(search='',cat='all'){
-    const list=$('#productList');
+    const list=document.getElementById('productList');
     list.innerHTML='';
-    let filtered=products.filter(p=>(!search || p.name.toLowerCase().includes(search.toLowerCase()) || p.barcode.includes(search)) && (cat==='all' || p.categoryId===cat));
+    let filtered=products.filter(p=>(!search||p.name.toLowerCase().includes(search.toLowerCase())||p.barcode.includes(search))&&(cat==='all'||p.categoryId===cat));
     if(!filtered.length){list.innerHTML='<tr><td colspan="4" class="empty-state"><i class="fas fa-box-open"></i><p>Tidak ada produk</p></td></tr>';return;}
     filtered.forEach(p=>{
         const stockClass=p.stock>5?'text-success':p.stock>0?'text-warning':'text-danger';
         list.insertAdjacentHTML('beforeend',`
         <tr>
-            <td>${p.name}<br><small>${p.brand} • ${p.unit}</small></td>
+            <td>${p.name}<br><small>${p.brand} · ${p.unit}</small></td>
             <td>${fmt(p.price)}</td>
             <td class="${stockClass}">${p.stock}</td>
             <td><button class="btn btn-sm btn-success add-to-cart" ${p.stock<=0?'disabled':''} data-id="${p.id}"><i class="fas fa-cart-plus"></i></button></td>
@@ -356,7 +332,7 @@ function renderProducts(search='',cat='all'){
     });
 }
 function renderCart(){
-    const list=$('#cartItems');
+    const list=document.getElementById('cartItems');
     list.innerHTML='';
     currentCart.subtotal=currentCart.items.reduce((a,i)=>a+i.product.price*i.quantity,0);
     currentCart.total=currentCart.subtotal+currentCart.tax-currentCart.discount;
@@ -365,10 +341,7 @@ function renderCart(){
         currentCart.items.forEach(i=>{
             list.insertAdjacentHTML('beforeend',`
             <div class="cart-item">
-                <div>
-                    <strong>${i.product.name}</strong><br>
-                    ${fmt(i.product.price)}
-                </div>
+                <div><strong>${i.product.name}</strong><br>${fmt(i.product.price)}</div>
                 <div>
                     <input type="number" min="1" max="${i.product.stock}" value="${i.quantity}" class="qty-input" data-id="${i.product.id}" style="width:50px">
                     <button class="btn btn-sm btn-danger remove-item" data-id="${i.product.id}"><i class="fas fa-trash"></i></button>
@@ -376,101 +349,98 @@ function renderCart(){
             </div>`);
         });
     }
-    $('#subtotal').textContent=fmt(currentCart.subtotal);
-    $('#discount').textContent=fmt(currentCart.discount);
-    $('#tax').textContent=fmt(currentCart.tax);
-    $('#total').textContent=fmt(currentCart.total);
+    document.getElementById('subtotal').textContent=fmt(currentCart.subtotal);
+    document.getElementById('discount').textContent=fmt(currentCart.discount);
+    document.getElementById('tax').textContent=fmt(currentCart.tax);
+    document.getElementById('total').textContent=fmt(currentCart.total);
     save(STORAGE.CART,currentCart);
 }
 function renderCategories(){
-    $('#categoryFilter').innerHTML='<option value="all">Semua Kategori</option>';
-    categories.forEach(c=>$('#categoryFilter').insertAdjacentHTML('beforeend',`<option value="${c.id}">${c.name}</option>`));
+    const sel=document.getElementById('categoryFilter');
+    sel.innerHTML='<option value="all">Semua Kategori</option>';
+    categories.forEach(c=>sel.insertAdjacentHTML('beforeend',`<option value="${c.id}">${c.name}</option>`));
 }
 function renderAdmin(){
-    $('#adminProductList').innerHTML=products.map(p=>`<tr>
+    document.getElementById('adminProductList').innerHTML=products.map(p=>`<tr>
         <td>${p.barcode}</td><td>${p.name}</td><td>${fmt(p.price)}</td><td>${p.stock}</td>
         <td>
-            <button class="btn btn-sm btn-info edit-product" data-id="${p.id}"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-sm btn-danger delete-product" data-id="${p.id}"><i class="fas fa-trash"></i></button>
+            <button class="btn btn-sm btn-info edit-product" data-id="${p.id}">Edit</button>
+            <button class="btn btn-sm btn-danger delete-product" data-id="${p.id}">Hapus</button>
         </td>
     </tr>`).join('');
-    $('#adminCategoryList').innerHTML=categories.map(c=>`<tr>
+    document.getElementById('adminCategoryList').innerHTML=categories.map(c=>`<tr>
         <td>${c.name}</td><td>${products.filter(p=>p.categoryId===c.id).length}</td>
         <td>
-            <button class="btn btn-sm btn-info edit-category" data-id="${c.id}"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-sm btn-danger delete-category" data-id="${c.id}"><i class="fas fa-trash"></i></button>
+            <button class="btn btn-sm btn-info edit-category" data-id="${c.id}">Edit</button>
+            <button class="btn btn-sm btn-danger delete-category" data-id="${c.id}">Hapus</button>
         </td>
     </tr>`).join('');
-    $('#adminCustomerList').innerHTML=customers.map(c=>`<tr>
+    document.getElementById('adminCustomerList').innerHTML=customers.map(c=>`<tr>
         <td>${c.name}</td><td>${c.phone}</td><td>${c.type}</td>
         <td>
-            <button class="btn btn-sm btn-info edit-customer" data-id="${c.id}"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-sm btn-danger delete-customer" data-id="${c.id}"><i class="fas fa-trash"></i></button>
+            <button class="btn btn-sm btn-info edit-customer" data-id="${c.id}">Edit</button>
+            <button class="btn btn-sm btn-danger delete-customer" data-id="${c.id}">Hapus</button>
         </td>
     </tr>`).join('');
-    $('#adminCashierList').innerHTML=cashiers.map(c=>`<tr>
-        <td>${c.id}</td><td>${c.name}</td><td><span class="badge ${c.status==='active'?'badge-success':'badge-danger'}">${c.status}</span></td>
+    document.getElementById('adminCashierList').innerHTML=cashiers.map(c=>`<tr>
+        <td>${c.id}</td><td>${c.name}</td><td>${c.status}</td>
         <td>
-            <button class="btn btn-sm btn-info edit-cashier" data-id="${c.id}"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-sm btn-danger delete-cashier" data-id="${c.id}" ${currentCashier&&currentCashier.id===c.id?'disabled':''}><i class="fas fa-trash"></i></button>
+            <button class="btn btn-sm btn-info edit-cashier" data-id="${c.id}">Edit</button>
+            <button class="btn btn-sm btn-danger delete-cashier" data-id="${c.id}" ${currentCashier&&currentCashier.id===c.id?'disabled':''}>Hapus</button>
         </td>
     </tr>`).join('');
 }
-/* ========== AUTH ========== */
+
+/* === AUTH === */
 function login(id,pin){
     const cashier=cashiers.find(c=>c.id===id&&c.pin===pin&&c.status==='active');
     if(!cashier){toast('ID / PIN salah','error');return false;}
     currentCashier=cashier;
     save(STORAGE.CASHIER,currentCashier);
-    $('#cashierName').textContent=cashier.name;
-    $('#mainApp').style.display='block';
-    $('#loginModal').style.display='none';
+    document.getElementById('cashierName').textContent=cashier.name;
+    document.getElementById('storeName').textContent=settings.storeName;
+    document.getElementById('storeAddress').textContent=settings.storeAddress;
+    document.getElementById('mainApp').style.display='block';
+    document.getElementById('loginModal').style.display='none';
     renderProducts();renderCart();renderCategories();
     return true;
 }
 function logout(){
     currentCashier=null;
     localStorage.removeItem(STORAGE.CASHIER);
-    $('#mainApp').style.display='none';
-    $('#loginModal').style.display='flex';
+    document.getElementById('mainApp').style.display='none';
+    document.getElementById('loginModal').style.display='flex';
 }
 
-/* ========== ADMIN MODAL ========== */
+/* === MODAL HANDLING === */
 function openAdmin(){
-    $('#adminModal').style.display='flex';
+    document.getElementById('adminModal').style.display='flex';
     renderAdmin();
 }
-$('#adminFab').onclick=()=>confirmDialog('Masuk ke Admin?',ok=>{
-    if(!ok)return;
+document.querySelectorAll('.modal-close').forEach(btn=>btn.onclick=e=>e.target.closest('.modal').style.display='none');
+document.getElementById('adminFab').onclick=()=>{
     const pwd=prompt('Password Admin:');
-    if(pwd===ADMIN_PASSWORD){openAdmin();}else{toast('Password salah','error');}
-});
-$$('.modal-close').forEach(el=>el.onclick=e=>e.target.closest('.modal').style.display='none');
+    if(pwd===ADMIN_PASSWORD)openAdmin();else toast('Password salah','error');
+};
 
-/* ========== TABS ========== */
-$$('.tab').forEach(tab=>tab.onclick=e=>{
+/* === TABS === */
+document.querySelectorAll('.tab').forEach(tab=>tab.onclick=e=>{
     const target=e.target.dataset.tab;
-    $$('.tab').forEach(t=>t.classList.remove('active'));
-    $$('.tab-content').forEach(c=>c.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
     e.target.classList.add('active');
-    $(`#${target}Tab`).classList.add('active');
-    if(target==='reports')renderReport();
-});
-$$('.admin-tab').forEach(tab=>tab.onclick=e=>{
-    const target=e.target.dataset.tab;
-    $$('.admin-tab').forEach(t=>t.classList.remove('active'));
-    $$('.admin-tab-content').forEach(c=>c.classList.remove('active'));
-    e.target.classList.add('active');
-    $(`#${target}Tab`).classList.add('active');
+    document.getElementById(target+'Tab').classList.add('active');
 });
 
-/* ========== CART ========== */
+/* === CART === */
 function addToCart(id){
     const p=products.find(pr=>pr.id===id);
     if(!p||p.stock<=0){toast('Stok habis','error');return;}
     const exist=currentCart.items.find(i=>i.product.id===id);
-    if(exist){if(exist.quantity+1>p.stock){toast('Stok tidak cukup','error');return;}exist.quantity++;}
-    else currentCart.items.push({product:p,quantity:1});
+    if(exist){
+        if(exist.quantity+1>p.stock){toast('Stok tidak cukup','error');return;}
+        exist.quantity++;
+    }else currentCart.items.push({product:p,quantity:1});
     renderCart();
 }
 function removeItem(id){
@@ -481,9 +451,10 @@ function updateQty(id,qty){
     const item=currentCart.items.find(i=>i.product.id===id);
     if(item){item.quantity=qty;renderCart();}
 }
-/* ========== CHECKOUT ========== */
+
+/* === CHECKOUT === */
 function finishTransaction(){
-    const pay=parseFloat($('#payAmount').value);
+    const pay=parseFloat(document.getElementById('payAmount').value);
     if(!pay||pay<currentCart.total){toast('Jumlah bayar kurang','error');return;}
     const profit=currentCart.items.reduce((a,i)=>a+(i.product.price-(i.product.purchasePrice||i.product.price))*i.quantity,0);
     const tr={
@@ -497,7 +468,7 @@ function finishTransaction(){
         profit,
         pay,
         change:pay-currentCart.total,
-        method:$('#payMethod').value,
+        method:document.getElementById('payMethod').value,
         cashier:currentCashier
     };
     transactions.unshift(tr);
@@ -512,26 +483,18 @@ function finishTransaction(){
 }
 function resetCart(){
     currentCart={items:[],subtotal:0,discount:0,tax:0,total:0};save(STORAGE.CART,currentCart);
-    renderCart();$('#payAmount').value='';
-    selectTab('cart');
+    renderCart();document.getElementById('payAmount').value='';
+    document.querySelector('[data-tab="cart"]').click();
 }
-function selectTab(tab){
-    $$('.tab').forEach(t=>t.classList.remove('active'));
-    $$('.tab-content').forEach(c=>c.classList.remove('active'));
-    $(`[data-tab="${tab}"]`).classList.add('active');
-    $(`#${tab}Tab`).classList.add('active');
-}
-
-/* ========== PRINT RECEIPT ========== */
 function generateReceipt(tr){
-    const rc=$('#receiptArea');
+    const rc=document.getElementById('receiptArea');
     rc.innerHTML=`
     <div class="receipt">
         <div class="receipt-header">
             <div><strong>${settings.storeName}</strong></div>
             <div>${settings.storeAddress}</div>
             <div>Telp: ${settings.storePhone}</div>
-            <div>${moment(tr.date).format('DD/MM/YYYY HH:mm')}</div>
+            <div>${new Date(tr.date).toLocaleString('id-ID')}</div>
         </div>
         <div class="receipt-items">
             ${tr.items.map(i=>`<div><span>${i.product.name} (${i.quantity})</span><span>${fmt(i.product.price*i.quantity)}</span></div>`).join('')}
@@ -544,15 +507,13 @@ function generateReceipt(tr){
             <div><span>${tr.method}</span><span>${fmt(tr.pay)}</span></div>
             <div><span>Kembali</span><span>${fmt(tr.change)}</span></div>
         </div>
-        <div style="text-align:center;margin-top:10px;font-size:12px">
-            Terima kasih | Kasir: ${tr.cashier.name}
-        </div>
+        <div style="text-align:center;margin-top:10px;font-size:12px">Terima kasih | Kasir: ${tr.cashier.name}</div>
     </div>`;
     window.print();
 }
 
-/* ========== ADMIN CRUD ========== */
-$('#addProductBtn').onclick=()=>{
+/* === ADMIN CRUD === */
+document.getElementById('addProductBtn').onclick=()=>{
     const name=prompt('Nama Produk');
     if(!name)return;
     const price=parseFloat(prompt('Harga Jual'));
@@ -560,82 +521,99 @@ $('#addProductBtn').onclick=()=>{
     products.push({id:'P'+Date.now(),barcode:'-',name,brand:'-',unit:'pcs',categoryId:categories[0].id,purchasePrice:price-2000,price,stock:0});
     save(STORAGE.PRODUCTS,products);renderProducts();renderAdmin();
 };
-$('#addCategoryBtn').onclick=()=>{
+document.getElementById('addCategoryBtn').onclick=()=>{
     const name=prompt('Nama Kategori');
     if(!name)return;
-    categories.push({id:'C'+Date.now(),name,description:''});
+    categories.push({id:'C'+Date.now(),name});
     save(STORAGE.CATEGORIES,categories);renderCategories();renderAdmin();
 };
-$('#addCustomerBtn').onclick=()=>{
+document.getElementById('addCustomerBtn').onclick=()=>{
     const name=prompt('Nama Pelanggan');
     if(!name)return;
-    customers.push({id:'M'+Date.now(),type:'member',name,phone:'-',email:'',address:''});
-    save(STORAGE.CUSTOMERS,customers);renderAdmin();
+    customers.push({id:'M'+Date.now(),type:'member',name,phone:'-'});save(STORAGE.CUSTOMERS,customers);renderAdmin();
 };
-$('#addCashierBtn').onclick=()=>{
+document.getElementById('addCashierBtn').onclick=()=>{
     const name=prompt('Nama Kasir');
     if(!name)return;
     const pin=prompt('PIN 4 digit');
     if(!pin||pin.length!==4)return;
-    cashiers.push({id:'K'+(cashiers.length+1).toString().padStart(3,'0'),name,pin,status:'active'});
-    save(STORAGE.CASHIERS,cashiers);renderAdmin();
+    cashiers.push({id:'K'+(cashiers.length+1).toString().padStart(3,'0'),name,pin,status:'active'});save(STORAGE.CASHIERS,cashiers);renderAdmin();
 };
-$('#saveSettingsBtn').onclick=()=>{
-    settings.storeName=$('#storeNameSet').value;
-    settings.storeAddress=$('#storeAddressSet').value;
-    settings.storePhone=$('#storePhoneSet').value;
-    settings.tax=parseInt($('#taxSet').value)||0;
-    settings.discount=parseInt($('#discountSet').value)||0;
+document.getElementById('saveSettingsBtn').onclick=()=>{
+    settings.storeName=document.getElementById('storeNameSet').value;
+    settings.storeAddress=document.getElementById('storeAddressSet').value;
+    settings.storePhone=document.getElementById('storePhoneSet').value;
+    settings.tax=parseInt(document.getElementById('taxSet').value)||0;
+    settings.discount=parseInt(document.getElementById('discountSet').value)||0;
     save(STORAGE.SETTINGS,settings);
-    $('#storeName').textContent=settings.storeName;
-    $('#storeAddress').textContent=settings.storeAddress;
+    document.getElementById('storeName').textContent=settings.storeName;
+    document.getElementById('storeAddress').textContent=settings.storeAddress;
     toast('Pengaturan tersimpan','success');
 };
-$('#backupBtn').onclick=()=>{
+document.getElementById('backupBtn').onclick=()=>{
     const data={products,categories,customers,cashiers,transactions,settings};
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url;a.download=`backup_${Date.now()}.json`;
-    a.click();URL.revokeObjectURL(url);
+    const a=document.createElement('a');a.href=url;a.download=`backup_${Date.now()}.json`;a.click();URL.revokeObjectURL(url);
 };
-$('#restoreBtn').onclick=()=>$('#restoreFile').click();
-$('#restoreFile').onchange=e=>{
+document.getElementById('restoreBtn').onclick=()=>document.getElementByById('restoreFile').click();
+document.getElementById('restoreFile').onchange=e=>{
     const file=e.target.files[0];
     if(!file)return;
     const reader=new FileReader();
     reader.onload=()=>{
         try{
             const data=JSON.parse(reader.result);
-            Object.assign(localStorage,data);
+            ['PRODUCTS','CATEGORIES','CUSTOMERS','CASHIERS','TRANSACTIONS','SETTINGS'].forEach(k=>localStorage.setItem('pos_'+k.toLowerCase(),JSON.stringify(data[k.toLowerCase()]||[])));
             initData();renderProducts();renderAdmin();toast('Data dipulihkan','success');
         }catch{toast('File rusak','error')}
     };
     reader.readAsText(file);
 };
 
-/* ========== SETUP ========== */
-$('#storeNameSet').value=settings.storeName;
-$('#storeAddressSet').value=settings.storeAddress;
-$('#storePhoneSet').value=settings.storePhone;
-$('#taxSet').value=settings.tax;
-$('#discountSet').value=settings.discount;
+/* === EVENT BINDING === */
+document.getElementById('loginForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    login(document.getElementById('cashierId').value.trim(),document.getElementById('cashierPin').value.trim());
+});
+document.getElementById('logoutBtn').onclick=logout;
+document.getElementById('productSearch').addEventListener('input',e=>renderProducts(e.target.value,document.getElementById('categoryFilter').value));
+document.getElementById('categoryFilter').addEventListener('change',e=>renderProducts(document.getElementById('productSearch').value,e.target.value));
+document.addEventListener('click',e=>{
+    if(e.target.classList.contains('add-to-cart'))addToCart(e.target.dataset.id);
+    if(e.target.classList.contains('remove-item'))removeItem(e.target.dataset.id);
+});
+document.getElementById('nextCustomer').onclick=()=>document.querySelector('[data-tab="customer"]').click();
+document.getElementById('backCart').onclick=()=>document.querySelector('[data-tab="cart"]').click();
+document.getElementById('nextPayment').onclick=()=>{
+    const type=document.getElementById('customerType').value;
+    const disc=type==='member'?parseInt(document.getElementById('memberDiscount').value)||0:settings.discount;
+    currentCart.discount=currentCart.subtotal*disc/100;
+    currentCart.tax=currentCart.subtotal*settings.tax/100;
+    currentCart.total=currentCart.subtotal-currentCart.discount+currentCart.tax;
+    document.getElementById('finalTotal').textContent=fmt(currentCart.total);
+    document.querySelector('[data-tab="payment"]').click();
+};
+document.getElementById('backCustomer').onclick=()=>document.querySelector('[data-tab="customer"]').click();
+document.getElementById('finishBtn').onclick=finishTransaction;
+document.getElementById('customerType').addEventListener('change',e=>document.getElementById('memberFields').style.display=e.target.value==='member'?'block':'none');
+
+/* === INIT === */
+document.getElementById('storeNameSet').value=settings.storeName;
+document.getElementById('storeAddressSet').value=settings.storeAddress;
+document.getElementById('storePhoneSet').value=settings.storePhone;
+document.getElementById('taxSet').value=settings.tax;
+document.getElementById('discountSet').value=settings.discount;
 renderCategories();
 renderAdmin();
-
-window.onbeforeprint=()=>{
-    document.title='Struk - '+moment().format('DDMMYYYY_HHmmss');
-};
+window.onbeforeprint=()=>document.title='Struk - '+new Date().getTime();
 window.onafterprint=()=>document.title='Premium POS';
 
 if(currentCashier){
-    $('#cashierName').textContent=currentCashier.name;
-    $('#mainApp').style.display='block';
-    $('#loginModal').style.display='none';
-    renderProducts();renderCart();renderCategories();
+    login(currentCashier.id,currentCashier.pin);
 }else{
-    $('#mainApp').style.display='none';
-    $('#loginModal').style.display='flex';
+    document.getElementById('mainApp').style.display='none';
+    document.getElementById('loginModal').style.display='flex';
 }
 </script>
 </body>
