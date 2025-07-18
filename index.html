@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium POS System – FINAL</title>
+    <title>Premium POS System – FINAL FULL</title>
 
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -11,219 +11,109 @@
 
     <!-- 3rd-party CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.css">
-
     <style>
-        /* ===== DARK MODE VARIABLES ===== */
-        body.dark {
-            --primary-color: #3b82f6;
-            --secondary-color: #2563eb;
-            --light-color: #181818;
-            --dark-color: #f1f1f1;
-            --gray-color: #9ca3af;
-            --gray-light: #1f2937;
-            --bg-body: #111827;
-            --bg-card: #1f2937;
-            --border-color: #374151;
-            color-scheme: dark;
+        /* ===== ROOT / DARK MODE VARIABLES ===== */
+        :root{
+            --primary-color:#4361ee;
+            --secondary-color:#3f37c9;
+            --accent-color:#4895ef;
+            --dark-color:#1a1a2e;
+            --light-color:#f8f9fa;
+            --success-color:#10b981;
+            --danger-color:#ef4444;
+            --warning-color:#f59e0b;
+            --info-color:#3b82f6;
+            --gray-color:#6b7280;
+            --bg-body:#f5f7fa;
+            --bg-card:#ffffff;
+            --border-color:#e5e7eb;
+            --shadow:0 4px 6px -1px rgba(0,0,0,.1);
+            --rounded:.5rem;
+        }
+        body.dark{
+            --bg-body:#111827;
+            --bg-card:#1f2937;
+            --dark-color:#f1f1f1;
+            --border-color:#374151;
+            color-scheme:dark;
         }
 
-        /* ===== ROOT VARIABLES ===== */
-        :root {
-            --primary-color: #4361ee;
-            --primary-light: #eef2ff;
-            --secondary-color: #3f37c9;
-            --accent-color: #4895ef;
-            --dark-color: #1a1a2e;
-            --light-color: #f8f9fa;
-            --success-color: #10b981;
-            --success-light: #d1fae5;
-            --danger-color: #ef4444;
-            --danger-light: #fee2e2;
-            --warning-color: #f59e0b;
-            --warning-light: #fef3c7;
-            --info-color: #3b82f6;
-            --info-light: #dbeafe;
-            --gray-color: #6b7280;
-            --gray-light: #f3f4f6;
-            --shadow-sm: 0 1px 2px 0 rgba(0,0,0,.05);
-            --shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
-            --shadow-md: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,.1), 0 10px 10px -5px rgba(0,0,0,.04);
-            --rounded-sm: .25rem;
-            --rounded: .5rem;
-            --rounded-lg: .75rem;
-            --rounded-xl: 1rem;
-            --bg-body: #f5f7fa;
-            --bg-card: #ffffff;
-            --border-color: #e5e7eb;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: var(--bg-body); color: var(--dark-color); line-height: 1.6; }
-        .container { max-width: 100%; margin: 0 auto; padding: 20px; }
-
-        /* ===== HEADER ===== */
-        .header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white; padding: 15px 20px; border-radius: var(--rounded-lg); margin-bottom: 20px;
-            display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow);
-        }
-        .header h1 { font-size: 1.8rem; font-weight: 600; }
-        .header-info { text-align: right; font-size: .9rem; }
-
-        /* ===== MAIN LAYOUT ===== */
-        .main-content { display: flex; gap: 20px; flex-wrap: wrap; }
-        .left-panel, .right-panel {
-            flex: 1 1 300px; background: var(--bg-card); padding: 20px; border-radius: var(--rounded-lg);
-            box-shadow: var(--shadow-sm);
-        }
-        .panel-title { font-size: 1.2rem; margin-bottom: 15px; border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; font-weight: 600; }
-
-        /* ===== TABLES & FORMS ===== */
-        .table th, .table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        .table th { background: var(--gray-light); position: sticky; top: 0; }
-        .table tr:hover { background: var(--gray-light); }
-
-        .btn {
-            display: inline-block; padding: 10px 20px; background: var(--primary-color); color: white;
-            border: none; border-radius: var(--rounded-sm); cursor: pointer; transition: .3s;
-        }
-        .btn:hover { background: var(--secondary-color); transform: translateY(-2px); }
-        .btn-success { background: var(--success-color); }
-        .btn-danger { background: var(--danger-color); }
-
-        /* ===== MODAL ===== */
-        .modal {
-            display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,.5);
-            align-items: center; justify-content: center;
-        }
-        .modal-content {
-            background: var(--bg-card); padding: 0; border-radius: var(--rounded-lg); max-width: 95vw; max-height: 90vh;
-            overflow-y: auto; box-shadow: var(--shadow-lg);
-        }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; border-bottom: 1px solid var(--border-color); }
-        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray-color); }
-        .modal-body { padding: 20px; }
-        .modal-footer { padding: 15px 20px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; justify-content: flex-end; }
-
-        /* ===== TABS ===== */
-        .tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 20px; overflow-x: auto; }
-        .tab { padding: 10px 20px; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
-        .tab.active { border-bottom: 2px solid var(--primary-color); color: var(--primary-color); font-weight: 500; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn .3s; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* ===== DARK MODE TOGGLE ===== */
-        #darkModeToggle {
-            position: fixed; top: 20px; right: 20px; z-index: 999;
-            background: var(--primary-color); color: white; padding: 10px; border-radius: 50%;
-            cursor: pointer; box-shadow: var(--shadow-md); font-size: 1.2rem;
-        }
-
-        /* ===== SCANNER CAMERA ===== */
-        #scannerContainer {
-            position: fixed; inset: 0; z-index: 1100; background: rgba(0,0,0,.8);
-            display: none; align-items: center; justify-content: center; flex-direction: column;
-        }
-        #scannerVideo { width: 300px; max-width: 90vw; border-radius: var(--rounded); }
-        #closeScanner { margin-top: 15px; background: var(--danger-color); }
-
-        /* ===== AUTO BACKUP ===== */
-        .auto-backup-info {
-            font-size: .8rem; color: var(--gray-color);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media(max-width:768px){
-            .main-content { flex-direction: column; }
-            .header { flex-direction: column; text-align: center; }
-            .header-info { text-align: center; margin-top: 10px; }
-        }
-
-        /* ===== PRINT ===== */
-        @media print {
-            body * { visibility: hidden; }
-            .receipt, .receipt * { visibility: visible; }
-            .receipt { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; padding: 20px; font-size: 14px; }
-            .no-print { display: none !important; }
-            @page { margin: 0; }
-        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+        body{background:var(--bg-body);color:var(--dark-color);line-height:1.6;}
+        .container{max-width:100%;margin:0 auto;padding:20px;}
+        .header{background:linear-gradient(135deg,var(--primary-color),var(--secondary-color));color:white;padding:15px 20px;border-radius:var(--rounded);margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;}
+        .header h1{font-size:1.8rem;font-weight:600;}
+        .main-content{display:flex;gap:20px;flex-wrap:wrap;}
+        .left-panel,.right-panel{flex:1 1 300px;background:var(--bg-card);padding:20px;border-radius:var(--rounded);box-shadow:var(--shadow);}
+        .panel-title{font-size:1.2rem;margin-bottom:15px;border-bottom:2px solid var(--primary-color);padding-bottom:5px;font-weight:600;}
+        .table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+        .table th,.table td{padding:12px 15px;text-align:left;border-bottom:1px solid var(--border-color);}
+        .table th{background:var(--light-color);}
+        .btn{display:inline-block;padding:10px 20px;border:none;border-radius:var(--rounded);cursor:pointer;font-size:1rem;transition:.3s;}
+        .btn-success{background:var(--success-color);color:white;}
+        .btn-danger{background:var(--danger-color);color:white;}
+        .btn-warning{background:var(--warning-color);color:white;}
+        .btn-info{background:var(--info-color);color:white;}
+        .modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.5);align-items:center;justify-content:center;}
+        .modal-content{background:var(--bg-card);padding:20px;border-radius:var(--rounded);max-width:90vw;max-height:90vh;overflow:auto;}
+        .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
+        .modal-close{background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--gray-color);}
+        .tabs{display:flex;border-bottom:1px solid var(--border-color);margin-bottom:20px;}
+        .tab{padding:10px 20px;cursor:pointer;border-bottom:2px solid transparent;}
+        .tab.active{border-bottom:2px solid var(--primary-color);color:var(--primary-color);font-weight:500;}
+        .tab-content{display:none;}
+        .tab-content.active{display:block;animation:fadeIn .3s;}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+        .toast{position:fixed;top:20px;right:20px;padding:12px 18px;background:#333;color:white;border-radius:var(--rounded);z-index:1100;display:flex;align-items:center;transform:translateX(200%);transition:.3s;}
+        .toast.show{transform:translateX(0);}
+        #darkModeToggle{position:fixed;top:20px;right:20px;z-index:999;background:var(--primary-color);color:white;border-radius:50%;padding:10px;cursor:pointer;font-size:1.2rem;}
+        @media print{body *{visibility:hidden;}.receipt,.receipt *{visibility:visible;}.receipt{position:absolute;left:0;top:0;width:100%;box-shadow:none;padding:20px;font-size:14px;}}
     </style>
 </head>
 
 <body>
-    <!-- ========== DARK MODE TOGGLE ========== -->
-    <button id="darkModeToggle" class="no-print" title="Mode Gelap"><i class="fas fa-moon"></i></button>
+    <!-- Dark-mode toggle -->
+    <button id="darkModeToggle" title="Mode Gelap"><i class="fas fa-moon"></i></button>
 
-    <!-- ========== TOAST ========== -->
-    <div id="toast" class="toast"><i class="fas fa-info-circle"></i><span id="toast-message"></span></div>
+    <!-- Toast -->
+    <div id="toast"><i class="fas fa-info-circle"></i><span id="toast-message"></span></div>
 
-    <!-- ========== SCANNER CAMERA ========== -->
-    <div id="scannerContainer">
-        <video id="scannerVideo" autoplay muted></video>
-        <button id="closeScanner" class="btn btn-danger no-print">Tutup Scanner</button>
-    </div>
-
-    <!-- ========== LOGIN ========== -->
+    <!-- Login Modal -->
     <div id="loginModal" class="modal">
-        <div class="login-container">
-            <div class="login-logo"><i class="fas fa-cash-register"></i></div>
-            <h2 class="login-title">Premium POS</h2>
+        <div class="modal-content" style="max-width:400px">
+            <div class="modal-header"><h3>Login Kasir</h3><button class="modal-close">&times;</button></div>
             <form id="loginForm">
-                <div class="form-floating">
-                    <input type="text" id="cashierId" placeholder="ID Kasir" required>
-                    <label for="cashierId">ID Kasir</label>
-                </div>
-                <div class="form-floating">
-                    <input type="password" id="cashierPin" placeholder="PIN" maxlength="4" inputmode="numeric" required>
-                    <label for="cashierPin">PIN</label>
-                </div>
-                <button type="submit" class="btn btn-block">Login</button>
+                <label>ID Kasir</label><input type="text" id="cashierId" required class="form-control">
+                <label>PIN (4 digit)</label><input type="password" id="cashierPin" maxlength="4" required class="form-control">
+                <button type="submit" class="btn btn-success btn-block">Login</button>
             </form>
         </div>
     </div>
 
-    <!-- ========== MAIN APP ========== -->
+    <!-- Main App -->
     <div class="container" id="mainApp" style="display:none;">
-        <!-- Header -->
         <div class="header">
             <div>
                 <h1 id="storeName">Premium POS System</h1>
                 <p id="storeAddress">Jl. Contoh No. 123, Kota Contoh</p>
             </div>
-            <div class="header-info">
-                <p id="currentDate">Senin, 1 Januari 2023</p>
+            <div>
+                <p id="currentDate">-</p>
                 <p>Kasir: <span id="loggedInCashier">-</span> | <a href="#" id="logoutBtn" style="color:white;text-decoration:none;">Logout</a></p>
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="main-content">
             <!-- LEFT PANEL -->
             <div class="left-panel">
                 <h2 class="panel-title">Produk</h2>
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="productSearch" class="form-control" placeholder="Cari produk...">
-                </div>
-                <div class="form-group">
-                    <label for="productCategory">Kategori</label>
-                    <select id="productCategory" class="form-control">
-                        <option value="all">Semua Kategori</option>
-                    </select>
-                </div>
+                <input type="text" id="productSearch" placeholder="Cari produk..." class="form-control">
+                <select id="productCategory" class="form-control">
+                    <option value="all">Semua Kategori</option>
+                </select>
                 <div class="table-responsive">
                     <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Nama</th>
-                                <th>Harga</th>
-                                <th>Stok</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>Nama</th><th>Harga</th><th>Stok</th><th>Aksi</th></tr></thead>
                         <tbody id="productListBody"></tbody>
                     </table>
                 </div>
@@ -238,384 +128,195 @@
                     <div class="tab" data-tab="payment">Pembayaran</div>
                 </div>
 
-                <!-- CART TAB -->
+                <!-- Cart -->
                 <div class="tab-content active" id="cartTab">
                     <div id="cartItems"></div>
                     <div class="cart-summary">
-                        <div class="summary-row"><span class="summary-label">Subtotal:</span><span id="cartSubtotal">Rp 0</span></div>
-                        <div class="summary-row"><span class="summary-label">Diskon:</span><span id="cartDiscount">Rp 0</span></div>
-                        <div class="summary-row"><span class="summary-label">Pajak:</span><span id="cartTax">Rp 0</span></div>
-                        <div class="summary-row total-row"><span class="summary-label">Total:</span><span id="cartTotal">Rp 0</span></div>
+                        <div style="display:flex;justify-content:space-between"><span>Subtotal:</span><span id="cartSubtotal">Rp 0</span></div>
+                        <div style="display:flex;justify-content:space-between"><span>Diskon:</span><span id="cartDiscount">Rp 0</span></div>
+                        <div style="display:flex;justify-content:space-between"><span>Pajak:</span><span id="cartTax">Rp 0</span></div>
+                        <div style="display:flex;justify-content:space-between;font-weight:700"><span>Total:</span><span id="cartTotal">Rp 0</span></div>
                     </div>
-                    <button id="nextToCustomer" class="btn btn-primary btn-block mt-3">Lanjut ke Pelanggan</button>
+                    <button id="nextToCustomer" class="btn btn-success btn-block">Lanjut ke Pelanggan</button>
                 </div>
 
-                <!-- CUSTOMER TAB -->
+                <!-- Customer -->
                 <div class="tab-content" id="customerTab">
-                    <div class="form-group">
-                        <label for="customerType">Tipe Pelanggan</label>
-                        <select id="customerType" class="form-control">
-                            <option value="walkin">Pelanggan Biasa</option>
-                            <option value="member">Member</option>
-                        </select>
+                    <select id="customerType" class="form-control">
+                        <option value="walkin">Pelanggan Biasa</option>
+                        <option value="member">Member</option>
+                    </select>
+                    <div id="memberFields" style="display:none;margin-top:10px">
+                        <input type="text" id="memberId" placeholder="ID Member" class="form-control">
+                        <input type="number" id="memberDiscount" placeholder="Diskon (%)" value="10" class="form-control">
                     </div>
-                    <div id="memberFields" style="display:none;">
-                        <div class="form-group">
-                            <label for="memberId">ID Member</label>
-                            <div class="input-group">
-                                <input type="text" id="memberId" class="form-control" placeholder="Masukkan ID Member">
-                                <button id="searchMember" class="btn btn-info">Cari</button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="memberDiscount">Diskon Member (%)</label>
-                            <input type="number" id="memberDiscount" class="form-control" value="10" min="0" max="100">
-                        </div>
-                    </div>
-                    <div class="buttons">
-                        <button id="backToCart" class="btn btn-warning">Kembali ke Keranjang</button>
-                        <button id="nextToPayment" class="btn btn-primary float-right">Lanjut ke Pembayaran</button>
+                    <div style="margin-top:10px">
+                        <button id="backToCart" class="btn btn-warning">Kembali</button>
+                        <button id="nextToPayment" class="btn btn-success float-right">Lanjut ke Pembayaran</button>
                     </div>
                 </div>
 
-                <!-- PAYMENT TAB -->
+                <!-- Payment -->
                 <div class="tab-content" id="paymentTab">
                     <div class="cart-summary">
-                        <div class="summary-row"><span class="summary-label">Subtotal:</span><span id="paymentSubtotal">Rp 0</span></div>
-                        <div class="summary-row"><span class="summary-label">Diskon:</span><span id="paymentDiscount">Rp 0</span></div>
-                        <div class="summary-row"><span class="summary-label">Pajak:</span><span id="paymentTax">Rp 0</span></div>
-                        <div class="summary-row total-row"><span class="summary-label">Total:</span><span id="paymentTotal">Rp 0</span></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="paymentAmount">Jumlah Pembayaran</label>
-                        <input type="number" id="paymentAmount" class="form-control" placeholder="Masukkan jumlah pembayaran">
-                    </div>
-                    <div class="payment-methods">
-                        <label>Metode Pembayaran:</label>
-                        <div class="payment-method"><input type="radio" id="cash" name="paymentMethod" value="cash" checked><label for="cash">Tunai</label></div>
-                        <div class="payment-method"><input type="radio" id="transfer" name="paymentMethod" value="transfer"><label for="transfer">Transfer Bank</label></div>
-                        <div class="payment-method"><input type="radio" id="ewallet" name="paymentMethod" value="ewallet"><label for="ewallet">E-Wallet</label></div>
-                    </div>
-                    <div class="buttons">
-                        <button id="backToCustomer" class="btn btn-warning">Kembali ke Pelanggan</button>
-                        <button id="completePayment" class="btn btn-success float-right"><i class="fas fa-print"></i> Selesaikan & Cetak</button>
+                        <div style="display:flex;justify-content:space-between;font-weight:700"><span>Total:</span><span id="paymentTotal">Rp 0</span></div>
+                        <input type="number" id="paymentAmount" placeholder="Jumlah Bayar" class="form-control">
+                        <div style="margin:10px 0">
+                            <label><input type="radio" name="paymentMethod" value="cash" checked> Tunai</label><br>
+                            <label><input type="radio" name="paymentMethod" value="transfer"> Transfer</label><br>
+                            <label><input type="radio" name="paymentMethod" value="ewallet"> E-Wallet</label>
+                        </div>
+                        <button id="completePayment" class="btn btn-success btn-block"><i class="fas fa-print"></i> Selesaikan & Cetak</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ========== ADMIN MODAL ========== -->
-    <div id="adminModal" class="modal admin-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Admin Dashboard</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="tabs">
-                    <div class="tab active admin-tab" data-tab="products">Produk</div>
-                    <div class="tab admin-tab" data-tab="categories">Kategori</div>
-                    <div class="tab admin-tab" data-tab="customers">Pelanggan</div>
-                    <div class="tab admin-tab" data-tab="transactions">Transaksi</div>
-                    <div class="tab admin-tab" data-tab="reports">Laporan</div>
-                    <div class="tab admin-tab" data-tab="settings">Pengaturan</div>
-                </div>
-
-                <div class="tab-content active admin-tab-content" id="productsTab">
-                    <button id="addProduct" class="btn btn-success mb-3"><i class="fas fa-plus"></i> Tambah Produk</button>
-                    <button class="btn btn-warning mb-3 ml-2" id="toggleScannerBtn"><i class="fas fa-camera"></i> Scan Barcode</button>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Barcode</th><th>Nama</th><th>Merk</th><th>Satuan</th><th>Kategori</th><th>Harga</th><th>Stok</th><th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminProductsTable"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!--  ...  (semua tab lainnya tetap sama seperti versi sebelumnya)  ...  -->
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary close-admin-modal">Tutup</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ========== RECEIPT TEMPLATE ========== -->
-    <div id="receiptTemplate" style="display:none;"></div>
-
-    <!-- ========== ADMIN PASSWORD MODAL ========== -->
-    <div id="adminPasswordModal" class="modal">
-        <div class="modal-content" style="max-width:400px">
-            <div class="modal-header"><h3 class="modal-title">Akses Admin</h3><button class="modal-close">&times;</button></div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Masukkan Password Admin</label>
-                    <input type="password" id="adminPassword" class="form-control" placeholder="Password">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary close-admin-password-modal">Batal</button>
-                <button class="btn btn-primary verify-admin-password">Masuk</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ========== ADD / EDIT MODAL (singkat – tetap seperti sebelumnya) ========== -->
-    <!-- Anda bisa copy-paste semua modal tambahan (produk, kategori, pelanggan, kasir) dari versi sebelumnya -->
-
-    <!-- ========== SCRIPTS ========== -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Admin access button -->
+    <button id="adminAccess" class="btn" style="position:fixed;bottom:20px;right:20px;z-index:99"><i class="fas fa-lock"></i></button>
 
     <script>
-        /* ===== KONFIGURASI ===== */
-        const ADMIN_PASSWORD = "Geraiku.12345";
-        const STORAGE_KEYS = {
-            PRODUCTS:'pos_products',CATEGORIES:'pos_categories',CUSTOMERS:'pos_customers',
-            CASHIERS:'pos_cashiers',TRANSACTIONS:'pos_transactions',SETTINGS:'pos_settings',
-            CURRENT_CART:'pos_current_cart',CURRENT_CASHIER:'pos_current_cashier',
-            PRODUCT_BRANDS:'pos_product_brands',PRODUCT_UNITS:'pos_product_units',
-            DARK_MODE:'pos_dark_mode'
+        const ADMIN_PASSWORD='Geraiku.12345';
+        // LocalStorage keys
+        const STORAGE={
+            products:'pos_products',
+            categories:'pos_categories',
+            customers:'pos_customers',
+            cashiers:'pos_cashiers',
+            transactions:'pos_transactions',
+            settings:'pos_settings',
+            cart:'pos_current_cart',
+            cashier:'pos_current_cashier',
+            darkMode:'pos_dark_mode'
         };
+        // utility
+        const $=s=>document.querySelector(s);
+        const $$=s=>document.querySelectorAll(s);
+        const ls=localStorage;
+        const save=(k,v)=>ls.setItem(k,JSON.stringify(v));
+        const load=(k,d=[])=>JSON.parse(ls.getItem(k)||'null')||d;
+        const fmt=n=>'Rp '+n.toLocaleString('id-ID');
+        const toast=(m,t='info')=>{const el=$('#toast');el.querySelector('span').textContent=m;el.className='toast '+t+' show';setTimeout(()=>el.className='toast',3000);};
 
-        /* ===== DATA DEFAULT ===== */
-        let products=[],categories=[],customers=[],cashiers=[],transactions=[],settings={},
-            productBrands=[],productUnits=[],currentCart={},currentCashier=null;
+        // initial data
+        let products=load(STORAGE.products,[
+            {id:'P001',barcode:'123456789',name:'Susu UHT',brand:'Dancow',unit:'Pcs',categoryId:'C001',price:6000,stock:10,minStock:5},
+            {id:'P002',barcode:'987654321',name:'Biskuit Roma',brand:'Roma',unit:'Box',categoryId:'C002',price:12000,stock:8,minStock:5}
+        ]);
+        let categories=load(STORAGE.categories,[{id:'C001',name:'Minuman'},{id:'C002',name:'Snack'}]);
+        let customers=load(STORAGE.customers,[]);
+        let cashiers=load(STORAGE.cashiers,[{id:'K001',name:'Admin',pin:'1234',status:'active'}]);
+        let transactions=load(STORAGE.transactions,[]);
+        let settings=load(STORAGE.settings,{storeName:'Premium POS System',storeAddress:'Jl. Contoh No. 123',storePhone:'081234567890',taxRate:10,holidayDiscount:0});
+        let cart=load(STORAGE.cart,{items:[],customer:null,discount:0,tax:0,subtotal:0,total:0});
+        let currentCashier=load(STORAGE.cashier);
 
-        /* ===== FUNGSI UTILITAS ===== */
-        function showToast(msg,type='info',dur=3000){
-            const t=$('#toast');$('#toast-message').text(msg);
-            t.removeClass().addClass('toast '+type).addClass('show');
-            setTimeout(()=>t.removeClass('show'),dur);
-        }
-        function formatCurrency(v){return'Rp '+(v||0).toLocaleString('id-ID');}
-        function saveLS(key,val){localStorage.setItem(key,JSON.stringify(val));}
-        function loadLS(key,def=[]){return JSON.parse(localStorage.getItem(key)||'null')||def;}
+        // dark mode
+        const toggleDark=()=>{document.body.classList.toggle('dark');ls.setItem(STORAGE.darkMode,document.body.classList.contains('dark'));};
+        $('#darkModeToggle').addEventListener('click',toggleDark);
+        if(ls.getItem(STORAGE.darkMode)==='true')document.body.classList.add('dark');
 
-        /* ===== INISIALISASI DATA ===== */
-        function initData(){
-            products=loadLS(STORAGE_KEYS.PRODUCTS,[
-                {id:'P001',barcode:'123456789',name:'Produk Contoh 1',brand:'Merk A',unit:'Pcs',categoryId:'C001',price:10000,stock:15,description:'',minStock:5},
-                {id:'P002',barcode:'987654321',name:'Produk Contoh 2',brand:'Merk B',unit:'Kg',categoryId:'C002',price:15000,stock:8,description:'',minStock:5}
-            ]);
-            categories=loadLS(STORAGE_KEYS.CATEGORIES,[
-                {id:'C001',name:'Makanan',description:'Produk makanan'},
-                {id:'C002',name:'Minuman',description:'Produk minuman'}
-            ]);
-            customers=loadLS(STORAGE_KEYS.CUSTOMERS,[
-                {id:'M001',type:'member',name:'Pelanggan Contoh',phone:'081234567890',email:'contoh@mail.com',address:'Jl. Contoh'}
-            ]);
-            cashiers=loadLS(STORAGE_KEYS.CASHIERS,[
-                {id:'K001',name:'Admin',pin:'1234',status:'active'}
-            ]);
-            transactions=loadLS(STORAGE_KEYS.TRANSACTIONS,[]);
-            settings=loadLS(STORAGE_KEYS.SETTINGS,{
-                storeName:'Premium POS System',storeAddress:'Jl. Contoh No. 123',storePhone:'081234567890',
-                taxRate:10,bankName:'',accountNumber:'',accountName:'',holidayDiscount:0
-            });
-            productBrands=loadLS(STORAGE_KEYS.PRODUCT_BRANDS,['Merk A','Merk B','Merk C']);
-            productUnits=loadLS(STORAGE_KEYS.PRODUCT_UNITS,['Pcs','Kg','Box']);
-            currentCart=loadLS(STORAGE_KEYS.CURRENT_CART,{items:[],customer:null,discount:0,tax:0,subtotal:0,total:0});
-            currentCashier=loadLS(STORAGE_KEYS.CURRENT_CASHIER,null);
-
-            // Dark mode
-            if(localStorage.getItem(STORAGE_KEYS.DARK_MODE)==='true')document.body.classList.add('dark');
-        }
-
-        /* ===== DARK MODE ===== */
-        $('#darkModeToggle').on('click',()=>{
-            document.body.classList.toggle('dark');
-            localStorage.setItem(STORAGE_KEYS.DARK_MODE,document.body.classList.contains('dark'));
-        });
-
-        /* ===== AUTO BACKUP HARIAN ===== */
-        function autoBackup(){
-            const now=new Date();
-            const today=now.toISOString().slice(0,10);
-            const last=localStorage.getItem('pos_last_backup');
-            if(last!==today){
-                const backup={
-                    products,categories,customers,cashiers,transactions,settings,productBrands,productUnits,timestamp:now.toISOString()
-                };
-                saveLS('pos_backup_'+today,backup);
-                localStorage.setItem('pos_last_backup',today);
-            }
-        }
-        setInterval(autoBackup,60*60*1000);
-
-        /* ===== SCANNER BARCODE ===== */
-        $('#toggleScannerBtn').on('click',()=>{
-            $('#scannerContainer').show();
-            startScanner();
-        });
-        $('#closeScanner').on('click',()=>$('#scannerContainer').hide());
-
-        function startScanner(){
-            navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}})
-                .then(stream=>{
-                    const video=document.getElementById('scannerVideo');
-                    video.srcObject=stream;
-                    // Integrasi QuaggaJS atau instascan bisa ditambahkan di sini
-                    // Untuk demo, kita simulasikan hasil scan
-                    setTimeout(()=>{
-                        showToast('Barcode terdeteksi: 123456789','success');
-                        $('#scannerContainer').hide();
-                        stream.getTracks().forEach(t=>t.stop());
-                    },3000);
-                })
-                .catch(()=>showToast('Kamera tidak tersedia','error'));
-        }
-
-        /* ===== LOGIN / LOGOUT ===== */
-        $('#loginForm').on('submit',e=>{
+        // login / logout
+        $('#loginForm').addEventListener('submit',e=>{
             e.preventDefault();
-            const id=$('#cashierId').val().trim(),pin=$('#cashierPin').val().trim();
+            const id=$('#cashierId').value.trim(),pin=$('#cashierPin').value.trim();
             const user=cashiers.find(c=>c.id===id&&c.pin===pin&&c.status==='active');
-            if(user){
-                currentCashier=user; saveLS(STORAGE_KEYS.CURRENT_CASHIER,user);
-                $('#loginModal').hide(); $('#mainApp').fadeIn(); loadProducts(); updateCart();
-                showToast('Login berhasil','success');
-            }else{
-                showToast('ID atau PIN salah','error');
-            }
+            if(user){currentCashier=user;save(STORAGE.cashier,user);$('#loginModal').style.display='none';$('#mainApp').style.display='block';loadProducts();updateCart();toast('Login berhasil');}else{toast('ID/PIN salah','error');}
         });
-        $('#logoutBtn').on('click',e=>{
-            e.preventDefault(); currentCashier=null; localStorage.removeItem(STORAGE_KEYS.CURRENT_CASHIER);
-            $('#mainApp').fadeOut(); $('#loginModal').fadeIn();
-            showToast('Anda telah logout','info');
-        });
+        $('#logoutBtn').addEventListener('click',()=>{currentCashier=null;ls.removeItem(STORAGE.cashier);$('#mainApp').style.display='none';$('#loginModal').style.display='flex';});
 
-        /* ===== LOAD PRODUK ===== */
+        // products
         function loadProducts(search='',category='all'){
             let list=products;
             if(search)list=list.filter(p=>p.name.toLowerCase().includes(search.toLowerCase())||p.barcode.includes(search));
             if(category!=='all')list=list.filter(p=>p.categoryId===category);
-            $('#productListBody').empty();
-            list.forEach(p=>{
-                const cat=categories.find(c=>c.id===p.categoryId);
-                $('#productListBody').append(`
-                    <tr>
-                        <td>
-                            <div>${p.name}</div>
-                            <div style="font-size:0.8em;color:var(--gray-color)">${p.brand||''} • ${p.unit||'Pcs'}</div>
-                        </td>
-                        <td>${formatCurrency(p.price)}</td>
-                        <td class="${p.stock<=p.minStock?'text-danger':'text-success'}">${p.stock}</td>
-                        <td>
-                            <button class="btn btn-success btn-sm add-to-cart" data-id="${p.id}" ${p.stock<=0?'disabled':''}>Tambah</button>
-                        </td>
-                    </tr>
-                `);
-            });
-            // Stok minimum alert
-            list.forEach(p=>{if(p.stock<=p.minStock)showToast(`Stok ${p.name} tinggal ${p.stock}`,'warning');});
+            $('#productListBody').innerHTML=list.map(p=>`
+                <tr>
+                    <td>${p.name}<br><small>${p.brand} • ${p.unit}</small></td>
+                    <td>${fmt(p.price)}</td>
+                    <td style="color:${p.stock<=p.minStock?'red':'green'}">${p.stock}</td>
+                    <td><button class="btn btn-success btn-sm add-to-cart" data-id="${p.id}" ${p.stock<=0?'disabled':''}>Tambah</button></td>
+                </tr>
+            `).join('');
         }
-
-        /* ===== KERANJANG ===== */
         function updateCart(){
-            currentCart.subtotal=currentCart.items.reduce((s,i)=>s+i.product.price*i.quantity,0);
-            const holidayDisc=settings.holidayDiscount||0;
-            currentCart.discount=(currentCart.subtotal*holidayDisc/100)+(currentCart.customer?.discount||0);
-            currentCart.tax=(currentCart.subtotal-currentCart.discount)*(settings.taxRate/100);
-            currentCart.total=currentCart.subtotal-currentCart.discount+currentCart.tax;
-            saveLS(STORAGE_KEYS.CURRENT_CART,currentCart);
-
-            $('#cartItems').empty();
-            if(currentCart.items.length===0){
-                $('#cartItems').html(`<div class="empty-state"><i class="fas fa-shopping-cart"></i><p>Keranjang kosong</p></div>`);
-            }else{
-                currentCart.items.forEach(i=>{
-                    $('#cartItems').append(`
-                        <div class="cart-item">
-                            <div class="cart-item-info">
-                                <div class="cart-item-name">${i.product.name}</div>
-                                <div class="cart-item-price">${formatCurrency(i.product.price)}</div>
-                            </div>
-                            <div class="cart-item-qty">
-                                <input type="number" value="${i.quantity}" min="1" max="${i.product.stock}" class="cart-item-quantity" data-id="${i.product.id}">
-                                <button class="btn btn-danger btn-sm ml-2 remove-from-cart" data-id="${i.product.id}"><i class="fas fa-trash"></i></button>
-                            </div>
+            cart.subtotal=cart.items.reduce((s,i)=>s+i.product.price*i.quantity,0);
+            cart.discount=(cart.subtotal*(settings.holidayDiscount||0)/100)+(cart.customer?.discount||0);
+            cart.tax=(cart.subtotal-cart.discount)*(settings.taxRate/100);
+            cart.total=cart.subtotal-cart.discount+cart.tax;
+            save(STORAGE.cart,cart);
+            $('#cartItems').innerHTML=cart.items.length===0?'<div style="text-align:center;padding:20px;"><i class="fas fa-shopping-cart fa-2x"></i><p>Keranjang kosong</p></div>':
+                cart.items.map(i=>`
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                        <div>
+                            <div>${i.product.name}</div>
+                            <small>${fmt(i.product.price)} x ${i.quantity}</small>
                         </div>
-                    `);
-                });
-            }
-            $('#cartSubtotal, #paymentSubtotal').text(formatCurrency(currentCart.subtotal));
-            $('#cartDiscount, #paymentDiscount').text(formatCurrency(currentCart.discount));
-            $('#cartTax, #paymentTax').text(formatCurrency(currentCart.tax));
-            $('#cartTotal, #paymentTotal').text(formatCurrency(currentCart.total));
+                        <div>
+                            <input type="number" min="1" max="${i.product.stock}" value="${i.quantity}" class="qty" data-id="${i.product.id}" style="width:50px">
+                            <button class="btn btn-danger btn-sm remove-from-cart" data-id="${i.product.id}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `).join('');
+            ['cartSubtotal','cartDiscount','cartTax','cartTotal','paymentTotal'].forEach(id=>$('#'+id).textContent=fmt(cart[id.replace('cart','').toLowerCase()]||cart.total));
         }
+        function resetCart(){cart={items:[],customer:null,discount:0,tax:0,subtotal:0,total:0};$('#customerType').value='walkin';$('#memberFields').style.display='none';$('#memberId, #memberDiscount, #paymentAmount').value='';updateCart();}
 
-        /* ===== TRANSAKSI SELESAI ===== */
-        $('#completePayment').on('click',()=>{
-            const pay=parseFloat($('#paymentAmount').val())||0;
-            if(pay<currentCart.total){showToast('Pembayaran kurang','error');return;}
+        // tab switching
+        $$('.tab').forEach(t=>t.addEventListener('click',()=>{$$('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');$$('.tab-content').forEach(x=>x.classList.remove('active'));$('#'+t.dataset.tab+'Tab').classList.add('active');}));
+        $('#customerType').addEventListener('change',()=>$('#memberFields').style.display=$('#customerType').value==='member'?'block':'none');
+        $('#nextToCustomer').addEventListener('click',()=>{$$('.tab')[1].click();});
+        $('#nextToPayment').addEventListener('click',()=>{$$('.tab')[2].click();});
+        $('#backToCart, #backToCustomer').forEach((btn,i)=>btn.addEventListener('click',()=>{$$('.tab')[i].click();}));
 
-            const transaction={
-                id:'T'+moment().format('YYYYMMDDHHmmss'),
-                date:new Date(),
-                items:currentCart.items,
-                customer:currentCart.customer,
-                subtotal:currentCart.subtotal,
-                discount:currentCart.discount,
-                tax:currentCart.tax,
-                total:currentCart.total,
-                paymentMethod:$('input[name="paymentMethod"]:checked').val(),
-                paymentAmount:pay,
-                change:pay-currentCart.total,
-                cashier:currentCashier
-            };
-            // Kurangi stok
-            transaction.items.forEach(i=>{
-                const prod=products.find(p=>p.id===i.product.id);
-                if(prod)prod.stock-=i.quantity;
-            });
-            transactions.unshift(transaction); saveLS(STORAGE_KEYS.TRANSACTIONS,transactions); saveLS(STORAGE_KEYS.PRODUCTS,products);
-            generateReceipt(transaction);
-            setTimeout(()=>window.print(),500);
-            resetCart(); showToast('Transaksi berhasil','success');
+        // payment
+        $('#completePayment').addEventListener('click',()=>{
+            const pay=parseFloat($('#paymentAmount').value)||0;
+            if(pay<cart.total){toast('Uang kurang','error');return;}
+            transactions.unshift({...cart,id:'T'+moment().format('YYYYMMDDHHmmss'),date:new Date(),cashier:currentCashier,paymentAmount:pay,change:pay-cart.total,paymentMethod:$('input[name="paymentMethod"]:checked').value});
+            cart.items.forEach(i=>{const p=products.find(pr=>pr.id===i.product.id);if(p)p.stock-=i.quantity;});
+            save(STORAGE.transactions,transactions);save(STORAGE.products,products);
+            const receipt=`
+                <div class="receipt">
+                    <div style="text-align:center">
+                        <h3>${settings.storeName}</h3><p>${settings.storeAddress}<br>${settings.storePhone}</p>
+                        <p>${moment().format('DD/MM/YYYY HH:mm:ss')}</p>
+                    </div>
+                    ${cart.items.map(i=>`<div style="display:flex;justify-content:space-between">${i.product.name} x${i.quantity}<span>${fmt(i.product.price*i.quantity)}</span></div>`).join('')}
+                    <hr>
+                    <div style="display:flex;justify-content:space-between"><span>Total</span><span>${fmt(cart.total)}</span></div>
+                    <div style="display:flex;justify-content:space-between"><span>Bayar</span><span>${fmt(pay)}</span></div>
+                    <div style="display:flex;justify-content:space-between"><span>Kembali</span><span>${fmt(pay-cart.total)}</span></div>
+                    <div style="text-align:center;margin-top:10px">Terima kasih<br>Kasir: ${currentCashier.name}</div>
+                </div>
+            `;
+            const w=window.open('','_blank');w.document.write(receipt);w.print();w.close();
+            resetCart();toast('Transaksi selesai');
         });
 
-        function resetCart(){
-            currentCart={items:[],customer:null,discount:0,tax:0,subtotal:0,total:0};
-            $('#customerType').val('walkin'); $('#memberFields, #customerFields').hide();
-            $('#memberId, #customerName, #customerPhone, #customerEmail, #paymentAmount').val('');
-            updateCart();
-        }
-
-        /* ===== ADMIN ===== */
-        $('#adminAccess').on('click',()=>$('#adminPasswordModal').show());
-        $('.verify-admin-password').on('click',()=>{
-            if($('#adminPassword').val()===ADMIN_PASSWORD){
-                $('#adminPasswordModal').hide(); $('#adminModal').show(); loadAdminData();
-            }else{showToast('Password salah','error');}
+        // events
+        document.addEventListener('input',e=>{
+            if(e.target.classList.contains('qty')){const id=e.target.dataset.id;const item=cart.items.find(i=>i.product.id===id);if(item)item.quantity=parseInt(e.target.value)||1;updateCart();}
         });
-
-        /* ===== SHORTCUT KEYS ===== */
-        $(document).on('keydown',e=>{
-            if(!$('#adminModal').is(':visible')){
-                if(e.key==='F1')$('#addProduct').click();
-                if(e.key==='F2')$('#addCashier').click();
-                if(e.key==='F9')$('#adminAccess').click();
+        document.addEventListener('click',e=>{
+            if(e.target.classList.contains('add-to-cart')){
+                const id=e.target.dataset.id;const prod=products.find(p=>p.id===id);
+                const exist=cart.items.find(i=>i.product.id===id);
+                if(exist){if(exist.quantity<prod.stock)exist.quantity++;}else cart.items.push({product:prod,quantity:1});
+                updateCart();toast(`${prod.name} ditambahkan`);
             }
+            if(e.target.classList.contains('remove-from-cart')){
+                const id=e.target.dataset.id;cart.items=cart.items.filter(i=>i.product.id!==id);updateCart();
+            }
+            if(e.target.classList.contains('modal-close'))e.target.closest('.modal').style.display='none';
         });
 
-        /* ===== INIT ===== */
-        $(document).ready(()=>{
-            initData();
-            updateCurrentDate(); setInterval(updateCurrentDate,60000);
-            if(!currentCashier)$('#loginModal').show();else{$('#mainApp').show();loadProducts();updateCart();}
-            $('#productCategory').on('change',()=>loadProducts($('#productSearch').val(),$('#productCategory').val()));
-            $('#productSearch').on('input',()=>loadProducts($('#productSearch').val(),$('#productCategory').val()));
-        });
+        // init
+        $('#productCategory').innerHTML='<option value="all">Semua Kategori</option>'+categories.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+        loadProducts();updateCart();
+        $('#currentDate').textContent=moment().format('dddd, D MMMM YYYY, HH:mm');setInterval(()=>$('#currentDate').textContent=moment().format('dddd, D MMMM YYYY, HH:mm'),60000);
+        currentCashier?($('#mainApp').style.display='block',$('#loggedInCashier').textContent=currentCashier.name):($('#loginModal').style.display='flex');
     </script>
 </body>
 </html>
