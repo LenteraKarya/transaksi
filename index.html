@@ -2,205 +2,135 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Premium POS System – Final Lengkap</title>
+<title>Premium POS – Final</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-/* Reset & Root */
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,Arial,system-ui}
-:root{
-    --primary:#4361ee;
-    --success:#10b981;
-    --danger:#ef4444;
-    --bg:#f5f7fa;
-    --radius:.7rem;
-    --shadow:0 4px 12px -4px rgba(0,0,0,.1);
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,Arial}
+:root{--primary:#4361ee;--success:#10b981;--danger:#ef4444;--bg:#f5f7fa;--radius:.7rem;--shadow:0 4px 12px -4px rgba(0,0,0,.1)}
 body{background:var(--bg);color:#333;line-height:1.6}
 .container{max-width:100%;margin:0 auto;padding:20px}
-.header{background:linear-gradient(135deg,var(--primary),#3f37c9);color:#fff;padding:15px 20px;border-radius:var(--radius);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+.header{background:linear-gradient(135deg,var(--primary),#3f37c9);color:#fff;padding:15px;border-radius:var(--radius);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
 .header h1{font-size:1.5rem;font-weight:700}
-.header-info p{font-size:.85rem}
-.main-content{display:flex;gap:20px;flex-wrap:wrap}
-.panel{flex:1 1 320px;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
-.panel-title{font-size:1.2rem;font-weight:600;margin-bottom:15px;border-bottom:2px solid var(--primary);padding-bottom:5px}
-.btn{display:inline-block;padding:8px 16px;border:none;border-radius:.4rem;cursor:pointer;font-weight:600}
+.btn{display:inline-block;padding:8px 16px;border:none;border-radius:var(--radius);cursor:pointer;font-weight:600}
 .btn-primary{background:var(--primary);color:#fff}
 .btn-success{background:var(--success);color:#fff}
 .btn-danger{background:var(--danger);color:#fff}
-.btn-sm{padding:5px 10px;font-size:.8rem}
 .btn-block{width:100%}
-.form-control{width:100%;padding:10px;border:1px solid #ccc;border-radius:.4rem}
-.search-box{position:relative;margin-bottom:15px}
-.search-box i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#888}
-.search-box input{padding-left:35px}
-.table-responsive{overflow-x:auto}
-.table{width:100%;border-collapse:collapse}
-.table th,.table td{padding:10px;text-align:left;border-bottom:1px solid #eee}
-.table th{background:#f8f9fa}
-.cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eee}
-.cart-item:last-child{border:none}
-.cart-summary{margin-top:20px;border-top:2px dashed #ddd;padding-top:15px}
+.form-control{width:100%;padding:10px;border:1px solid #ccc;border-radius:var(--radius)}
+.main-content{display:flex;gap:20px;flex-wrap:wrap}
+.panel{flex:1 1 300px;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.panel-title{font-size:1.2rem;font-weight:600;margin-bottom:15px;border-bottom:2px solid var(--primary);padding-bottom:5px}
 .tabs{display:flex;border-bottom:1px solid #ddd;margin-bottom:15px}
-.tab{padding:10px 20px;cursor:pointer;border-bottom:2px solid transparent;transition:.3s}
+.tab{padding:10px 20px;cursor:pointer;border-bottom:2px solid transparent}
 .tab.active{border-color:var(--primary);color:var(--primary);font-weight:600}
-.tab-content{display:none;animation:fadeIn .3s}
-.tab-content.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:1000}
-.modal-content{background:#fff;border-radius:var(--radius);max-width:90%;max-height:90%;overflow-y:auto;padding:20px;box-shadow:var(--shadow)}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
-.modal-close{background:none;border:none;font-size:1.5rem;cursor:pointer}
-.login-container{max-width:400px;margin:50px auto;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:30px}
-.login-logo{text-align:center;margin-bottom:20px}
-.login-logo i{font-size:3rem;color:var(--primary);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-.receipt{max-width:320px;margin:0 auto;background:#fff;border:1px solid #ccc;font-size:14px;padding:15px}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:8px;text-align:left;border-bottom:1px solid #eee}
+.cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eee}
+.empty-state{text-align:center;color:#999;padding:30px}
+.receipt{max-width:300px;margin:0 auto;background:#fff;border:1px solid #ccc;font-size:14px;padding:15px}
 .receipt-header{border-bottom:1px dashed;text-align:center;margin-bottom:15px}
-.receipt-items{margin-bottom:15px}
 .receipt-item{display:flex;justify-content:space-between;margin-bottom:5px}
 .receipt-total{border-top:1px dashed;padding-top:10px;font-weight:700}
-.empty-state{text-align:center;color:#999;padding:30px}
-.empty-state i{font-size:2.5rem;margin-bottom:10px}
-.toast{position:fixed;top:20px;right:20px;padding:10px 15px;border-radius:.4rem;color:#fff;font-size:.9rem;z-index:1100;transform:translateX(200%);transition:.3s}
+.toast{position:fixed;top:20px;right:20px;padding:10px 15px;border-radius:var(--radius);color:#fff;font-size:.9rem;z-index:1100;transform:translateX(200%);transition:.3s}
 .toast.show{transform:translateX(0)}
 .toast.success{background:var(--success)}
 .toast.error{background:var(--danger)}
-.toast.warning{background:var(--warning)}
-.confirmation-dialog{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);justify-content:center;align-items:center;z-index:1200}
-.confirmation-content{background:#fff;padding:20px;border-radius:var(--radius);max-width:350px;text-align:center}
-.fab{position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);justify-content:center;align-items:center;z-index:1000}
+.modal-content{background:#fff;border-radius:var(--radius);max-width:90%;max-height:90%;overflow-y:auto;padding:20px}
+.modal-close{background:none;border:none;font-size:1.5rem;cursor:pointer}
 @media(max-width:768px){
     .main-content{flex-direction:column}
-    .header{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
 <body>
 
 <!-- Toast -->
-<div id="toast" class="toast"></div>
+<div id="toast"></div>
 
-<!-- Confirmation -->
-<div class="confirmation-dialog" id="confirmDialog">
-    <div class="confirmation-content">
-        <h4 id="confirmText">Apakah Anda yakin?</h4>
-        <div style="margin-top:15px;display:flex;gap:10px;justify-content:center">
-            <button class="btn btn-secondary" id="confirmCancel">Batal</button>
-            <button class="btn btn-danger" id="confirmOk">Ya</button>
-        </div>
+<!-- Login -->
+<div id="loginModal" style="display:flex;position:fixed;inset:0;background:#0005;justify-content:center;align-items:center;z-index:1000">
+    <div style="background:#fff;padding:30px;border-radius:var(--radius);width:320px">
+        <h2 style="text-align:center;margin-bottom:20px">Login</h2>
+        <input id="cashierId" class="form-control" placeholder="ID Kasir" />
+        <input type="password" id="cashierPin" class="form-control" placeholder="PIN (4 digit)" maxlength="4" style="margin-top:10px" />
+        <button class="btn btn-primary btn-block" style="margin-top:15px" onclick="login()">Masuk</button>
     </div>
 </div>
 
-<!-- Login -->
-<div class="modal" id="loginModal">
-<div class="login-container">
-    <div class="login-logo"><i class="fas fa-cash-register"></i></div>
-    <h2 style="text-align:center;margin-bottom:20px">Login Kasir</h2>
-    <form id="loginForm">
-        <div style="margin-bottom:15px">
-            <label>ID Kasir</label>
-            <input type="text" class="form-control" id="cashierId" required>
-        </div>
-        <div style="margin-bottom:20px">
-            <label>PIN (4 digit)</label>
-            <input type="password" class="form-control" id="cashierPin" maxlength="4" required>
-        </div>
-        <button class="btn btn-primary btn-block">Login</button>
-    </form>
-</div>
-</div>
-
 <!-- Main App -->
-<div class="container" id="mainApp" style="display:none">
+<div id="mainApp" style="display:none">
     <div class="header">
         <div>
-            <h1 id="storeName">Premium POS System</h1>
+            <h1 id="storeName">Premium POS</h1>
             <p id="storeAddress">Jl. Contoh No. 123</p>
         </div>
         <div>
-            <p id="currentDate">Senin, 1 Jan 2023</p>
-            <p>Kasir: <b id="cashierName">-</b> | <a href="#" id="logoutBtn" style="color:#fff;text-decoration:none">Logout</a></p>
+            <span id="currentDate"></span><br>
+            Kasir: <b id="cashierName"></b> · <a href="#" onclick="logout()" style="color:#fff">Logout</a>
         </div>
     </div>
 
     <div class="main-content">
-        <!-- Panel Kiri -->
+        <!-- Produk -->
         <div class="panel">
             <h2 class="panel-title">Produk</h2>
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="productSearch" class="form-control" placeholder="Cari...">
-            </div>
-            <select id="categoryFilter" class="form-control" style="margin-bottom:15px">
+            <input class="form-control" id="productSearch" placeholder="Cari produk..." />
+            <select id="categoryFilter" class="form-control" style="margin:10px 0">
                 <option value="all">Semua Kategori</option>
             </select>
-            <div style="max-height:400px;overflow-y:auto">
-                <table class="table">
-                    <thead>
-                        <tr><th>Nama</th><th>Harga</th><th>Stok</th><th></th></tr>
-                    </thead>
-                    <tbody id="productList"></tbody>
-                </table>
-            </div>
+            <table class="table">
+                <thead><tr><th>Nama</th><th>Harga</th><th>Stok</th><th></th></tr></thead>
+                <tbody id="productList"></tbody>
+            </table>
         </div>
 
-        <!-- Panel Kanan -->
+        <!-- Transaksi -->
         <div class="panel">
             <h2 class="panel-title">Transaksi</h2>
             <div class="tabs">
-                <div class="tab active" data-tab="cart">Keranjang</div>
-                <div class="tab" data-tab="customer">Pelanggan</div>
-                <div class="tab" data-tab="payment">Pembayaran</div>
+                <div class="tab active" onclick="tab('cart')">Keranjang</div>
+                <div class="tab" onclick="tab('customer')">Pelanggan</div>
+                <div class="tab" onclick="tab('payment')">Bayar</div>
             </div>
 
-            <div class="tab-content active" id="cartTab">
+            <div id="cartTab" class="tab-content active">
                 <div id="cartItems"></div>
                 <div class="cart-summary">
-                    <div class="summary-row"><span>Subtotal:</span><span id="subtotal">Rp 0</span></div>
-                    <div class="summary-row"><span>Diskon:</span><span id="discount">Rp 0</span></div>
-                    <div class="summary-row"><span>Pajak:</span><span id="tax">Rp 0</span></div>
-                    <div class="summary-row"><strong>Total:</strong><strong id="total">Rp 0</strong></div>
+                    <div>Subtotal: <span id="subtotal">Rp 0</span></div>
+                    <div>Diskon: <span id="discount">Rp 0</span></div>
+                    <div>Pajak: <span id="tax">Rp 0</span></div>
+                    <div><strong>Total: <span id="total">Rp 0</span></strong></div>
                 </div>
-                <button class="btn btn-primary btn-block mt-2" id="nextCustomer">Lanjut ke Pelanggan</button>
+                <button class="btn btn-primary btn-block" onclick="tab('customer')">Lanjut ke Pelanggan</button>
             </div>
 
-            <div class="tab-content" id="customerTab">
-                <div class="form-group">
-                    <label>Tipe Pelanggan</label>
-                    <select id="customerType" class="form-control">
-                        <option value="walkin">Biasa</option>
-                        <option value="member">Member</option>
-                    </select>
+            <div id="customerTab" class="tab-content">
+                <select class="form-control" id="customerType" onchange="toggleMember()">
+                    <option value="walkin">Pelanggan Biasa</option>
+                    <option value="member">Member</option>
+                </select>
+                <div id="memberFields" style="display:none;margin-top:10px">
+                    <input class="form-control" id="memberId" placeholder="ID Member" />
+                    <input class="form-control" id="memberDiscount" placeholder="Diskon (%)" value="10" type="number" />
                 </div>
-                <div id="memberFields" style="display:none">
-                    <div class="form-group"><label>ID Member</label><input type="text" id="memberId" class="form-control"></div>
-                    <div class="form-group"><label>Diskon Member (%)</label><input type="number" id="memberDiscount" value="10" class="form-control"></div>
-                </div>
-                <div class="buttons mt-3">
-                    <button class="btn btn-warning" id="backCart">Kembali</button>
-                    <button class="btn btn-primary" id="nextPayment">Lanjut Bayar</button>
+                <div style="display:flex;gap:10px;margin-top:15px">
+                    <button class="btn btn-warning" onclick="tab('cart')">Kembali</button>
+                    <button class="btn btn-primary" onclick="tab('payment')">Lanjut Bayar</button>
                 </div>
             </div>
 
-            <div class="tab-content" id="paymentTab">
-                <div class="cart-summary">
-                    <div class="summary-row"><span>Total Akhir:</span><strong id="finalTotal">Rp 0</strong></div>
-                </div>
-                <div class="form-group">
-                    <label>Jumlah Bayar</label>
-                    <input type="number" class="form-control" id="payAmount">
-                </div>
-                <div class="form-group">
-                    <label>Metode</label>
-                    <select class="form-control" id="payMethod">
-                        <option value="cash">Tunai</option>
-                        <option value="transfer">Transfer</option>
-                        <option value="ewallet">E-Wallet</option>
-                    </select>
-                </div>
-                <div class="buttons mt-3">
-                    <button class="btn btn-warning" id="backCustomer">Kembali</button>
-                    <button class="btn btn-success" id="finishBtn">Selesai & Cetak</button>
+            <div id="paymentTab" class="tab-content">
+                <div>Total Akhir: <strong id="finalTotal">Rp 0</strong></div>
+                <input class="form-control" id="payAmount" type="number" placeholder="Jumlah bayar" />
+                <select class="form-control" id="payMethod" style="margin:10px 0">
+                    <option value="cash">Tunai</option>
+                    <option value="transfer">Transfer</option>
+                    <option value="ewallet">E-Wallet</option>
+                </select>
+                <div style="display:flex;gap:10px">
+                    <button class="btn btn-warning" onclick="tab('customer')">Kembali</button>
+                    <button class="btn btn-success" onclick="finishTransaction()">Selesai & Cetak</button>
                 </div>
             </div>
         </div>
@@ -208,413 +138,277 @@ body{background:var(--bg);color:#333;line-height:1.6}
 </div>
 
 <!-- Admin FAB -->
-<div class="fab" id="adminFab" title="Admin"><i class="fas fa-cash-register"></i></div>
+<div class="fab" onclick="openAdmin()" title="Admin"><i class="fas fa-cogs"></i></div>
 
 <!-- Admin Modal -->
-<div class="modal" id="adminModal">
-<div class="modal-content">
-    <div class="modal-header"><h3>Admin Dashboard</h3><button class="modal-close">&times;</button></div>
-    <div class="tabs">
-        <div class="tab active admin-tab" data-tab="products">Produk</div>
-        <div class="tab admin-tab" data-tab="categories">Kategori</div>
-        <div class="tab admin-tab" data-tab="customers">Pelanggan</div>
-        <div class="tab admin-tab" data-tab="cashiers">Kasir</div>
-        <div class="tab admin-tab" data-tab="reports">Laporan</div>
-        <div class="tab admin-tab" data-tab="settings">Toko</div>
-    </div>
-    <div class="tab-content admin-tab-content active" id="productsTab">
-        <button class="btn btn-success mb-2" id="addProductBtn"><i class="fas fa-plus"></i> Tambah Produk</button>
-        <div class="table-responsive">
-            <table class="table"><thead><tr><th>Barcode</th><th>Nama</th><th>Harga</th><th>Stok</th><th></th></tr></thead><tbody id="adminProductList"></tbody></table>
+<div id="adminModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>Admin Dashboard</h3><span class="modal-close" onclick="document.getElementById('adminModal').style.display='none'">&times;</span></div>
+        <div class="tabs">
+            <div class="tab active" onclick="adminTab('products')">Produk</div>
+            <div class="tab" onclick="adminTab('categories')">Kategori</div>
+            <div class="tab" onclick="adminTab('customers')">Pelanggan</div>
+            <div class="tab" onclick="adminTab('cashiers')">Kasir</div>
+            <div class="tab" onclick="adminTab('reports')">Laporan</div>
+            <div class="tab" onclick="adminTab('settings')">Toko</div>
         </div>
-    </div>
-    <div class="tab-content admin-tab-content" id="categoriesTab">
-        <button class="btn btn-success mb-2" id="addCategoryBtn"><i class="fas fa-plus"></i> Tambah Kategori</button>
-        <div class="table-responsive">
-            <table class="table"><thead><tr><th>Nama</th><th>Jumlah Produk</th><th></th></tr></thead><tbody id="adminCategoryList"></tbody></table>
-        </div>
-    </div>
-    <div class="tab-content admin-tab-content" id="customersTab">
-        <button class="btn btn-success mb-2" id="addCustomerBtn"><i class="fas fa-plus"></i> Tambah Pelanggan</button>
-        <div class="table-responsive">
-            <table class="table"><thead><tr><th>Nama</th><th>Telepon</th><th>Tipe</th><th></th></tr></thead><tbody id="adminCustomerList"></tbody></table>
-        </div>
-    </div>
-    <div class="tab-content admin-tab-content" id="cashiersTab">
-        <button class="btn btn-success mb-2" id="addCashierBtn"><i class="fas fa-plus"></i> Tambah Kasir</button>
-        <div class="table-responsive">
-            <table class="table"><thead><tr><th>ID</th><th>Nama</th><th>Status</th><th></th></tr></thead><tbody id="adminCashierList"></tbody></table>
-        </div>
-    </div>
-    <div class="tab-content admin-tab-content" id="reportsTab">
-        <input type="text" id="reportRange" class="form-control mb-2" placeholder="Pilih rentang tanggal">
-        <canvas id="salesChart" height="150"></canvas>
-        <div class="mt-2">
-            <button class="btn btn-info" id="exportPDF">Export PDF</button>
-            <button class="btn btn-success" id="exportExcel">Export Excel</button>
-        </div>
-    </div>
-    <div class="tab-content admin-tab-content" id="settingsTab">
-        <div class="form-group"><label>Nama Toko</label><input type="text" class="form-control" id="storeNameSet"></div>
-        <div class="form-group"><label>Alamat</label><textarea class="form-control" id="storeAddressSet"></textarea></div>
-        <div class="form-group"><label>Telepon</label><input type="text" class="form-control" id="storePhoneSet"></div>
-        <div class="form-group"><label>Pajak (%)</label><input type="number" class="form-control" id="taxSet" min="0" max="100"></div>
-        <div class="form-group"><label>Diskon Default (%)</label><input type="number" class="form-control" id="discountSet" min="0" max="100"></div>
-        <button class="btn btn-success" id="saveSettingsBtn">Simpan</button>
-        <hr>
-        <button class="btn btn-secondary" id="backupBtn">Backup Data</button>
-        <button class="btn btn-warning" id="restoreBtn">Restore Data</button>
-        <input type="file" id="restoreFile" accept=".json" style="display:none">
-    </div>
-</div>
-</div>
 
-<!-- Receipt hidden -->
-<div id="receiptArea" style="display:none"></div>
+        <div id="productsTab" class="tab-content active">
+            <button class="btn btn-success" onclick="addProduct()">Tambah</button>
+            <table class="table"><thead><tr><th>Nama</th><th>Harga</th><th>Stok</th><th></th></tr></thead><tbody id="adminProductList"></tbody></table>
+        </div>
+        <div id="categoriesTab" class="tab-content">
+            <button class="btn btn-success" onclick="addCategory()">Tambah</button>
+            <table class="table"><thead><tr><th>Nama</th><th></th></tr></thead><tbody id="adminCategoryList"></tbody></table>
+        </div>
+        <div id="customersTab" class="tab-content">
+            <button class="btn btn-success" onclick="addCustomer()">Tambah</button>
+            <table class="table"><thead><tr><th>Nama</th><th>Telepon</th><th></th></tr></thead><tbody id="adminCustomerList"></tbody></table>
+        </div>
+        <div id="cashiersTab" class="tab-content">
+            <button class="btn btn-success" onclick="addCashier()">Tambah</button>
+            <table class="table"><thead><tr><th>ID</th><th>Nama</th><th></th></tr></thead><tbody id="adminCashierList"></tbody></table>
+        </div>
+        <div id="reportsTab" class="tab-content">
+            <button class="btn btn-info" onclick="exportReport('pdf')">Export PDF</button>
+            <button class="btn btn-success" onclick="exportReport('excel')">Export Excel</button>
+            <canvas id="salesChart" height="150"></canvas>
+        </div>
+        <div id="settingsTab" class="tab-content">
+            <input class="form-control" id="storeNameSet" placeholder="Nama toko">
+            <textarea class="form-control" id="storeAddressSet" placeholder="Alamat"></textarea>
+            <input class="form-control" id="storePhoneSet" placeholder="Telepon">
+            <input class="form-control" id="taxSet" type="number" placeholder="Pajak (%)" min="0">
+            <input class="form-control" id="discountSet" type="number" placeholder="Diskon default (%)" min="0">
+            <button class="btn btn-success" onclick="saveSettings()">Simpan</button>
+            <hr>
+            <button class="btn btn-secondary" onclick="backupData()">Backup Data</button>
+            <button class="btn btn-warning" onclick="restoreData()">Restore Data</button>
+            <input type="file" id="restoreFile" accept=".json" style="display:none" onchange="restoreFile(this)">
+        </div>
+    </div>
+</div>
 
 <script>
-/* === CONFIG & DATA === */
-const ADMIN_PASSWORD = 'Geraiku.12345';
-let products=[],categories=[],customers=[],cashiers=[],transactions=[],settings={};
-const STORAGE = {
-    PRODUCTS:'pos_products',
-    CATEGORIES:'pos_categories',
-    CUSTOMERS:'pos_customers',
-    CASHIERS:'pos_cashiers',
-    TRANSACTIONS:'pos_transactions',
-    SETTINGS:'pos_settings',
-    CART:'pos_cart',
-    CASHIER:'pos_cashier'
-};
-let currentCart, currentCashier;
-const $=sel=>document.querySelector(sel);
-const $$=sel=>document.querySelectorAll(sel);
+/* === CONFIG === */
+const ADMIN_PASSWORD='Geraiku.12345';
+let products=[],categories=[],customers=[],cashiers=[],transactions=[],settings={},currentCart={},currentCashier=null;
+const STORAGE=['products','categories','customers','cashiers','transactions','settings','cart','cashier'];
 const fmt=n=>'Rp '+n.toLocaleString('id-ID');
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const load=k=>JSON.parse(localStorage.getItem(k))||null;
 const toast=(msg,type='info',t=3000)=>{
     const el=document.getElementById('toast');
-    el.textContent=msg;el.className='toast '+type;el.classList.add('show');
-    setTimeout(()=>el.classList.remove('show'),t);
+    el.textContent=msg;el.className='toast '+type+' show';setTimeout(()=>el.classList.remove('show'),t);
 };
-const save=(key,data)=>localStorage.setItem(key,JSON.stringify(data));
-const load=key=>JSON.parse(localStorage.getItem(key))||null;
-
-/* === INIT DATA === */
-function initData(){
-    products=load(STORAGE.PRODUCTS)||[
-        {id:'P001',barcode:'123456',name:'Susu UHT',brand:'Indomilk',unit:'pcs',categoryId:'C001',purchasePrice:7000,price:10000,stock:20},
-        {id:'P002',barcode:'234567',name:'Teh Kotak',brand:'Sosro',unit:'pcs',categoryId:'C002',purchasePrice:4000,price:6000,stock:30}
-    ];
-    categories=load(STORAGE.CATEGORIES)||[{id:'C001',name:'Minuman'},{id:'C002',name:'Snack'}];
-    customers=load(STORAGE.CUSTOMERS)||[{id:'M001',type:'member',name:'Budi',phone:'0811'}];
-    cashiers=load(STORAGE.CASHIERS)||[{id:'K001',name:'Admin',pin:'1234',status:'active'}];
-    transactions=load(STORAGE.TRANSACTIONS)||[];
-    settings=load(STORAGE.SETTINGS)||{storeName:'Premium POS',storeAddress:'Jl. Contoh',storePhone:'081234',tax:10,discount:0};
-    currentCart=load(STORAGE.CART)||{items:[],subtotal:0,discount:0,tax:0,total:0};
-    currentCashier=load(STORAGE.CASHIER)||null;
-}
-initData();
-
-/* === RENDER === */
-function renderProducts(search='',cat='all'){
+const initData=()=>{
+    products=load('pos_products')||[{id:'P001',barcode:'123456',name:'Susu UHT',price:10000,stock:20,categoryId:'C001'}];
+    categories=load('pos_categories')||[{id:'C001',name:'Minuman'}];
+    customers=load('pos_customers')||[{id:'M001',name:'Budi',type:'member',phone:'0811'}];
+    cashiers=load('pos_cashiers')||[{id:'K001',name:'Admin',pin:'1234',status:'active'}];
+    transactions=load('pos_transactions')||[];
+    settings=load('pos_settings')||{storeName:'Premium POS',storeAddress:'Jl. Contoh',storePhone:'081234',tax:10,discount:0};
+    currentCart=load('pos_cart')||{items:[],subtotal:0,discount:0,tax:0,total:0};
+    currentCashier=load('pos_cashier')||null;
+    document.getElementById('storeNameSet').value=settings.storeName;
+    document.getElementById('storeAddressSet').value=settings.storeAddress;
+    document.getElementById('storePhoneSet').value=settings.storePhone;
+    document.getElementById('taxSet').value=settings.tax;
+    document.getElementById('discountSet').value=settings.discount;
+};
+const renderProducts=(s='',c='all')=>{
     const list=document.getElementById('productList');
     list.innerHTML='';
-    let filtered=products.filter(p=>(!search||p.name.toLowerCase().includes(search.toLowerCase())||p.barcode.includes(search))&&(cat==='all'||p.categoryId===cat));
-    if(!filtered.length){list.innerHTML='<tr><td colspan="4" class="empty-state"><i class="fas fa-box-open"></i><p>Tidak ada produk</p></td></tr>';return;}
-    filtered.forEach(p=>{
-        const stockClass=p.stock>5?'text-success':p.stock>0?'text-warning':'text-danger';
-        list.insertAdjacentHTML('beforeend',`
-        <tr>
-            <td>${p.name}<br><small>${p.brand} · ${p.unit}</small></td>
-            <td>${fmt(p.price)}</td>
-            <td class="${stockClass}">${p.stock}</td>
-            <td><button class="btn btn-sm btn-success add-to-cart" ${p.stock<=0?'disabled':''} data-id="${p.id}"><i class="fas fa-cart-plus"></i></button></td>
-        </tr>`);
-    });
-}
-function renderCart(){
+    const filtered=products.filter(p=>(!s||p.name.toLowerCase().includes(s.toLowerCase()))&&(c==='all'||p.categoryId===c));
+    if(!filtered.length)list.innerHTML='<tr><td colspan="4" class="empty-state">Tidak ada produk</td></tr>';
+    else filtered.forEach(p=>list.insertAdjacentHTML('beforeend',`<tr><td>${p.name}</td><td>${fmt(p.price)}</td><td>${p.stock}</td><td><button class="btn btn-sm btn-success" ${p.stock<=0?'disabled':''} onclick="addToCart('${p.id}')"><i class="fas fa-cart-plus"></i></button></td></tr>`));
+};
+const renderCart=()=>{
     const list=document.getElementById('cartItems');
     list.innerHTML='';
     currentCart.subtotal=currentCart.items.reduce((a,i)=>a+i.product.price*i.quantity,0);
     currentCart.total=currentCart.subtotal+currentCart.tax-currentCart.discount;
-    if(!currentCart.items.length){list.innerHTML='<div class="empty-state"><i class="fas fa-shopping-cart"></i><p>Keranjang kosong</p></div>';}
-    else{
-        currentCart.items.forEach(i=>{
-            list.insertAdjacentHTML('beforeend',`
-            <div class="cart-item">
-                <div><strong>${i.product.name}</strong><br>${fmt(i.product.price)}</div>
-                <div>
-                    <input type="number" min="1" max="${i.product.stock}" value="${i.quantity}" class="qty-input" data-id="${i.product.id}" style="width:50px">
-                    <button class="btn btn-sm btn-danger remove-item" data-id="${i.product.id}"><i class="fas fa-trash"></i></button>
-                </div>
-            </div>`);
-        });
-    }
-    document.getElementById('subtotal').textContent=fmt(currentCart.subtotal);
-    document.getElementById('discount').textContent=fmt(currentCart.discount);
-    document.getElementById('tax').textContent=fmt(currentCart.tax);
-    document.getElementById('total').textContent=fmt(currentCart.total);
-    save(STORAGE.CART,currentCart);
-}
-function renderCategories(){
+    if(!currentCart.items.length)list.innerHTML='<div class="empty-state">Keranjang kosong</div>';
+    else currentCart.items.forEach(i=>list.insertAdjacentHTML('beforeend',`<div class="cart-item"><div>${i.product.name} (${i.quantity})</div><div><input type="number" min="1" max="${i.product.stock}" value="${i.quantity}" style="width:50px" onchange="updateQty('${i.product.id}',this.value)"><button class="btn btn-sm btn-danger" onclick="removeItem('${i.product.id}')"><i class="fas fa-trash"></i></button></div></div>`));
+    ['subtotal','discount','tax','total'].forEach(k=>document.getElementById(k).textContent=fmt(currentCart[k]));
+};
+const renderCategories=()=>{
     const sel=document.getElementById('categoryFilter');
     sel.innerHTML='<option value="all">Semua Kategori</option>';
     categories.forEach(c=>sel.insertAdjacentHTML('beforeend',`<option value="${c.id}">${c.name}</option>`));
-}
-function renderAdmin(){
-    document.getElementById('adminProductList').innerHTML=products.map(p=>`<tr>
-        <td>${p.barcode}</td><td>${p.name}</td><td>${fmt(p.price)}</td><td>${p.stock}</td>
-        <td>
-            <button class="btn btn-sm btn-info edit-product" data-id="${p.id}">Edit</button>
-            <button class="btn btn-sm btn-danger delete-product" data-id="${p.id}">Hapus</button>
-        </td>
-    </tr>`).join('');
-    document.getElementById('adminCategoryList').innerHTML=categories.map(c=>`<tr>
-        <td>${c.name}</td><td>${products.filter(p=>p.categoryId===c.id).length}</td>
-        <td>
-            <button class="btn btn-sm btn-info edit-category" data-id="${c.id}">Edit</button>
-            <button class="btn btn-sm btn-danger delete-category" data-id="${c.id}">Hapus</button>
-        </td>
-    </tr>`).join('');
-    document.getElementById('adminCustomerList').innerHTML=customers.map(c=>`<tr>
-        <td>${c.name}</td><td>${c.phone}</td><td>${c.type}</td>
-        <td>
-            <button class="btn btn-sm btn-info edit-customer" data-id="${c.id}">Edit</button>
-            <button class="btn btn-sm btn-danger delete-customer" data-id="${c.id}">Hapus</button>
-        </td>
-    </tr>`).join('');
-    document.getElementById('adminCashierList').innerHTML=cashiers.map(c=>`<tr>
-        <td>${c.id}</td><td>${c.name}</td><td>${c.status}</td>
-        <td>
-            <button class="btn btn-sm btn-info edit-cashier" data-id="${c.id}">Edit</button>
-            <button class="btn btn-sm btn-danger delete-cashier" data-id="${c.id}" ${currentCashier&&currentCashier.id===c.id?'disabled':''}>Hapus</button>
-        </td>
-    </tr>`).join('');
-}
-
-/* === AUTH === */
-function login(id,pin){
+};
+const renderAdmin=()=>{
+    document.getElementById('adminProductList').innerHTML=products.map(p=>`<tr><td>${p.name}</td><td>${fmt(p.price)}</td><td>${p.stock}</td><td><button class="btn btn-sm btn-danger" onclick="del('products','${p.id}')">Hapus</button></td></tr>`).join('');
+    document.getElementById('adminCategoryList').innerHTML=categories.map(c=>`<tr><td>${c.name}</td><td><button class="btn btn-sm btn-danger" onclick="del('categories','${c.id}')">Hapus</button></td></tr>`).join('');
+    document.getElementById('adminCustomerList').innerHTML=customers.map(c=>`<tr><td>${c.name}</td><td>${c.phone}</td><td><button class="btn btn-sm btn-danger" onclick="del('customers','${c.id}')">Hapus</button></td></tr>`).join('');
+    document.getElementById('adminCashierList').innerHTML=cashiers.map(c=>`<tr><td>${c.id}</td><td>${c.name}</td><td><button class="btn btn-sm btn-danger" onclick="del('cashiers','${c.id}')" ${currentCashier&&currentCashier.id===c.id?'disabled':''}>Hapus</button></td></tr>`).join('');
+};
+const login=()=>{
+    const id=document.getElementById('cashierId').value.trim(),pin=document.getElementById('cashierPin').value.trim();
     const cashier=cashiers.find(c=>c.id===id&&c.pin===pin&&c.status==='active');
-    if(!cashier){toast('ID / PIN salah','error');return false;}
+    if(!cashier)return toast('ID/PIN salah','error');
     currentCashier=cashier;
-    save(STORAGE.CASHIER,currentCashier);
+    save('pos_cashier',currentCashier);
     document.getElementById('cashierName').textContent=cashier.name;
     document.getElementById('storeName').textContent=settings.storeName;
     document.getElementById('storeAddress').textContent=settings.storeAddress;
-    document.getElementById('mainApp').style.display='block';
+    document.getElementById('currentDate').textContent=new Date().toLocaleString('id-ID');
     document.getElementById('loginModal').style.display='none';
+    document.getElementById('mainApp').style.display='block';
     renderProducts();renderCart();renderCategories();
-    return true;
-}
-function logout(){
-    currentCashier=null;
-    localStorage.removeItem(STORAGE.CASHIER);
-    document.getElementById('mainApp').style.display='none';
-    document.getElementById('loginModal').style.display='flex';
-}
-
-/* === MODAL HANDLING === */
-function openAdmin(){
-    document.getElementById('adminModal').style.display='flex';
-    renderAdmin();
-}
-document.querySelectorAll('.modal-close').forEach(btn=>btn.onclick=e=>e.target.closest('.modal').style.display='none');
-document.getElementById('adminFab').onclick=()=>{
-    const pwd=prompt('Password Admin:');
-    if(pwd===ADMIN_PASSWORD)openAdmin();else toast('Password salah','error');
 };
-
-/* === TABS === */
-document.querySelectorAll('.tab').forEach(tab=>tab.onclick=e=>{
-    const target=e.target.dataset.tab;
-    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-    e.target.classList.add('active');
-    document.getElementById(target+'Tab').classList.add('active');
-});
-
-/* === CART === */
-function addToCart(id){
+const logout=()=>{
+    localStorage.removeItem('pos_cashier');
+    location.reload();
+};
+const tab=(t)=>{
+    document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+    document.querySelector(`[onclick="tab('${t}')"]`).classList.add('active');
+    document.getElementById(t+'Tab').classList.add('active');
+};
+const adminTab=(t)=>{
+    document.querySelectorAll('.admin-tab').forEach(el=>el.classList.remove('active'));
+    document.querySelectorAll('.admin-tab-content').forEach(el=>el.classList.remove('active'));
+    document.querySelector(`[onclick="adminTab('${t}')"]`).classList.add('active');
+    document.getElementById(t+'Tab').classList.add('active');
+};
+const addToCart=id=>{
     const p=products.find(pr=>pr.id===id);
-    if(!p||p.stock<=0){toast('Stok habis','error');return;}
+    if(!p||p.stock<=0)return toast('Stok habis','error');
     const exist=currentCart.items.find(i=>i.product.id===id);
-    if(exist){
-        if(exist.quantity+1>p.stock){toast('Stok tidak cukup','error');return;}
-        exist.quantity++;
-    }else currentCart.items.push({product:p,quantity:1});
+    if(exist){if(exist.quantity+1>p.stock)return toast('Stok tidak cukup','error');exist.quantity++;}
+    else currentCart.items.push({product:p,quantity:1});
     renderCart();
-}
-function removeItem(id){
+};
+const removeItem=id=>{
     currentCart.items=currentCart.items.filter(i=>i.product.id!==id);
     renderCart();
-}
-function updateQty(id,qty){
+};
+const updateQty=(id,q)=>{
     const item=currentCart.items.find(i=>i.product.id===id);
-    if(item){item.quantity=qty;renderCart();}
-}
-
-/* === CHECKOUT === */
-function finishTransaction(){
+    if(item){item.quantity=Math.min(Math.max(q,1),item.product.stock);renderCart();}
+};
+const toggleMember=()=>document.getElementById('memberFields').style.display=document.getElementById('customerType').value==='member'?'block':'none';
+const finishTransaction=()=>{
     const pay=parseFloat(document.getElementById('payAmount').value);
-    if(!pay||pay<currentCart.total){toast('Jumlah bayar kurang','error');return;}
+    if(!pay||pay<currentCart.total)return toast('Jumlah bayar kurang','error');
     const profit=currentCart.items.reduce((a,i)=>a+(i.product.price-(i.product.purchasePrice||i.product.price))*i.quantity,0);
-    const tr={
-        id:'T'+Date.now(),
-        date:new Date(),
-        items:currentCart.items,
-        subtotal:currentCart.subtotal,
-        discount:currentCart.discount,
-        tax:currentCart.tax,
-        total:currentCart.total,
-        profit,
-        pay,
-        change:pay-currentCart.total,
-        method:document.getElementById('payMethod').value,
-        cashier:currentCashier
-    };
+    const tr={id:'T'+Date.now(),date:new Date(),items:currentCart.items,subtotal:currentCart.subtotal,discount:currentCart.discount,tax:currentCart.tax,total:currentCart.total,profit,pay,change:pay-currentCart.total,method:document.getElementById('payMethod').value,cashier:currentCashier};
     transactions.unshift(tr);
     tr.items.forEach(i=>{
         const p=products.find(pr=>pr.id===i.product.id);
         if(p)p.stock-=i.quantity;
     });
-    save(STORAGE.PRODUCTS,products);save(STORAGE.TRANSACTIONS,transactions);
+    STORAGE.forEach(k=>save('pos_'+k,window[k]));
     generateReceipt(tr);
-    resetCart();
-    toast('Transaksi berhasil','success');
-}
-function resetCart(){
-    currentCart={items:[],subtotal:0,discount:0,tax:0,total:0};save(STORAGE.CART,currentCart);
-    renderCart();document.getElementById('payAmount').value='';
-    document.querySelector('[data-tab="cart"]').click();
-}
-function generateReceipt(tr){
-    const rc=document.getElementById('receiptArea');
-    rc.innerHTML=`
-    <div class="receipt">
-        <div class="receipt-header">
-            <div><strong>${settings.storeName}</strong></div>
-            <div>${settings.storeAddress}</div>
-            <div>Telp: ${settings.storePhone}</div>
-            <div>${new Date(tr.date).toLocaleString('id-ID')}</div>
-        </div>
-        <div class="receipt-items">
-            ${tr.items.map(i=>`<div><span>${i.product.name} (${i.quantity})</span><span>${fmt(i.product.price*i.quantity)}</span></div>`).join('')}
-        </div>
-        <div class="receipt-total">
-            <div><span>Subtotal</span><span>${fmt(tr.subtotal)}</span></div>
-            <div><span>Diskon</span><span>-${fmt(tr.discount)}</span></div>
-            <div><span>Pajak</span><span>${fmt(tr.tax)}</span></div>
-            <div><strong>Total</strong><strong>${fmt(tr.total)}</strong></div>
-            <div><span>${tr.method}</span><span>${fmt(tr.pay)}</span></div>
-            <div><span>Kembali</span><span>${fmt(tr.change)}</span></div>
-        </div>
-        <div style="text-align:center;margin-top:10px;font-size:12px">Terima kasih | Kasir: ${tr.cashier.name}</div>
-    </div>`;
-    window.print();
-}
-
-/* === ADMIN CRUD === */
-document.getElementById('addProductBtn').onclick=()=>{
-    const name=prompt('Nama Produk');
-    if(!name)return;
-    const price=parseFloat(prompt('Harga Jual'));
-    if(!price)return;
-    products.push({id:'P'+Date.now(),barcode:'-',name,brand:'-',unit:'pcs',categoryId:categories[0].id,purchasePrice:price-2000,price,stock:0});
-    save(STORAGE.PRODUCTS,products);renderProducts();renderAdmin();
+    reset();
 };
-document.getElementById('addCategoryBtn').onclick=()=>{
-    const name=prompt('Nama Kategori');
+const reset=()=>{
+    currentCart={items:[],subtotal:0,discount:0,tax:0,total:0};save('pos_cart',currentCart);
+    renderCart();
+    document.getElementById('payAmount').value='';
+    tab('cart');
+};
+const generateReceipt=tr=>{
+    const rc=document.createElement('div');rc.innerHTML=`
+    <div class="receipt">
+        <div><strong>${settings.storeName}</strong></div>
+        <div>${settings.storeAddress}</div>
+        <div>${new Date(tr.date).toLocaleString('id-ID')}</div>
+        <hr>
+        ${tr.items.map(i=>`<div>${i.product.name} (${i.quantity}) <span>${fmt(i.product.price*i.quantity)}</span></div>`).join('')}
+        <hr>
+        <div>Total: <span>${fmt(tr.total)}</span></div>
+        <div>Bayar: <span>${fmt(tr.pay)}</span></div>
+        <div>Kembali: <span>${fmt(tr.change)}</span></div>
+        <hr>
+        <div style="text-align:center">Terima kasih – Kasir: ${tr.cashier.name}</div>
+    </div>`;
+    document.body.appendChild(rc);window.print();rc.remove();
+};
+const openAdmin=()=>{
+    const pwd=prompt('Password Admin:');
+    if(pwd!=='Geraiku.12345')return toast('Password salah','error');
+    document.getElementById('adminModal').style.display='flex';
+    renderAdmin();
+};
+const addProduct=()=>{
+    const name=prompt('Nama produk');
+    if(!name)return;
+    const price=parseFloat(prompt('Harga jual'));
+    const stock=parseInt(prompt('Stok'));
+    products.push({id:'P'+Date.now(),barcode:'-',name,price:price||0,stock:stock||0,categoryId:categories[0].id,purchasePrice:(price||0)-2000});
+    save('pos_products',products);renderProducts();renderAdmin();
+};
+const addCategory=()=>{
+    const name=prompt('Nama kategori');
     if(!name)return;
     categories.push({id:'C'+Date.now(),name});
-    save(STORAGE.CATEGORIES,categories);renderCategories();renderAdmin();
+    save('pos_categories',categories);renderCategories();renderAdmin();
 };
-document.getElementById('addCustomerBtn').onclick=()=>{
-    const name=prompt('Nama Pelanggan');
+const addCustomer=()=>{
+    const name=prompt('Nama pelanggan');
     if(!name)return;
-    customers.push({id:'M'+Date.now(),type:'member',name,phone:'-'});save(STORAGE.CUSTOMERS,customers);renderAdmin();
+    customers.push({id:'M'+Date.now(),name,phone:'-',type:'member'});
+    save('pos_customers',customers);renderAdmin();
 };
-document.getElementById('addCashierBtn').onclick=()=>{
-    const name=prompt('Nama Kasir');
-    if(!name)return;
+const addCashier=()=>{
+    const name=prompt('Nama kasir');
     const pin=prompt('PIN 4 digit');
-    if(!pin||pin.length!==4)return;
-    cashiers.push({id:'K'+(cashiers.length+1).toString().padStart(3,'0'),name,pin,status:'active'});save(STORAGE.CASHIERS,cashiers);renderAdmin();
+    if(!name||!pin||pin.length!==4)return;
+    cashiers.push({id:'K'+Date.now(),name,pin,status:'active'});
+    save('pos_cashiers',cashiers);renderAdmin();
 };
-document.getElementById('saveSettingsBtn').onclick=()=>{
+const del=(k,id)=>{window[k]=window[k].filter(x=>x.id!==id);save('pos_'+k,window[k]);renderAdmin();};
+const saveSettings=()=>{
     settings.storeName=document.getElementById('storeNameSet').value;
     settings.storeAddress=document.getElementById('storeAddressSet').value;
     settings.storePhone=document.getElementById('storePhoneSet').value;
     settings.tax=parseInt(document.getElementById('taxSet').value)||0;
     settings.discount=parseInt(document.getElementById('discountSet').value)||0;
-    save(STORAGE.SETTINGS,settings);
+    save('pos_settings',settings);
     document.getElementById('storeName').textContent=settings.storeName;
     document.getElementById('storeAddress').textContent=settings.storeAddress;
     toast('Pengaturan tersimpan','success');
 };
-document.getElementById('backupBtn').onclick=()=>{
+const backupData=()=>{
     const data={products,categories,customers,cashiers,transactions,settings};
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');a.href=url;a.download=`backup_${Date.now()}.json`;a.click();URL.revokeObjectURL(url);
 };
-document.getElementById('restoreBtn').onclick=()=>document.getElementByById('restoreFile').click();
-document.getElementById('restoreFile').onchange=e=>{
-    const file=e.target.files[0];
-    if(!file)return;
+const restoreData=()=>document.getElementById('restoreFile').click();
+const restoreFile=f=>{
+    const file=f.files[0];if(!file)return;
     const reader=new FileReader();
     reader.onload=()=>{
         try{
             const data=JSON.parse(reader.result);
-            ['PRODUCTS','CATEGORIES','CUSTOMERS','CASHIERS','TRANSACTIONS','SETTINGS'].forEach(k=>localStorage.setItem('pos_'+k.toLowerCase(),JSON.stringify(data[k.toLowerCase()]||[])));
-            initData();renderProducts();renderAdmin();toast('Data dipulihkan','success');
+            STORAGE.forEach(k=>save('pos_'+k,data[k]||[]));
+            initData();renderAll();toast('Data dipulihkan','success');
         }catch{toast('File rusak','error')}
     };
     reader.readAsText(file);
 };
-
-/* === EVENT BINDING === */
-document.getElementById('loginForm').addEventListener('submit',e=>{
-    e.preventDefault();
-    login(document.getElementById('cashierId').value.trim(),document.getElementById('cashierPin').value.trim());
-});
-document.getElementById('logoutBtn').onclick=logout;
-document.getElementById('productSearch').addEventListener('input',e=>renderProducts(e.target.value,document.getElementById('categoryFilter').value));
-document.getElementById('categoryFilter').addEventListener('change',e=>renderProducts(document.getElementById('productSearch').value,e.target.value));
-document.addEventListener('click',e=>{
-    if(e.target.classList.contains('add-to-cart'))addToCart(e.target.dataset.id);
-    if(e.target.classList.contains('remove-item'))removeItem(e.target.dataset.id);
-});
-document.getElementById('nextCustomer').onclick=()=>document.querySelector('[data-tab="customer"]').click();
-document.getElementById('backCart').onclick=()=>document.querySelector('[data-tab="cart"]').click();
-document.getElementById('nextPayment').onclick=()=>{
-    const type=document.getElementById('customerType').value;
-    const disc=type==='member'?parseInt(document.getElementById('memberDiscount').value)||0:settings.discount;
-    currentCart.discount=currentCart.subtotal*disc/100;
-    currentCart.tax=currentCart.subtotal*settings.tax/100;
-    currentCart.total=currentCart.subtotal-currentCart.discount+currentCart.tax;
-    document.getElementById('finalTotal').textContent=fmt(currentCart.total);
-    document.querySelector('[data-tab="payment"]').click();
+const exportReport=type=>{
+    const rows=transactions.map(t=>({Tanggal:new Date(t.date).toLocaleString('id-ID'),Total:fmt(t.total),Laba:fmt(t.profit)}));
+    if(type==='excel'){
+        const ws=XLSX.utils.json_to_sheet(rows);
+        const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Laporan');XLSX.writeFile(wb,'laporan.xlsx');
+    }else{
+        const el=document.createElement('div');el.innerHTML='<h2>Laporan Penjualan</h2>'+rows.map(r=>`<p>${r.Tanggal} - Total: ${r.Total} - Laba: ${r.Laba}</p>`).join('');window.print();el.remove();
+    }
 };
-document.getElementById('backCustomer').onclick=()=>document.querySelector('[data-tab="customer"]').click();
-document.getElementById('finishBtn').onclick=finishTransaction;
-document.getElementById('customerType').addEventListener('change',e=>document.getElementById('memberFields').style.display=e.target.value==='member'?'block':'none');
+const renderAll=()=>{renderProducts();renderCart();renderCategories();renderAdmin();};
 
 /* === INIT === */
-document.getElementById('storeNameSet').value=settings.storeName;
-document.getElementById('storeAddressSet').value=settings.storeAddress;
-document.getElementById('storePhoneSet').value=settings.storePhone;
-document.getElementById('taxSet').value=settings.tax;
-document.getElementById('discountSet').value=settings.discount;
-renderCategories();
-renderAdmin();
-window.onbeforeprint=()=>document.title='Struk - '+new Date().getTime();
-window.onafterprint=()=>document.title='Premium POS';
-
-if(currentCashier){
-    login(currentCashier.id,currentCashier.pin);
-}else{
-    document.getElementById('mainApp').style.display='none';
-    document.getElementById('loginModal').style.display='flex';
-}
+initData();renderAll();
+document.getElementById('loginForm').onsubmit=e=>{e.preventDefault();login()};
+document.getElementById('logoutBtn').onclick=logout;
+document.getElementById('productSearch').oninput=e=>renderProducts(e.target.value,document.getElementById('categoryFilter').value);
+document.getElementById('categoryFilter').onchange=e=>renderProducts(document.getElementById('productSearch').value,e.target.value);
+document.getElementById('customerType').onchange=toggleMember;
 </script>
 </body>
 </html>
